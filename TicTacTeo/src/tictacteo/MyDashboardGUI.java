@@ -9,6 +9,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class MyDashboardGUI extends AnchorPane {
 
@@ -32,7 +33,7 @@ public class MyDashboardGUI extends AnchorPane {
     protected final Text text1;
     protected final Text text2;
 
-    public MyDashboardGUI() {
+    public MyDashboardGUI(Stage stage) {
 
         stackPane = new StackPane();
         imageView = new ImageView();
@@ -55,7 +56,7 @@ public class MyDashboardGUI extends AnchorPane {
         text2 = new Text();
 
         setPrefHeight(417.0);
-        setPrefWidth(597.0);
+        setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
         getStylesheets().add("/tictacteo/styles/MyDashboard.css");
 
@@ -72,26 +73,28 @@ public class MyDashboardGUI extends AnchorPane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         imageView.getStyleClass().add("logo");
-        imageView.setImage(new Image(getClass().getResource("../images/myDashboard/logo.jpg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("../images/myDashboard/tic-tac-toe.jpg").toExternalForm()));
 
-        AnchorPane.setRightAnchor(circle, 19.59999999999991);
+        AnchorPane.setRightAnchor(circle, 15.0);
         AnchorPane.setTopAnchor(circle, 25.0);
         circle.setFill(javafx.scene.paint.Color.valueOf("#006fb2"));
-        circle.setLayoutX(566.4000000000001);
+        circle.setLayoutX(550.0);
         circle.setLayoutY(40.0);
         circle.setRadius(15.0);
         circle.setStroke(javafx.scene.paint.Color.TRANSPARENT);
         circle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
 
+        AnchorPane.setRightAnchor(text, 26.0);
         text.setFill(javafx.scene.paint.Color.valueOf("#f0eded"));
-        text.setLayoutX(561.0);
+        text.setLayoutX(566.0);
         text.setLayoutY(45.0);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
         text.setText("U");
 
+        AnchorPane.setRightAnchor(text0, 65.0);
         text0.setFill(javafx.scene.paint.Color.WHITE);
-        text0.setLayoutX(483.0);
+        text0.setLayoutX(480.0);
         text0.setLayoutY(45.0);
         text0.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text0.setStrokeWidth(0.0);
@@ -100,7 +103,7 @@ public class MyDashboardGUI extends AnchorPane {
         AnchorPane.setLeftAnchor(line, 0.0);
         AnchorPane.setRightAnchor(line, 0.0);
         AnchorPane.setTopAnchor(line, 75.0);
-        line.setEndX(485.0);
+        line.setEndX(500.0);
         line.setLayoutX(115.5);
         line.setLayoutY(68.0);
         line.setStartX(-115.0);
@@ -177,14 +180,16 @@ public class MyDashboardGUI extends AnchorPane {
         rectangle.setLayoutY(392.0);
         rectangle.setStroke(javafx.scene.paint.Color.TRANSPARENT);
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        rectangle.setWidth(601.0);
+        rectangle.setWidth(616.0);
 
-        imageView3.setFitHeight(24.0);
-        imageView3.setFitWidth(23.0);
+        AnchorPane.setLeftAnchor(imageView3, 70.0);
+        imageView3.setFitHeight(25.0);
+        imageView3.setFitWidth(25.0);
         imageView3.setLayoutX(71.0);
         imageView3.setLayoutY(28.0);
         imageView3.setImage(new Image(getClass().getResource("../images/myDashboard/star.png").toExternalForm()));
 
+        AnchorPane.setLeftAnchor(text1, 100.0);
         text1.setFill(javafx.scene.paint.Color.WHITE);
         text1.setLayoutX(101.0);
         text1.setLayoutY(44.0);
@@ -192,8 +197,9 @@ public class MyDashboardGUI extends AnchorPane {
         text1.setStrokeWidth(0.0);
         text1.setText("Score: ");
 
+        AnchorPane.setLeftAnchor(text2, 140.0);
         text2.setFill(javafx.scene.paint.Color.WHITE);
-        text2.setLayoutX(138.0);
+        text2.setLayoutX(145.0);
         text2.setLayoutY(45.0);
         text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text2.setStrokeWidth(0.0);

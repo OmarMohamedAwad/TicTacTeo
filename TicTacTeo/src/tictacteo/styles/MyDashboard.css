@@ -28,6 +28,6 @@ and open the template in the editor.
 
 .play-btn {
     -fx-background-color: #006FB2;
-    -fx-border-radius: 10;
+    -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
 }
