@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="417.0" prefWidth="597.0" style="-fx-background-color: #343F4B;" stylesheets="@styles/MyDashboard.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="46.0" styleClass="logo-containers" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
+               <image>
+                  <Image url="@../images/myDashboard/logo.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Circle fill="#006fb2" layoutX="566.4000000000001" layoutY="40.0" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.rightAnchor="19.59999999999991" AnchorPane.topAnchor="25.0" />
+      <Text fill="#f0eded" layoutX="561.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="U" />
+      <Text fill="WHITE" layoutX="483.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" />
+      <Line endX="485.0" layoutX="115.5" layoutY="68.0" startX="-115.0" style="-fx-stroke: #ffffff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0" />
+      <StackPane layoutX="66.0" layoutY="151.0" prefHeight="113.0" prefWidth="114.0" styleClass="game-container">
+         <children>
+            <ImageView fitHeight="106.0" fitWidth="106.0" styleClass="game-image">
+               <image>
+                  <Image url="@../images/myDashboard/tic-tac-toe.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Button layoutX="67.0" layoutY="285.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" styleClass="play-btn" text="Play" textFill="WHITE" />
+      <StackPane layoutX="251.0" layoutY="151.0" prefHeight="113.0" prefWidth="114.0" styleClass="topscore-container">
+         <children>
+            <ImageView fitHeight="107.0" fitWidth="96.0" styleClass="top-score-image">
+               <image>
+                  <Image url="@../images/myDashboard/top-score.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Button layoutX="252.0" layoutY="285.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" styleClass="play-btn" text="Top Score" textFill="WHITE" />
+      <StackPane layoutX="437.0" layoutY="151.0" prefHeight="114.0" prefWidth="111.0" styleClass="topscore-container">
+         <children>
+            <ImageView fitHeight="104.0" fitWidth="104.0" styleClass="history-image">
+               <image>
+                  <Image url="@../images/myDashboard/my-history.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Button layoutX="437.0" layoutY="285.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" styleClass="play-btn" text="My History" textFill="WHITE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#006fb2" height="24.0" layoutX="-7.0" layoutY="392.0" stroke="TRANSPARENT" strokeType="INSIDE" width="601.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ImageView fitHeight="24.0" fitWidth="23.0" layoutX="71.0" layoutY="28.0">
+         <image>
+            <Image url="@../images/myDashboard/star.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="101.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score: " />
+      <Text fill="WHITE" layoutX="138.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="80" />
+   </children>
+</AnchorPane>
