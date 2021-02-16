@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #343F4B; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="6.0" layoutX="-1.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Label layoutX="35.0" layoutY="39.0" prefHeight="41.0" prefWidth="58.0" />
+      <Label layoutX="84.0" layoutY="26.0" text="Tic Tac Toe" textAlignment="CENTER" textFill="#ffffffed">
+         <font>
+            <Font name="SansSerif Regular" size="23.0" />
+         </font>
+      </Label>
+      <Button layoutX="247.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15;" text="Back" textFill="WHITE" />
+      <Label layoutX="258.0" layoutY="91.0" style="-fx-font-weight: bold; -fx-font-family: sans serif;" text="Game Progress" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="196.0" layoutY="115.0" prefHeight="17.0" prefWidth="42.0" />
+      <ImageView layoutX="212.0" layoutY="88.0">
+         <image>
+            <Image url="@../images/progress-report.png" />
+         </image>
+      </ImageView>
+      <TableView layoutX="114.0" layoutY="132.0" prefHeight="206.0" prefWidth="384.0">
+        <columns>
+          <TableColumn prefWidth="109.0" text="#" />
+          <TableColumn prefWidth="165.0" text="Player Name" />
+            <TableColumn prefWidth="105.0" text="Score" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="72.0" fitWidth="74.0" layoutX="3.0" layoutY="4.0">
+         <image>
+            <Image url="@../images/log3.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
