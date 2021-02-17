@@ -10,7 +10,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #343F4B; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="6.0" layoutX="-1.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
@@ -29,7 +28,7 @@
       <Label layoutX="196.0" layoutY="115.0" prefHeight="17.0" prefWidth="42.0" />
       <ImageView layoutX="212.0" layoutY="88.0">
          <image>
-            <Image url="@../images/progress-report.png" />
+            <Image url="@../images/login/progress-report.png" />
          </image>
       </ImageView>
       <TableView layoutX="114.0" layoutY="132.0" prefHeight="206.0" prefWidth="384.0">
@@ -41,7 +40,7 @@
       </TableView>
       <ImageView fitHeight="72.0" fitWidth="74.0" layoutX="3.0" layoutY="4.0">
          <image>
-            <Image url="@../images/log3.jpg" />
+            <Image url="@../images/tic-tac-toe.jpg" />
          </image>
       </ImageView>
    </children>

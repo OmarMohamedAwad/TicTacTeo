@@ -20,17 +20,17 @@
       <Line endX="500.0" layoutX="101.0" layoutY="75.0" startX="-100.0" stroke="#8492a6" />
       <ImageView fitHeight="59.0" fitWidth="87.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/tic-tac-toe-game-neon-linear-outline-icon_7280-2418.jpg" />
+            <Image url="@../images/tic-tac-toe.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="376.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/frind.jpg" />
+            <Image url="@../images/options/frind.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="158.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/x2.jpg" />
+            <Image url="@../images/options/x.jpg" />
          </image>
       </ImageView>
       <RadioButton fx:id="crb" layoutX="164.0" layoutY="200.0" mnemonicParsing="false" style="-fx-text-fill: wheate;" text="Computer" textFill="#fcfcfc">
@@ -53,7 +53,7 @@
       </RadioButton>
       <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="376.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/o.jpg" />
+            <Image url="@../images/options/o.jpg" />
          </image>
       </ImageView>
       <Text fill="#fffdfd" layoutX="94.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Teo">
@@ -79,7 +79,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/computer2.jpg" />
+                  <Image url="@../images/options/computer.jpg" />
                </image>
             </ImageView>
          </children>

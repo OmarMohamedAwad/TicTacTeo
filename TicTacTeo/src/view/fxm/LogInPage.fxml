@@ -30,7 +30,7 @@
       <Label layoutX="203.0" layoutY="18.0" prefHeight="41.0" prefWidth="218.0" />
       <ImageView fitHeight="41.0" fitWidth="206.0" layoutX="197.0" layoutY="18.0">
          <image>
-            <Image url="@../images/ClipartKey_97962.png" />
+            <Image url="@../images/login/ClipartKey_97962.png" />
          </image>
       </ImageView>
       <Label layoutX="197.0" layoutY="185.0" prefHeight="17.0" prefWidth="29.0" />

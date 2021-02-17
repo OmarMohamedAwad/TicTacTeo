@@ -20,7 +20,7 @@ public class TicTacTeo extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MyDashboardGUI root = new MyDashboardGUI(primaryStage);
+        FXMLOptionpage root = new FXMLOptionpage();
         
         Scene scene = new Scene(root, 600, 500);
         

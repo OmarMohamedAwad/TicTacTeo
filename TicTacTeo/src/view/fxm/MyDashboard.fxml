@@ -10,14 +10,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B;" stylesheets="@styles/MyDashboard.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B;" stylesheets="@../styles/MyDashboard.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="46.0" styleClass="logo-containers" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <children>
             <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
                <image>
-                  <Image url="@../images/myDashboard/tic-tac-toe.jpg" />
+                  <Image url="@../images/tic-tac-toe.jpg" />
                </image>
             </ImageView>
          </children>
@@ -30,7 +29,7 @@
          <children>
             <ImageView fitHeight="106.0" fitWidth="106.0" styleClass="game-image">
                <image>
-                  <Image url="@../images/myDashboard/tic-tac-toe.jpg" />
+                  <Image url="@../images/tic-tac-toe.jpg" />
                </image>
             </ImageView>
          </children>

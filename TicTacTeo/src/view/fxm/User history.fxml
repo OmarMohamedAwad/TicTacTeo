@@ -35,7 +35,7 @@
          <children>
             <ImageView fitHeight="39.0" fitWidth="49.0" layoutX="339.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/Capture.PNG" />
+                  <Image url="@../images/myHistory/progress.PNG" />
                </image>
             </ImageView>
             <Label contentDisplay="CENTER" layoutX="386.0" layoutY="23.0" prefHeight="32.0" prefWidth="167.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="See Your Progress" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
@@ -45,7 +45,7 @@
             </Label>
             <ImageView fitHeight="86.0" fitWidth="122.0" layoutX="228.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/download.jpg" />
+                  <Image url="@../images/myHistory/max-score.jpg" />
                </image></ImageView>
             <StackPane layoutX="386.0" layoutY="83.0" prefHeight="74.0" prefWidth="67.0" />
             <ScrollPane hbarPolicy="NEVER" layoutX="173.0" layoutY="227.0" prefHeight="362.0" prefWidth="540.0">
@@ -79,7 +79,7 @@
             </Button>
             <ImageView fitHeight="86.0" fitWidth="112.0" layoutX="577.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/big-win-neon-label-illustration_csp66803125.jpg" />
+                  <Image url="@../images/myHistory/big-win.jpg" />
                </image></ImageView>
             <Label contentDisplay="CENTER" layoutX="216.0" layoutY="185.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Win # Times" textAlignment="CENTER" textFill="#5555d2">
                <font>
@@ -107,7 +107,7 @@
             </Label>
             <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="400.0" layoutY="83.0">
                <image>
-                  <Image url="@../../../Images/losing-neon-light-icon-2E5BD3C.jpg" />
+                  <Image url="@../images/myHistory/losing.jpg" />
                </image>
             </ImageView>
          </children>

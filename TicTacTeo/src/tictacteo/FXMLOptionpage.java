@@ -15,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javax.swing.ButtonGroup;
 
-public abstract class FXMLOptionpage extends AnchorPane {
+public class FXMLOptionpage extends AnchorPane {
 
     protected final Line line;
     protected final ImageView TicTacTeo;
@@ -54,8 +54,8 @@ public abstract class FXMLOptionpage extends AnchorPane {
         setPrefWidth(600.0);
         setStyle("-fx-background-color: #343F4B;");
         getStyleClass().add("mainFxmlClass");
-        getStylesheets().add("/tictacteo/fxml.css");
-
+        getStylesheets().add("/view/styles/fxml.css");
+        
         line.setEndX(500.0);
         line.setLayoutX(101.0);
         line.setLayoutY(75.0);
@@ -68,7 +68,7 @@ public abstract class FXMLOptionpage extends AnchorPane {
         TicTacTeo.setLayoutY(11.0);
         TicTacTeo.setPickOnBounds(true);
         TicTacTeo.setPreserveRatio(true);
-        TicTacTeo.setImage(new Image(getClass().getResource("../../images/tic-tac-toe-game-neon-linear-outline-icon_7280-2418.jpg").toExternalForm()));
+        TicTacTeo.setImage(new Image(getClass().getResource("../view/images/tic-tac-toe.jpg").toExternalForm()));
 
         Computer.setFitHeight(106.0);
         Computer.setFitWidth(141.0);
@@ -76,7 +76,7 @@ public abstract class FXMLOptionpage extends AnchorPane {
         Computer.setLayoutY(86.0);
         Computer.setPickOnBounds(true);
         Computer.setPreserveRatio(true);
-        Computer.setImage(new Image(getClass().getResource("../../images/computer2.jpg").toExternalForm()));
+        Computer.setImage(new Image(getClass().getResource("../view/images/options/computer.jpg").toExternalForm()));
 
         Friend.setFitHeight(106.0);
         Friend.setFitWidth(141.0);
@@ -84,7 +84,7 @@ public abstract class FXMLOptionpage extends AnchorPane {
         Friend.setLayoutY(86.0);
         Friend.setPickOnBounds(true);
         Friend.setPreserveRatio(true);
-        Friend.setImage(new Image(getClass().getResource("../../images/frind.jpg").toExternalForm()));
+        Friend.setImage(new Image(getClass().getResource("../view/images/options/frind.jpg").toExternalForm()));
 
         X.setFitHeight(106.0);
         X.setFitWidth(141.0);
@@ -92,7 +92,7 @@ public abstract class FXMLOptionpage extends AnchorPane {
         X.setLayoutY(236.0);
         X.setPickOnBounds(true);
         X.setPreserveRatio(true);
-        X.setImage(new Image(getClass().getResource("../../images/x2.jpg").toExternalForm()));
+        X.setImage(new Image(getClass().getResource("../view/images/options/x.jpg").toExternalForm()));
    
         ComputerRB.setLayoutX(164.0);
         ComputerRB.setLayoutY(200.0);
@@ -131,7 +131,7 @@ public abstract class FXMLOptionpage extends AnchorPane {
         O.setLayoutY(236.0);
         O.setPickOnBounds(true);
         O.setPreserveRatio(true);
-        O.setImage(new Image(getClass().getResource("../../images/o.jpg").toExternalForm()));
+        O.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
         text.setFill(javafx.scene.paint.Color.valueOf("#fffdfd"));
         text.setLayoutX(94.0);
