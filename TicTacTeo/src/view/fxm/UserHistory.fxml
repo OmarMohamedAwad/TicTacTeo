@@ -22,10 +22,13 @@
          <children>
             <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/tic-tac-toe-game-neon-linear-outline-icon_7280-2418.jpg" />
+                  <Image url="@../images/tic-tac-toe.jpg" />
                </image>
+               <effect>
+                  <DropShadow />
+               </effect>
             </ImageView>
-            <Label contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="User Name" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Label contentDisplay="CENTER" layoutX="63.0" layoutY="14.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="User Name" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -40,7 +43,7 @@
             </ImageView>
             <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="347.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Images/big-win-neon-label-illustration_csp66803125.jpg" />
+                  <Image url="@../images/myHistory/big-win.jpg" />
                </image>
                <effect>
                   <DropShadow />
@@ -87,10 +90,6 @@
                </effect>
 
             </Button>
-            <ImageView fitHeight="86.0" fitWidth="112.0" layoutX="577.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/myHistory/big-win.jpg" />
-               </image></ImageView>
             <Label contentDisplay="CENTER" layoutX="62.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Win # Times" textAlignment="CENTER" textFill="#5555d2">
                <font>
                   <Font name="System Bold Italic" size="10.0" />

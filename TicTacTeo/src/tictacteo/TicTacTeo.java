@@ -20,9 +20,9 @@ public class TicTacTeo extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLOptionpage root = new FXMLOptionpage();
+        MyDashboardPage root = new MyDashboardPage();
 
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 490, 417);
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.setScene(scene);
         primaryStage.resizableProperty().setValue(false);

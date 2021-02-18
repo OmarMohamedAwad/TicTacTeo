@@ -15,10 +15,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #d4d6d8;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="2.0" layoutY="66.0" stroke="#6b6b6b" strokeType="INSIDE" strokeWidth="2.0" width="500.0">
-         <effect>
-            <DropShadow />
-         </effect></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="2.0" layoutY="66.0" stroke="#6b6b6b" strokeType="INSIDE" strokeWidth="2.0" width="500.0" />
       <Label layoutX="213.0" layoutY="79.0" style="-fx-font-weight: bold;" text="Games" textAlignment="CENTER" textFill="#c31d1ded">
          <font>
             <Font name="SansSerif Regular" size="23.0" />
@@ -62,7 +59,7 @@
       <Label layoutX="197.0" layoutY="185.0" prefHeight="17.0" prefWidth="29.0" />
       <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="146.0" layoutY="180.0">
          <image>
-            <Image url="@../images/joistic.png" />
+            <Image url="@../images/login/joistic.png" />
          </image>
          <effect>
             <DropShadow />
@@ -71,7 +68,7 @@
       <Label layoutX="203.0" layoutY="235.0" prefHeight="17.0" prefWidth="29.0" />
       <ImageView fitHeight="20.0" fitWidth="22.0" layoutX="150.0" layoutY="245.0">
          <image>
-            <Image url="@../images/lock.png" />
+            <Image url="@../images/login/lock.png" />
          </image>
          <effect>
             <DropShadow />
