@@ -1,5 +1,8 @@
 package tictacteo;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -12,8 +15,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-public  class MyDashboardPage extends AnchorPane {
+public class MyDashboardPage extends AnchorPane {
 
     protected final StackPane logoStackPane;
     protected final ImageView logoImageView;
@@ -45,8 +49,7 @@ public  class MyDashboardPage extends AnchorPane {
     protected final Text scoreValueText;
     protected final DropShadow anchorDropShadow;
 
-    public MyDashboardPage() {
-
+    public MyDashboardPage(Stage primary) {
         logoStackPane = new StackPane();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -63,12 +66,32 @@ public  class MyDashboardPage extends AnchorPane {
         topScoreStackPane = new StackPane();
         topScoreImageView = new ImageView();
         topScoreDropShadow = new DropShadow();
+        //////////////////////////////////SELECT TOP SCORE PAGE\\\\\\\\\\\\\\\\\
         topScoreButton = new Button();
+        topScoreButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+//                   HistoryPage history = new HistoryPage();
+//                    Stage window = new Stage();
+//                    Scene scene=new Scene(history);
+//                    window.setScene(scene);
+//                    primary.close();
+//                    window.show();
+                primary.setScene(new Scene(new HistoryPage(primary)));
+            }
+        });
         topScoreinnerShadow = new InnerShadow();
         myHistoryStackPane = new StackPane();
         myHistoryImageView = new ImageView();
         myHistoryDropShadow = new DropShadow();
+        //////////////////////////////DISPLAY HISTORY OF THE USER HIMSELF\\\\\\\\\\\\
         myHistoryButton = new Button();
+        myHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                primary.setScene(new Scene(new PlayerHistoryPage(primary)));
+            }
+        });
         myHistoryInnerShadow = new InnerShadow();
         rectangle = new Rectangle();
         rectangleInnerShadow = new InnerShadow();
