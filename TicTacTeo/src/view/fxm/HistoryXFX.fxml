@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,11 +16,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="2.0" layoutX="-1.0" layoutY="67.0" stroke="#6b6b6b" strokeType="INSIDE" width="500.0">
-         <effect>
-            <DropShadow />
-         </effect></Rectangle>
-      <Label layoutX="35.0" layoutY="39.0" prefHeight="41.0" prefWidth="58.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6b6b" height="2.0" layoutX="-1.0" layoutY="67.0" stroke="#6b6b6b" strokeType="INSIDE" width="500.0" />
       <Label layoutX="84.0" layoutY="25.0" text="Tic Tac Toe" textAlignment="CENTER" textFill="#ffffffed">
          <font>
             <Font name="SansSerif Bold" size="15.0" />
@@ -28,30 +25,24 @@
             <DropShadow />
          </effect>
       </Label>
-      <Button layoutX="206.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15;" text="Back" textFill="WHITE">
+      <Button layoutX="193.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15;" text="Back" textFill="WHITE">
          <effect>
-            <DropShadow />
+            <InnerShadow />
          </effect></Button>
       <Label layoutX="217.0" layoutY="91.0" style="-fx-font-weight: bold; -fx-font-family: sans serif;" text="Game Progress" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
-         <effect>
-            <DropShadow />
-         </effect>
       </Label>
       <Label layoutX="196.0" layoutY="115.0" prefHeight="17.0" prefWidth="42.0" />
-      <ImageView layoutX="164.0" layoutY="89.0">
+      <ImageView fitHeight="30.0" fitWidth="35.0" layoutX="169.0" layoutY="90.0">
          <image>
-            <Image url="@../images/progress-report.png" />
+            <Image url="@../images/login/progress-report.png" />
          </image>
-         <effect>
-            <DropShadow />
-         </effect>
       </ImageView>
       <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="11.0">
          <image>
-            <Image url="@../images/log3.jpg" />
+            <Image url="@../images/tic-tac-toe.jpg" />
          </image>
          <effect>
             <DropShadow />

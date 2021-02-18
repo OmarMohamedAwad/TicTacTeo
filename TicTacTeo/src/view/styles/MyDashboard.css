@@ -1,0 +1,11 @@
+
+.logo-containers, .game-container, .topscore-container {
+    -fx-padding : 2; 
+    -fx-background-radius: 5;
+    -fx-background-color: #070d2f;
+}
+
+.play-btn {
+    -fx-background-color: #006FB2;
+    -fx-background-radius: 5;
+}
