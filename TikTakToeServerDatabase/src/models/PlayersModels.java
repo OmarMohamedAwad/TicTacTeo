@@ -12,9 +12,9 @@ import java.util.Vector;
 
 public class PlayersModels {
 
-    static final String DB_URL = "";
+    static final String DB_URL = "jdbc:mysql:localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
-    static final String DB_PASSWD = "";
+    static final String DB_PASSWD = "root@#123";
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
@@ -39,7 +39,7 @@ public class PlayersModels {
         return false;
     }
 
-    public static boolean loginPlayer(String username, String password) {
+    public static boolean validatePlayer(String username, String password) {
         try {
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
@@ -94,7 +94,7 @@ public class PlayersModels {
         return false;
     }
 
-    public static Vector<Players> PlayersHistory() {
+    public static Vector<Players> gameHistory() {
         try {
             Vector<Players> tmp = new Vector<Players>();
 
