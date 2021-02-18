@@ -13,49 +13,59 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.12162162162162163" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="742.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="417.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="86.0" prefWidth="896.0" style="-fx-background-color: #343F4B;">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="506.0" style="-fx-background-color: #343F4B;">
          <children>
-            <ImageView fitHeight="74.0" fitWidth="79.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/tic-tac-toe-game-neon-linear-outline-icon_7280-2418.jpg" />
                </image>
             </ImageView>
-            <Label contentDisplay="CENTER" layoutX="99.0" layoutY="27.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="User Name" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Label contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="User Name" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
          </children></AnchorPane>
-    <AnchorPane accessibleRole="BUTTON" minHeight="0.0" minWidth="0.0" prefHeight="651.0" prefWidth="885.0" style="-fx-background-color: #343F4B;">
+    <AnchorPane accessibleRole="BUTTON" minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="500.0" style="-fx-background-color: #343F4B;">
          <children>
-            <ImageView fitHeight="39.0" fitWidth="49.0" layoutX="339.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="124.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/Capture.PNG" />
                </image>
             </ImageView>
-            <Label contentDisplay="CENTER" layoutX="386.0" layoutY="23.0" prefHeight="32.0" prefWidth="167.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="See Your Progress" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="347.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/big-win-neon-label-illustration_csp66803125.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+            <Label contentDisplay="CENTER" layoutX="166.0" layoutY="7.0" prefHeight="32.0" prefWidth="167.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="See Your Progress" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="86.0" fitWidth="122.0" layoutX="228.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="83.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/download.jpg" />
-               </image></ImageView>
-            <StackPane layoutX="386.0" layoutY="83.0" prefHeight="74.0" prefWidth="67.0" />
-            <ScrollPane hbarPolicy="NEVER" layoutX="173.0" layoutY="227.0" prefHeight="362.0" prefWidth="540.0">
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect></ImageView>
+            <ScrollPane hbarPolicy="NEVER" layoutX="54.0" layoutY="179.0" prefHeight="115.0" prefWidth="379.0">
                <content>
-                  <TableView nodeOrientation="LEFT_TO_RIGHT" prefHeight="359.0" prefWidth="529.0">
+                  <TableView nodeOrientation="LEFT_TO_RIGHT" prefHeight="110.0" prefWidth="365.0">
                     <columns>
                       <TableColumn prefWidth="75.0" styleClass="Colums" text="Games" />
-                      <TableColumn prefWidth="75.0" styleClass="Colums" text="Date" />
-                        <TableColumn prefWidth="75.0" styleClass="Colums" text="Vs-Player" />
-                        <TableColumn prefWidth="132.80001220703127" styleClass="Colums" text="Status" />
+                      <TableColumn minWidth="0.0" prefWidth="68.0" styleClass="Colums" text="Date" />
+                        <TableColumn prefWidth="99.0" styleClass="Colums" text="Vs-Player" />
+                        <TableColumn prefWidth="117.0" styleClass="Colums" text="Status" />
                     </columns>
                      <opaqueInsets>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -71,45 +81,48 @@
                   <DropShadow color="#c95c0e" />
                </effect>
             </ScrollPane>
-            <Button contentDisplay="CENTER" layoutX="398.0" layoutY="600.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Back" textFill="#540b0b" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.bottomAnchor="14.399999999999977" AnchorPane.leftAnchor="398.0" AnchorPane.rightAnchor="376.4" AnchorPane.topAnchor="600.0">
+            <Button contentDisplay="CENTER" layoutX="199.0" layoutY="311.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15; -fx-background-color: #3065b5;" text="Back" textFill="#fcf9f9" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="311.0">
                <effect>
-                  <DropShadow color="#972323" height="0.0" radius="2.3675" width="11.47" />
+                  <DropShadow height="10.04" radius="4.8774999999999995" width="11.47" />
                </effect>
 
             </Button>
-            <ImageView fitHeight="86.0" fitWidth="112.0" layoutX="577.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Images/big-win-neon-label-illustration_csp66803125.jpg" />
-               </image></ImageView>
-            <Label contentDisplay="CENTER" layoutX="216.0" layoutY="185.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Win # Times" textAlignment="CENTER" textFill="#5555d2">
+            <Label contentDisplay="CENTER" layoutX="62.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Win # Times" textAlignment="CENTER" textFill="#5555d2">
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="System Bold Italic" size="10.0" />
                </font>
                <effect>
                   <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
                </effect>
             </Label>
-            <Label contentDisplay="CENTER" layoutX="388.0" layoutY="185.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Lose # Times" textAlignment="CENTER" textFill="#5555d2">
+            <Label contentDisplay="CENTER" layoutX="201.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Lose # Times" textAlignment="CENTER" textFill="#5555d2">
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="System Bold Italic" size="10.0" />
                </font>
                <effect>
                   <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
                </effect>
             </Label>
-            <Label contentDisplay="CENTER" layoutX="565.0" layoutY="185.0" prefHeight="32.0" prefWidth="110.0" style="-fx-alignment: center; -fx-background-color: white; -fx-border-radius: 5px;" text="The MaxScore #" textAlignment="CENTER" textFill="#5555d2">
+            <Label contentDisplay="CENTER" layoutX="326.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-alignment: center; -fx-background-color: white; -fx-border-radius: 5px;" text="The MaxScore #" textAlignment="CENTER" textFill="#5555d2">
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="System Bold Italic" size="10.0" />
                </font>
                <effect>
                   <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
                </effect>
             </Label>
-            <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="400.0" layoutY="83.0">
-               <image>
-                  <Image url="@../../../Images/losing-neon-light-icon-2E5BD3C.jpg" />
-               </image>
-            </ImageView>
+            <Pane layoutX="219.0" layoutY="57.0" prefHeight="59.0" prefWidth="60.0">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="60.0">
+                     <image>
+                        <Image url="@../../../Images/losing-neon-light-icon-2E5BD3C.jpg" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
          <effect>
             <ColorAdjust />
