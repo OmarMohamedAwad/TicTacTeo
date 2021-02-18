@@ -22,7 +22,7 @@
          <children>
             <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/tic-tac-toe.jpg" />
+                  <Image url="@../images/myHistory/tic-tac-toe-game.jpg" />
                </image>
                <effect>
                   <DropShadow />
@@ -61,14 +61,14 @@
                <effect>
                   <DropShadow />
                </effect></ImageView>
-            <ScrollPane hbarPolicy="NEVER" layoutX="54.0" layoutY="179.0" prefHeight="115.0" prefWidth="379.0">
+            <ScrollPane hbarPolicy="NEVER" layoutX="54.0" layoutY="179.0" prefHeight="110.0" prefWidth="379.0">
                <content>
-                  <TableView nodeOrientation="LEFT_TO_RIGHT" prefHeight="110.0" prefWidth="365.0">
+                  <TableView nodeOrientation="LEFT_TO_RIGHT" prefHeight="110.0" prefWidth="379.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" styleClass="Colums" text="Games" />
-                      <TableColumn minWidth="0.0" prefWidth="68.0" styleClass="Colums" text="Date" />
-                        <TableColumn prefWidth="99.0" styleClass="Colums" text="Vs-Player" />
-                        <TableColumn prefWidth="117.0" styleClass="Colums" text="Status" />
+                      <TableColumn prefWidth="96.0" styleClass="Colums" text="Games" />
+                      <TableColumn minWidth="0.0" prefWidth="94.0" styleClass="Colums" text="Date" />
+                        <TableColumn prefWidth="93.0" styleClass="Colums" text="Vs-Player" />
+                        <TableColumn prefWidth="76.0" styleClass="Colums" text="Status" />
                     </columns>
                      <opaqueInsets>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

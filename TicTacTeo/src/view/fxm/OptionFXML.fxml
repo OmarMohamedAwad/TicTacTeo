@@ -23,7 +23,7 @@
       </Line>
       <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/tic-tac-toe.jpg" />
+            <Image url="@../images/options/tic-tac-toe-game.jpg" />
          </image>
          <effect>
             <DropShadow />

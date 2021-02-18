@@ -34,15 +34,14 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="196.0" layoutY="115.0" prefHeight="17.0" prefWidth="42.0" />
       <ImageView fitHeight="30.0" fitWidth="35.0" layoutX="169.0" layoutY="90.0">
          <image>
-            <Image url="@../images/login/progress-report.png" />
+            <Image url="@../images/myHistory/progress.PNG" />
          </image>
       </ImageView>
       <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="11.0">
          <image>
-            <Image url="@../images/tic-tac-toe.jpg" />
+            <Image url="@../images/myHistory/tic-tac-toe-game.jpg" />
          </image>
          <effect>
             <DropShadow />
