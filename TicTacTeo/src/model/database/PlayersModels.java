@@ -96,18 +96,18 @@ public class PlayersModels {
 
     public static Vector<Players> gameHistory() {
         try {
-            Vector<Players> tmp = new Vector<Players>();
+            Vector<Players> topPlayers = new Vector<Players>();
 
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT User_Name,Score FROM users order by Score DESC limit 5");
             while (resultSet.next()) {
                 Players currentPlayer = new Players(resultSet.getString("User_Name"), resultSet.getInt("Score"));
-                tmp.add(currentPlayer);
+                topPlayers.add(currentPlayer);
             }
             resultSet.close();
             connection.close();
-            return tmp;
+            return topPlayers;
         } catch (SQLException ex) {
             Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
         }
