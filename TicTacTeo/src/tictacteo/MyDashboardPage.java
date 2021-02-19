@@ -20,7 +20,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import models.PlayersModels;
+import model.database.Players;
+import model.database.PlayersModels;
+
 
 public class MyDashboardPage extends AnchorPane {
 
@@ -53,8 +55,9 @@ public class MyDashboardPage extends AnchorPane {
     protected final Text scoreText;
     protected final Text scoreValueText;
     protected final DropShadow anchorDropShadow;
-
-    public MyDashboardPage(Stage primary) {
+    private int playerId;
+    
+    public MyDashboardPage(Stage primary, int id) {
         logoStackPane = new StackPane();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -71,33 +74,12 @@ public class MyDashboardPage extends AnchorPane {
         topScoreStackPane = new StackPane();
         topScoreImageView = new ImageView();
         topScoreDropShadow = new DropShadow();
-        //////////////////////////////////SELECT TOP SCORE PAGE\\\\\\\\\\\\\\\\\
         topScoreButton = new Button();
-        topScoreButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-//                   HistoryPage history = new HistoryPage();
-//                    Stage window = new Stage();
-//                    Scene scene=new Scene(history);
-//                    window.setScene(scene);
-//                    primary.close();
-//                    window.show();
-                primary.setScene(new Scene(new HistoryPage(primary)));
-            }
-        });
         topScoreinnerShadow = new InnerShadow();
         myHistoryStackPane = new StackPane();
         myHistoryImageView = new ImageView();
         myHistoryDropShadow = new DropShadow();
-        //////////////////////////////DISPLAY HISTORY OF THE USER HIMSELF\\\\\\\\\\\\
         myHistoryButton = new Button();
-        myHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                int PlayerId = 2;
-                primary.setScene(new Scene(new PlayerHistoryPage(primary , PlayerId)));
-            }
-        });          
         myHistoryInnerShadow = new InnerShadow();
         rectangle = new Rectangle();
         rectangleInnerShadow = new InnerShadow();
@@ -105,7 +87,14 @@ public class MyDashboardPage extends AnchorPane {
         scoreText = new Text();
         scoreValueText = new Text();
         anchorDropShadow = new DropShadow();
-
+        playerId = id;
+        
+        setDesignProperty();
+        setActions(primary);
+        setPlayerInfo();
+    }
+    
+    public void setDesignProperty(){
         setMinHeight(USE_PREF_SIZE);
         setPrefHeight(417.0);
         setPrefWidth(504.0);
@@ -277,7 +266,7 @@ public class MyDashboardPage extends AnchorPane {
         scoreText.setStrokeWidth(0.0);
         scoreText.setText("Score: ");
 
-        AnchorPane.setLeftAnchor(scoreValueText, 140.0);
+        AnchorPane.setLeftAnchor(scoreValueText, 145.0);
         scoreValueText.setFill(javafx.scene.paint.Color.WHITE);
         scoreValueText.setLayoutX(145.0);
         scoreValueText.setLayoutY(45.0);
@@ -306,6 +295,25 @@ public class MyDashboardPage extends AnchorPane {
         getChildren().add(starImageView);
         getChildren().add(scoreText);
         getChildren().add(scoreValueText);
-
+    }
+    
+    public void setActions(Stage primary){
+        //DISPLAY HISTORY OF THE USER HIMSELF
+        myHistoryButton.setOnAction(e ->
+                primary.setScene(new Scene(new PlayerHistoryPage(primary,playerId)))
+        );
+        
+        //SELECT TOP SCORE PAGE
+        topScoreButton.setOnAction(e -> 
+                primary.setScene(new Scene(new HistoryPage(primary,playerId)))
+        );
+    }
+    
+    public void setPlayerInfo(){
+        Players player = PlayersModels.playerInfo(playerId);
+        playerNameText.setText(player.getUserName());
+        char firstChar = (player.getUserName()).charAt(0);
+        firstCharText.setText(""+firstChar);
+        scoreValueText.setText(""+player.getScore());
     }
 }

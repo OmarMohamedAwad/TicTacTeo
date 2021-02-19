@@ -7,12 +7,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -23,7 +25,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import models.PlayersModels;
+import model.database.Players;
+import model.database.PlayersModels;
 
 public class HistoryPage extends Pane {
 
@@ -38,27 +41,21 @@ public class HistoryPage extends Pane {
     protected final DropShadow dropShadow0;
     protected final ScrollPane scrollPane;
     protected final AnchorPane anchorPane;
-    protected final TableView topScoreTable;
+    protected final TableView<Players> topScoreTable;
     protected final TableColumn playerNumberColumn;
     protected final TableColumn playerNameColumn;
     protected final TableColumn playerScoreColumn;
     protected final DropShadow dropShadow1;
     protected final DropShadow dropShadow2;
     protected final DropShadow dropShadow3;
-
-    public HistoryPage(Stage primary) {
+    private int playerId;
+    
+    public HistoryPage(Stage primary, int id) {
 
         separatorRectangle = new Rectangle();
         gameNameLabelView = new Label();
         dropShadow = new DropShadow();
-        /////////////////////////////////Back Again to Dahboard\\\\\\\\\\\\\\\\
         backButton = new Button();
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary)));
-            }
-        });
         innerShadow = new InnerShadow();
         gameProgressLabelView = new Label();
         progrssImageView = new ImageView();
@@ -66,14 +63,20 @@ public class HistoryPage extends Pane {
         dropShadow0 = new DropShadow();
         scrollPane = new ScrollPane();
         anchorPane = new AnchorPane();
-        topScoreTable = new TableView();
+        topScoreTable = new TableView<Players>();
         playerNumberColumn = new TableColumn();
         playerNameColumn = new TableColumn();
         playerScoreColumn = new TableColumn();
         dropShadow1 = new DropShadow();
         dropShadow2 = new DropShadow();
         dropShadow3 = new DropShadow();
-
+        playerId = id;
+        
+        setDesignProperty();
+        setActions(primary);
+    }
+    
+    public void setDesignProperty(){
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -157,24 +160,51 @@ public class HistoryPage extends Pane {
         playerScoreColumn.setText("Score");
 
         topScoreTable.setEffect(dropShadow1);
-        scrollPane.setContent(anchorPane);
+        
+        setHistoryData();
+        scrollPane.setContent(topScoreTable);
 
         dropShadow2.setColor(javafx.scene.paint.Color.valueOf("#c95c0e"));
         scrollPane.setEffect(dropShadow2);
 
         setEffect(dropShadow3);
-
         getChildren().add(separatorRectangle);
         getChildren().add(gameNameLabelView);
         getChildren().add(backButton);
         getChildren().add(gameProgressLabelView);
         getChildren().add(progrssImageView);
         getChildren().add(gameLogoImagView);
+        
+        anchorPane.getChildren().add(topScoreTable);
+        getChildren().add(scrollPane);
+        
+    }
+    
+    public void setActions(Stage primary){
+        //Back Again to Dahboard
+        backButton.setOnAction(e -> 
+                primary.setScene(new Scene(new MyDashboardPage(primary,playerId)))
+        );
+    }
+    
+    public void setHistoryData(){
+        topScoreTable.setEditable(true);
         topScoreTable.getColumns().add(playerNumberColumn);
         topScoreTable.getColumns().add(playerNameColumn);
         topScoreTable.getColumns().add(playerScoreColumn);
-        anchorPane.getChildren().add(topScoreTable);
-        getChildren().add(scrollPane);
-
+        
+        Vector<Players> dbPlaye = PlayersModels.gameHistory();
+        ObservableList<Players> players = FXCollections.observableArrayList();
+        int index = 1;
+        for(Players player : dbPlaye){
+           players.add(new Players(""+index,player.getUserName(), player.getScore()+""));
+           index++; 
+        }
+        
+        playerNumberColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("id"));
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("name"));
+        playerScoreColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("userScore"));
+        
+        topScoreTable.setItems(players);
     }
 }

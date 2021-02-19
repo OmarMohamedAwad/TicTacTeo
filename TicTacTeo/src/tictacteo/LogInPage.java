@@ -69,7 +69,7 @@ public class LogInPage extends Pane {
 //                    window.setScene(scene);
 //                    primary.close();
 //                    window.show();
-                    primary.setScene(new Scene(new MyDashboardPage(primary)));
+                    primary.setScene(new Scene(new MyDashboardPage(primary,1)));
                 }
             }
         });
@@ -116,12 +116,12 @@ public class LogInPage extends Pane {
         logInFormContainer.setArcWidth(32.0);
         logInFormContainer.setFill(javafx.scene.paint.Color.valueOf("#454e57"));
         logInFormContainer.setHeight(233.0);
-        logInFormContainer.setLayoutX(137.0);
+        logInFormContainer.setLayoutX(130.0);
         logInFormContainer.setLayoutY(118.0);
         logInFormContainer.setStroke(javafx.scene.paint.Color.valueOf("#615f5f"));
         logInFormContainer.setStrokeLineCap(javafx.scene.shape.StrokeLineCap.ROUND);
         logInFormContainer.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        logInFormContainer.setWidth(227.0);
+        logInFormContainer.setWidth(260.0);
 
         //lighting.setBumpInput(javafx.scene.effect.Effect.);
         logInFormContainer.setEffect(lighting);

@@ -86,7 +86,7 @@
             </ScrollPane>
             <Button contentDisplay="CENTER" layoutX="199.0" layoutY="311.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15; -fx-background-color: #3065b5;" text="Back" textFill="#fcf9f9" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="311.0">
                <effect>
-                  <DropShadow height="10.04" radius="4.8774999999999995" width="11.47" />
+                  <InnerShadow />
                </effect>
 
             </Button>

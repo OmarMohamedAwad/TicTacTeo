@@ -41,7 +41,7 @@ public class PlayerHistoryPage extends AnchorPane {
     protected final ImageView winningTimesImageView;
     protected final DropShadow dropShadow0;
     protected final Button backToDashboardButton;
-    protected final DropShadow dropShadow1;
+    protected final InnerShadow backInnerShadow;
     protected final Label winningTimesLableView;
     protected final InnerShadow innerShadow;
     protected final Label looseTimeLabelView;
@@ -50,6 +50,7 @@ public class PlayerHistoryPage extends AnchorPane {
     protected final InnerShadow innerShadow1;
     protected final ScrollPane scrollPane;
     protected final TableView myHisoryTabelView;
+    protected final DropShadow tableDropShadow;
     protected final TableColumn gamesColumn;
     protected final TableColumn dateColumn;
     protected final TableColumn vsPlayerColumn;
@@ -76,10 +77,10 @@ PlayerId = playerid;
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary)));
+                primary.setScene(new Scene(new MyDashboardPage(primary,1)));
             }
         });
-        dropShadow1 = new DropShadow();
+        backInnerShadow = new InnerShadow();
         winningTimesLableView = new Label();
         innerShadow = new InnerShadow();
         looseTimeLabelView = new Label();
@@ -97,6 +98,7 @@ PlayerId = playerid;
         separatorRectangle = new Rectangle();
         logoImage = new ImageView();
         dropShadow3 = new DropShadow();
+        tableDropShadow = new DropShadow();
         userNameLabel = new Label();
 
         setId("AnchorPane");
@@ -156,13 +158,11 @@ PlayerId = playerid;
         backToDashboardButton.setTextFill(javafx.scene.paint.Color.valueOf("#fcf9f9"));
         backToDashboardButton.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
 
-        dropShadow1.setHeight(10.04);
-        dropShadow1.setRadius(4.8774999999999995);
-        dropShadow1.setWidth(11.47);
-        backToDashboardButton.setEffect(dropShadow1);
-        /////////////////////////////////////////
- 
-  //////////////////////////////////////
+        backInnerShadow.setHeight(10.04);
+        backInnerShadow.setRadius(4.8774999999999995);
+        backInnerShadow.setWidth(11.47);
+        backToDashboardButton.setEffect(backInnerShadow);
+
         winningTimesLableView.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         winningTimesLableView.setLayoutX(47.0);
         winningTimesLableView.setLayoutY(181.0);
@@ -308,6 +308,7 @@ PlayerId = playerid;
         getChildren().add(winningTimesLableView);
         getChildren().add(looseTimeLabelView);
         getChildren().add(maxScoreLabelView);
+
       //  myHisoryTabelView.getColumns().add(gamesColumn);
       //  myHisoryTabelView.getColumns().add(dateColumn);
         //myHisoryTabelView.getColumns().add(vsPlayerColumn);
