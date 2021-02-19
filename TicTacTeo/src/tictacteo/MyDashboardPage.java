@@ -97,10 +97,7 @@ public class MyDashboardPage extends AnchorPane {
                 int PlayerId = 2;
                 primary.setScene(new Scene(new PlayerHistoryPage(primary , PlayerId)));
             }
-        });
-        
-        
-          
+        });          
         myHistoryInnerShadow = new InnerShadow();
         rectangle = new Rectangle();
         rectangleInnerShadow = new InnerShadow();

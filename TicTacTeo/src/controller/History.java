@@ -14,7 +14,7 @@ public class History {
     private String status;
     private int playerId;
   
-    private SimpleStringProperty tableHistoryId;
+    private SimpleStringProperty id;
     private SimpleStringProperty tableDate;
     private SimpleStringProperty tableVsPlayer;
     private SimpleStringProperty tableStatus;
@@ -75,7 +75,8 @@ public class History {
     }
     
         public History(String tableHistoryId,String tableDate,String tableVsPlayer,String tableStatus,String tablePlayerid ){
-                  this.tableHistoryId=new SimpleStringProperty(tableHistoryId);
+         
+                  this.id=new SimpleStringProperty(tableHistoryId);
                   this.tableDate=new SimpleStringProperty(tableDate);
                   this.tableVsPlayer=new SimpleStringProperty(tableVsPlayer);
                   this.tableStatus=new SimpleStringProperty(tableStatus);
@@ -118,11 +119,11 @@ public class History {
   
             public String gettableHistoryId()
        {
-        return tableHistoryId.get();
+        return id.get();
     }
 
     public void setHistoryID(String tableHistoryId) {
-        this.tableHistoryId.set(tableHistoryId);
+       id.set(tableHistoryId);
     }
             
     
