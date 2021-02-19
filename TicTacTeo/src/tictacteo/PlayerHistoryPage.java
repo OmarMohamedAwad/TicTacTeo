@@ -1,5 +1,13 @@
 package tictacteo;
 
+import controller.History;
+import controller.Players;
+import models.HistoryModels;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -7,16 +15,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import models.HistoryModels;
+import static models.HistoryModels.addHistory;
+import models.PlayersModels;
+import static models.PlayersModels.playerId;
 public class PlayerHistoryPage extends AnchorPane {
 
     protected final ImageView progressImageView;
@@ -47,8 +62,10 @@ public class PlayerHistoryPage extends AnchorPane {
     protected final DropShadow dropShadow3;
     protected final Label userNameLabel;
 
-    public PlayerHistoryPage(Stage primary, int id) {
-
+    @SuppressWarnings("empty-statement")
+    public PlayerHistoryPage(Stage primary , int PlayerId) {
+        int playerid = 2;
+PlayerId = playerid;
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
         dropShadow = new DropShadow();
@@ -215,7 +232,7 @@ public class PlayerHistoryPage extends AnchorPane {
         statusolumn.setMinWidth(0.0);
         statusolumn.setPrefWidth(103.0);
         statusolumn.setText("Status");
-        scrollPane.setContent(myHisoryTabelView);
+        
 
         looserImageView.setFitHeight(59.0);
         looserImageView.setFitWidth(60.0);
@@ -256,6 +273,33 @@ public class PlayerHistoryPage extends AnchorPane {
         userNameLabel.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
         userNameLabel.setFont(new Font("System Bold", 15.0));
 
+                myHisoryTabelView.setEditable(true);
+        myHisoryTabelView.getColumns().add(gamesColumn);
+        myHisoryTabelView.getColumns().add(dateColumn);
+        myHisoryTabelView.getColumns().add(vsPlayerColumn);
+        myHisoryTabelView.getColumns().add(statusolumn);
+         Vector<History> tmp = new Vector<History>(); 
+     
+         tmp=HistoryModels.userHistory(PlayerId);
+            
+        ObservableList<History> data = FXCollections.observableArrayList();
+    int index=1;
+    for(History history : tmp){
+        data.add(new History(index+"", history.getDate(),history.getVsPlayer(),history.getStatus(),history.getPlayerId()+""));
+        index++;
+        
+        
+    }
+   
+    gamesColumn.setCellValueFactory( new PropertyValueFactory<History,String>("id") );
+    dateColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableDate") );
+    vsPlayerColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableVsPlayer") );
+    statusolumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableStatus") );
+    
+     myHisoryTabelView.setItems(data);    
+  
+        scrollPane.setContent(myHisoryTabelView);
+        
         getChildren().add(progressImageView);
         getChildren().add(maxScoreView);
         getChildren().add(titleLabel);
@@ -264,16 +308,20 @@ public class PlayerHistoryPage extends AnchorPane {
         getChildren().add(winningTimesLableView);
         getChildren().add(looseTimeLabelView);
         getChildren().add(maxScoreLabelView);
-        myHisoryTabelView.setEffect(tableDropShadow);
-        myHisoryTabelView.getColumns().add(gamesColumn);
-        myHisoryTabelView.getColumns().add(dateColumn);
-        myHisoryTabelView.getColumns().add(vsPlayerColumn);
-        myHisoryTabelView.getColumns().add(statusolumn);
+
+      //  myHisoryTabelView.getColumns().add(gamesColumn);
+      //  myHisoryTabelView.getColumns().add(dateColumn);
+        //myHisoryTabelView.getColumns().add(vsPlayerColumn);
+        //myHisoryTabelView.getColumns().add(statusolumn);
         getChildren().add(scrollPane);
         getChildren().add(looserImageView);
         getChildren().add(separatorRectangle);
         getChildren().add(logoImage);
         getChildren().add(userNameLabel);
-
+         
+      //  AnchorPane.getChildren().add(myHisoryTabelView);
+       
+        
+        
     }
 }

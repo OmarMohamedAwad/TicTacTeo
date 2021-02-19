@@ -8,13 +8,16 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import controller.Players;
+import java.util.ArrayList;
 import java.util.Vector;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class PlayersModels {
 
-    static final String DB_URL = "jdbc:mysql:localhost:3306/tiktaktoe";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
-    static final String DB_PASSWD = "root@#123";
+    static final String DB_PASSWD = "1234";
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
@@ -23,10 +26,12 @@ public class PlayersModels {
     public static boolean addPlayer(Players user) {
         try {
             Connection connection = connect();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users ( User_Name,Password,Score) VALUES (?,?,?)");
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getScore());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users ( User_ID,User_Name,Password,Score) VALUES (?,?,?,?)");
+            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4, user.getScore());
+
             int res = preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
@@ -37,37 +42,29 @@ public class PlayersModels {
         return false;
     }
 
-    public static int loginPlayer(String username, String password) {
+    public static boolean validatePlayer(String username, String password) {
         try {
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users order by Score DESC");
-            boolean playerFound = false;
-            int userId = 0;
+            boolean playerNameFound = false;
+            boolean correctPassword = false;
             while (resultSet.next()) {
-                if ((resultSet.getString("User_Name").equals(username)) && (resultSet.getString("Password").equals(password))) {
-                    playerFound = true;
-                    userId = resultSet.getInt("User_ID");
+                if (resultSet.getString("User_Name").equals(username)) {
+                    playerNameFound = true;
+                    if (resultSet.getString("Password").equals(password)) {
+                        correctPassword = true;
+                    }
                     break;
-                }
-            }
-            if (!playerFound) {
-                Players newPlayer = new Players();
-                newPlayer.setUserName(username);
-                newPlayer.setPassword(password);
-                boolean addedSucess = addPlayer(newPlayer);
-                if (addedSucess) {
-                    ResultSet result = statement.executeQuery("SELECT User_ID FROM users where User_Name=" + username);
-                    userId = result.getInt("User_ID");
                 }
             }
             resultSet.close();
             connection.close();
-            return userId;
+            return correctPassword & playerNameFound;
         } catch (SQLException ex) {
             Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return -1;
+        return false;
     }
 
     public static boolean updatePlayerScore(int userid, String gameResult) {
@@ -83,7 +80,7 @@ public class PlayersModels {
                         break;
                     }
                 }
-                lastScore++;
+               lastScore++;
             }
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET Score = ? where User_ID=? ");
 
@@ -99,17 +96,18 @@ public class PlayersModels {
         }
         return false;
     }
-
+     
     public static Vector<Players> gameHistory() {
         try {
+     
             Vector<Players> tmp = new Vector<Players>();
-
+          
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT User_Name,Score FROM users order by Score DESC limit 5");
             while (resultSet.next()) {
                 Players currentPlayer = new Players(resultSet.getString("User_Name"), resultSet.getInt("Score"));
-                tmp.add(currentPlayer);
+               tmp.add(currentPlayer);
             }
             resultSet.close();
             connection.close();
@@ -141,6 +139,33 @@ public class PlayersModels {
             Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static int playerId(String username) {
+        try {
+            Connection connection = connect();
+            Statement statement = (Statement) connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+
+            while (resultSet.next()) {
+
+                if (resultSet.getString("User_Name").equals(username)) {
+                    //Players user=new Players(resultSet.getInt("User_ID"),resultSet.getString("User_Name"),resultSet.getString("Email"),resultSet.getString("Password"),resultSet.getInt("Points"),resultSet.getString("User_Pic"), resultSet.getString("State"));
+                    int id = resultSet.getInt("User_ID");
+                    resultSet.close();
+                    connection.close();
+                    return id;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public static ArrayList<Integer>[] addPlayer(int playerid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
