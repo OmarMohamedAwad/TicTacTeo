@@ -52,14 +52,14 @@ public class HistoryModels {
 
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM history ");
-            if (resultSet.getInt("Player_ID") == playerId) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM history where Player_ID="+playerId);
+           // if (resultSet.getInt("Player_ID") == playerId) {
                 while (resultSet.next()) {
                     History currentHistory = new History(resultSet.getInt("History_ID"), resultSet.getString("Date"), resultSet.getString("Vs_Player"), resultSet.getString("Status"),resultSet.getInt("Player_ID"));
                     tmp.add(currentHistory);
                 }
 
-            }
+           // }
 
             resultSet.close();
             connection.close();

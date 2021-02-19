@@ -161,28 +161,7 @@ PlayerId = playerid;
         dropShadow1.setWidth(11.47);
         backToDashboardButton.setEffect(dropShadow1);
         /////////////////////////////////////////
-        myHisoryTabelView.setEditable(true);
-        myHisoryTabelView.getColumns().add(gamesColumn);
-        myHisoryTabelView.getColumns().add(dateColumn);
-        myHisoryTabelView.getColumns().add(vsPlayerColumn);
-        myHisoryTabelView.getColumns().add(statusolumn);
-         Vector<History> tmp = new Vector<History>(); 
-         tmp=HistoryModels.userHistory(PlayerId);
-        ObservableList<History> data = FXCollections.observableArrayList();
-    int index=1;
-    for(History history : tmp){
-      
-        data.add(new History(index, history.getDate(),history.getVsPlayer(),history.getStatus(),history.getPlayerId()));
-        index++;
-        
-    }
-    gamesColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableHistoryId") );
-    dateColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableDate") );
-    vsPlayerColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableVsPlayer") );
-    statusolumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableStatus") );
-    
-     myHisoryTabelView.setItems(data);
-     
+ 
   //////////////////////////////////////
         winningTimesLableView.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         winningTimesLableView.setLayoutX(47.0);
@@ -253,7 +232,7 @@ PlayerId = playerid;
         statusolumn.setMinWidth(0.0);
         statusolumn.setPrefWidth(103.0);
         statusolumn.setText("Status");
-        scrollPane.setContent(myHisoryTabelView);
+        
 
         looserImageView.setFitHeight(59.0);
         looserImageView.setFitWidth(60.0);
@@ -294,6 +273,33 @@ PlayerId = playerid;
         userNameLabel.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
         userNameLabel.setFont(new Font("System Bold", 15.0));
 
+                myHisoryTabelView.setEditable(true);
+        myHisoryTabelView.getColumns().add(gamesColumn);
+        myHisoryTabelView.getColumns().add(dateColumn);
+        myHisoryTabelView.getColumns().add(vsPlayerColumn);
+        myHisoryTabelView.getColumns().add(statusolumn);
+         Vector<History> tmp = new Vector<History>(); 
+     
+         tmp=HistoryModels.userHistory(PlayerId);
+            
+        ObservableList<History> data = FXCollections.observableArrayList();
+    int index=1;
+    for(History history : tmp){
+        data.add(new History(index+"", history.getDate(),history.getVsPlayer(),history.getStatus(),history.getPlayerId()+""));
+        index++;
+        
+        
+    }
+   
+    gamesColumn.setCellValueFactory( new PropertyValueFactory<History,String>("id") );
+    dateColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableDate") );
+    vsPlayerColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableVsPlayer") );
+    statusolumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableStatus") );
+    
+     myHisoryTabelView.setItems(data);    
+  
+        scrollPane.setContent(myHisoryTabelView);
+        
         getChildren().add(progressImageView);
         getChildren().add(maxScoreView);
         getChildren().add(titleLabel);
@@ -302,15 +308,19 @@ PlayerId = playerid;
         getChildren().add(winningTimesLableView);
         getChildren().add(looseTimeLabelView);
         getChildren().add(maxScoreLabelView);
-        myHisoryTabelView.getColumns().add(gamesColumn);
-        myHisoryTabelView.getColumns().add(dateColumn);
-        myHisoryTabelView.getColumns().add(vsPlayerColumn);
-        myHisoryTabelView.getColumns().add(statusolumn);
+      //  myHisoryTabelView.getColumns().add(gamesColumn);
+      //  myHisoryTabelView.getColumns().add(dateColumn);
+        //myHisoryTabelView.getColumns().add(vsPlayerColumn);
+        //myHisoryTabelView.getColumns().add(statusolumn);
         getChildren().add(scrollPane);
         getChildren().add(looserImageView);
         getChildren().add(separatorRectangle);
         getChildren().add(logoImage);
         getChildren().add(userNameLabel);
-
+         
+      //  AnchorPane.getChildren().add(myHisoryTabelView);
+       
+        
+        
     }
 }
