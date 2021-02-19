@@ -191,13 +191,12 @@ public class HistoryPage extends Pane {
         topScoreTable.getColumns().add(playerNameColumn);
         topScoreTable.getColumns().add(playerScoreColumn);
         
-        
-        ObservableList<Players> players = FXCollections.observableArrayList();
         Vector<Players> dbPlaye = PlayersModels.gameHistory();
+        ObservableList<Players> players = FXCollections.observableArrayList();
         int index = 1;
         for(Players player : dbPlaye){
            players.add(new Players(""+index,player.getUserName(), player.getScore()+""));
-            index++; 
+           index++; 
         }
         
         playerNumberColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("id"));

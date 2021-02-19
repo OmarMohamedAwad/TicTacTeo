@@ -17,7 +17,7 @@ public class Players {
     private SimpleStringProperty name;
     private SimpleStringProperty userScore;
     
-    public Players(){   
+    public Players(){ 
     }
     public Players(int userId,String userName,String password,int score ){
         this.userID=userId;
