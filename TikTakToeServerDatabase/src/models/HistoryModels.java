@@ -19,9 +19,9 @@ import static models.PlayersModels.connect;
  */
 public class HistoryModels {
 
-    static final String DB_URL = "";
+    static final String DB_URL = "jdbc:mysql:localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
-    static final String DB_PASSWD = "";
+    static final String DB_PASSWD = "root@#123";
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
@@ -45,11 +45,9 @@ public class HistoryModels {
         }
         return false;
     }
-
     public static Vector<History> userHistory(int playerId) {
         try {
             Vector<History> tmp = new Vector<History>();
-
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM history ");
@@ -58,9 +56,7 @@ public class HistoryModels {
                     History currentHistory = new History(resultSet.getInt("History_ID"), resultSet.getString("Date"), resultSet.getString("Vs_Player"), resultSet.getString("Status"),resultSet.getInt("Player_ID"));
                     tmp.add(currentHistory);
                 }
-
             }
-
             resultSet.close();
             connection.close();
             return tmp;
