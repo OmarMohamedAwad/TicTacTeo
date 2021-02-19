@@ -69,7 +69,7 @@ public class LogInPage extends Pane {
 //                    window.setScene(scene);
 //                    primary.close();
 //                    window.show();
-                    primary.setScene(new Scene(new MyDashboardPage(primary)));
+                    primary.setScene(new Scene(new MyDashboardPage(primary,1)));
                 }
             }
         });

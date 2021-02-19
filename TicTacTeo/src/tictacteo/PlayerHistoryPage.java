@@ -46,7 +46,7 @@ public class PlayerHistoryPage extends AnchorPane {
     protected final DropShadow dropShadow3;
     protected final Label userNameLabel;
 
-    public PlayerHistoryPage(Stage primary) {
+    public PlayerHistoryPage(Stage primary, int id) {
 
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
@@ -59,7 +59,7 @@ public class PlayerHistoryPage extends AnchorPane {
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary)));
+                primary.setScene(new Scene(new MyDashboardPage(primary,1)));
             }
         });
         dropShadow1 = new DropShadow();

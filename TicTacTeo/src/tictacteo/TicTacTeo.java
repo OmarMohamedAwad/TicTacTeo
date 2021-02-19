@@ -20,12 +20,10 @@ public class TicTacTeo extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //MyDashboardPage root = new MyDashboardPage();
-        //HistoryPage root = new HistoryPage();
-        //OptionPage root = new OptionPage();
-        //PlayerHistoryPage root = new PlayerHistoryPage();
+
         LogInPage root = new  LogInPage(primaryStage);
         Scene scene = new Scene(root, 490, 417);
+        
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.setScene(scene);
         primaryStage.resizableProperty().setValue(false);
