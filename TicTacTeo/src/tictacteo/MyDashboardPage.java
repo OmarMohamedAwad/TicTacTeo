@@ -1,5 +1,8 @@
 package tictacteo;
 
+import controller.Players;
+import java.util.Iterator;
+import java.util.Vector;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -10,12 +13,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import models.PlayersModels;
 
 public class MyDashboardPage extends AnchorPane {
 
@@ -89,9 +94,13 @@ public class MyDashboardPage extends AnchorPane {
         myHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new PlayerHistoryPage(primary)));
+                int PlayerId = 2;
+                primary.setScene(new Scene(new PlayerHistoryPage(primary , PlayerId)));
             }
         });
+        
+        
+          
         myHistoryInnerShadow = new InnerShadow();
         rectangle = new Rectangle();
         rectangleInnerShadow = new InnerShadow();
