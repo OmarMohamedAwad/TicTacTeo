@@ -27,9 +27,11 @@ CREATE TABLE `history` (
   `Date` date NOT NULL,
   `Vs_Player` varchar(45) NOT NULL,
   `Status` varchar(45) NOT NULL,
+  `Player_ID` int NOT NULL,
   PRIMARY KEY (`History_ID`),
   UNIQUE KEY `History_ID_UNIQUE` (`History_ID`),
-  CONSTRAINT `Player_ID` FOREIGN KEY (`History_ID`) REFERENCES `users` (`User_ID`)
+  KEY `game` (`Player_ID`),
+  CONSTRAINT `game` FOREIGN KEY (`Player_ID`) REFERENCES `users` (`User_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,4 +80,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-18 20:35:33
+-- Dump completed on 2021-02-19 21:10:42
