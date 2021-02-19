@@ -1,8 +1,5 @@
 package tictacteo;
 
-import controller.History;
-import controller.Players;
-import models.HistoryModels;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -27,11 +24,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.database.History;
+import model.database.HistoryModels;
 
-import models.HistoryModels;
-import static models.HistoryModels.addHistory;
-import models.PlayersModels;
-import static models.PlayersModels.playerId;
 public class PlayerHistoryPage extends AnchorPane {
 
     protected final ImageView progressImageView;
