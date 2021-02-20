@@ -1,6 +1,5 @@
 package tictacteo;
 
-import controller.Players;
 import java.util.Iterator;
 import java.util.Vector;
 import javafx.event.ActionEvent;
@@ -300,12 +299,12 @@ public class MyDashboardPage extends AnchorPane {
     public void setActions(Stage primary){
         //DISPLAY HISTORY OF THE USER HIMSELF
         myHistoryButton.setOnAction(e ->
-                primary.setScene(new Scene(new PlayerHistoryPage(primary,playerId)))
+                primary.setScene(new Scene(new MyHistoryPage(primary,playerId)))
         );
         
         //SELECT TOP SCORE PAGE
         topScoreButton.setOnAction(e -> 
-                primary.setScene(new Scene(new HistoryPage(primary,playerId)))
+                primary.setScene(new Scene(new GameHistoryPage(primary,playerId)))
         );
     }
     

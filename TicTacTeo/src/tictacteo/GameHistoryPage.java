@@ -1,6 +1,5 @@
 package tictacteo;
 
-import controller.Players;
 import java.util.Iterator;
 import java.util.Vector;
 import javafx.collections.FXCollections;
@@ -28,7 +27,7 @@ import javafx.stage.Stage;
 import model.database.Players;
 import model.database.PlayersModels;
 
-public class HistoryPage extends Pane {
+public class GameHistoryPage extends Pane {
 
     protected final Rectangle separatorRectangle;
     protected final Label gameNameLabelView;
@@ -41,7 +40,7 @@ public class HistoryPage extends Pane {
     protected final DropShadow dropShadow0;
     protected final ScrollPane scrollPane;
     protected final AnchorPane anchorPane;
-    protected final TableView<Players> topScoreTable;
+    protected final TableView topScoreTable;
     protected final TableColumn playerNumberColumn;
     protected final TableColumn playerNameColumn;
     protected final TableColumn playerScoreColumn;
@@ -50,7 +49,7 @@ public class HistoryPage extends Pane {
     protected final DropShadow dropShadow3;
     private int playerId;
     
-    public HistoryPage(Stage primary, int id) {
+    public GameHistoryPage(Stage primary, int id) {
 
         separatorRectangle = new Rectangle();
         gameNameLabelView = new Label();
@@ -63,7 +62,7 @@ public class HistoryPage extends Pane {
         dropShadow0 = new DropShadow();
         scrollPane = new ScrollPane();
         anchorPane = new AnchorPane();
-        topScoreTable = new TableView<Players>();
+        topScoreTable = new TableView();
         playerNumberColumn = new TableColumn();
         playerNameColumn = new TableColumn();
         playerScoreColumn = new TableColumn();
