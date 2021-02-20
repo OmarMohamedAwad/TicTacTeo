@@ -45,7 +45,6 @@ public class MyHistoryPage extends AnchorPane {
     protected final InnerShadow innerShadow1;
     protected final ScrollPane scrollPane;
     protected final TableView myHisoryTabelView;
-    protected final DropShadow tableDropShadow;
     protected final TableColumn gamesColumn;
     protected final TableColumn dateColumn;
     protected final TableColumn vsPlayerColumn;
@@ -58,9 +57,7 @@ public class MyHistoryPage extends AnchorPane {
     protected final Label userNameLabel;
 
     @SuppressWarnings("empty-statement")
-    public MyHistoryPage(Stage primary , int PlayerId) {
-        int playerid = 2;
-PlayerId = playerid;
+    public MyHistoryPage(Stage primary, int playerId) {
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
         dropShadow = new DropShadow();
@@ -72,7 +69,7 @@ PlayerId = playerid;
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary,1)));
+                primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
             }
         });
         backInnerShadow = new InnerShadow();
@@ -93,7 +90,6 @@ PlayerId = playerid;
         separatorRectangle = new Rectangle();
         logoImage = new ImageView();
         dropShadow3 = new DropShadow();
-        tableDropShadow = new DropShadow();
         userNameLabel = new Label();
 
         setId("AnchorPane");
@@ -157,7 +153,7 @@ PlayerId = playerid;
         backInnerShadow.setRadius(4.8774999999999995);
         backInnerShadow.setWidth(11.47);
         backToDashboardButton.setEffect(backInnerShadow);
-
+        
         winningTimesLableView.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         winningTimesLableView.setLayoutX(47.0);
         winningTimesLableView.setLayoutY(181.0);
@@ -227,7 +223,6 @@ PlayerId = playerid;
         statusolumn.setMinWidth(0.0);
         statusolumn.setPrefWidth(103.0);
         statusolumn.setText("Status");
-        
 
         looserImageView.setFitHeight(59.0);
         looserImageView.setFitWidth(60.0);
@@ -268,33 +263,31 @@ PlayerId = playerid;
         userNameLabel.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
         userNameLabel.setFont(new Font("System Bold", 15.0));
 
-                myHisoryTabelView.setEditable(true);
+        myHisoryTabelView.setEditable(true);
         myHisoryTabelView.getColumns().add(gamesColumn);
         myHisoryTabelView.getColumns().add(dateColumn);
         myHisoryTabelView.getColumns().add(vsPlayerColumn);
         myHisoryTabelView.getColumns().add(statusolumn);
-         Vector<History> tmp = new Vector<History>(); 
-     
-         tmp=HistoryModels.userHistory(PlayerId);
-            
+        Vector<History> tmp = new Vector<History>();
+
+        tmp = HistoryModels.userHistory(playerId);
         ObservableList<History> data = FXCollections.observableArrayList();
-    int index=1;
-    for(History history : tmp){
-        data.add(new History(index+"", history.getDate(),history.getVsPlayer(),history.getStatus(),history.getPlayerId()+""));
-        index++;
-        
-        
-    }
-   
-    gamesColumn.setCellValueFactory( new PropertyValueFactory<History,String>("id") );
-    dateColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableDate") );
-    vsPlayerColumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableVsPlayer") );
-    statusolumn.setCellValueFactory( new PropertyValueFactory<History,String>("tableStatus") );
-    
-     myHisoryTabelView.setItems(data);    
-  
+        int index = 1;
+        for (History history : tmp) {
+            data.add(new History(index + "", history.getDate(), history.getVsPlayer(), history.getStatus(), history.getPlayerId() + ""));
+            index++;
+
+        }
+
+        gamesColumn.setCellValueFactory(new PropertyValueFactory<History, String>("id"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableDate"));
+        vsPlayerColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableVsPlayer"));
+        statusolumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableStatus"));
+
+        myHisoryTabelView.setItems(data);
+
         scrollPane.setContent(myHisoryTabelView);
-        
+
         getChildren().add(progressImageView);
         getChildren().add(maxScoreView);
         getChildren().add(titleLabel);
@@ -303,20 +296,11 @@ PlayerId = playerid;
         getChildren().add(winningTimesLableView);
         getChildren().add(looseTimeLabelView);
         getChildren().add(maxScoreLabelView);
-
-      //  myHisoryTabelView.getColumns().add(gamesColumn);
-      //  myHisoryTabelView.getColumns().add(dateColumn);
-        //myHisoryTabelView.getColumns().add(vsPlayerColumn);
-        //myHisoryTabelView.getColumns().add(statusolumn);
         getChildren().add(scrollPane);
         getChildren().add(looserImageView);
         getChildren().add(separatorRectangle);
         getChildren().add(logoImage);
         getChildren().add(userNameLabel);
-         
-      //  AnchorPane.getChildren().add(myHisoryTabelView);
-       
-        
-        
+
     }
 }
