@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import model.database.History;
 import model.database.HistoryModels;
 
-public class PlayerHistoryPage extends AnchorPane {
+public class MyHistoryPage extends AnchorPane {
 
     protected final ImageView progressImageView;
     protected final ImageView maxScoreView;
@@ -58,7 +58,7 @@ public class PlayerHistoryPage extends AnchorPane {
     protected final Label userNameLabel;
 
     @SuppressWarnings("empty-statement")
-    public PlayerHistoryPage(Stage primary , int PlayerId) {
+    public MyHistoryPage(Stage primary , int PlayerId) {
         int playerid = 2;
 PlayerId = playerid;
         progressImageView = new ImageView();
