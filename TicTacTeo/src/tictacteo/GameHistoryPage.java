@@ -24,8 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.database.Players;
-import model.database.PlayersModels;
+import model.database.Player;
+import model.database.PlayerModel;
 
 public class GameHistoryPage extends Pane {
 
@@ -192,17 +192,17 @@ public class GameHistoryPage extends Pane {
         topScoreTable.getColumns().add(playerNameColumn);
         topScoreTable.getColumns().add(playerScoreColumn);
         
-        Vector<Players> dbPlaye = PlayersModels.gameHistory();
-        ObservableList<Players> players = FXCollections.observableArrayList();
+        Vector<Player> dbPlaye = PlayerModel.gameHistory();
+        ObservableList<Player> players = FXCollections.observableArrayList();
         int index = 1;
-        for(Players player : dbPlaye){
-           players.add(new Players(""+index,player.getUserName(), player.getScore()+""));
+        for(Player player : dbPlaye){
+           players.add(new Player(""+index,player.getUserName(), player.getScore()+""));
            index++; 
         }
         
-        playerNumberColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("id"));
-        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("name"));
-        playerScoreColumn.setCellValueFactory(new PropertyValueFactory<Players,String> ("userScore"));
+        playerNumberColumn.setCellValueFactory(new PropertyValueFactory<Player,String> ("id"));
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<Player,String> ("name"));
+        playerScoreColumn.setCellValueFactory(new PropertyValueFactory<Player,String> ("userScore"));
         
         topScoreTable.setItems(players);
     }

@@ -19,8 +19,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.database.Players;
-import model.database.PlayersModels;
+import model.database.Player;
+import model.database.PlayerModel;
 
 
 public class MyDashboardPage extends AnchorPane {
@@ -309,7 +309,7 @@ public class MyDashboardPage extends AnchorPane {
     }
     
     public void setPlayerInfo(){
-        Players player = PlayersModels.playerInfo(playerId);
+        Player player = PlayerModel.playerInfo(playerId);
         playerNameText.setText(player.getUserName());
         char firstChar = (player.getUserName()).charAt(0);
         firstCharText.setText(""+firstChar);

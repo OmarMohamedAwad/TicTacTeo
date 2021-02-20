@@ -80,10 +80,13 @@
                   <TableColumn minWidth="0.0" prefWidth="103.0" text="Status" />
                </columns>
                <effect>
-                  <DropShadow color="#512304" />
+                  <DropShadow color="#512304" height="60.32" radius="36.5125" width="87.73" />
                </effect>
             </TableView>
          </content>
+         <effect>
+            <DropShadow />
+         </effect>
       </ScrollPane>
       <ImageView fitHeight="59.0" fitWidth="60.0" layoutX="226.0" layoutY="111.0">
          <image>

@@ -25,7 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.History;
-import model.database.HistoryModels;
+import model.database.HistoryModel;
 
 public class MyHistoryPage extends AnchorPane {
 
@@ -49,6 +49,7 @@ public class MyHistoryPage extends AnchorPane {
     protected final TableColumn dateColumn;
     protected final TableColumn vsPlayerColumn;
     protected final TableColumn statusolumn;
+    protected final DropShadow scrollPanDropShadow;
     protected final ImageView looserImageView;
     protected final DropShadow dropShadow2;
     protected final Rectangle separatorRectangle;
@@ -85,6 +86,7 @@ public class MyHistoryPage extends AnchorPane {
         dateColumn = new TableColumn();
         vsPlayerColumn = new TableColumn();
         statusolumn = new TableColumn();
+        scrollPanDropShadow = new DropShadow();
         looserImageView = new ImageView();
         dropShadow2 = new DropShadow();
         separatorRectangle = new Rectangle();
@@ -263,6 +265,7 @@ public class MyHistoryPage extends AnchorPane {
         userNameLabel.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
         userNameLabel.setFont(new Font("System Bold", 15.0));
 
+        scrollPane.setEffect(scrollPanDropShadow);
         myHisoryTabelView.setEditable(true);
         myHisoryTabelView.getColumns().add(gamesColumn);
         myHisoryTabelView.getColumns().add(dateColumn);
@@ -270,7 +273,7 @@ public class MyHistoryPage extends AnchorPane {
         myHisoryTabelView.getColumns().add(statusolumn);
         Vector<History> tmp = new Vector<History>();
 
-        tmp = HistoryModels.userHistory(playerId);
+        tmp = HistoryModel.userHistory(playerId);
         ObservableList<History> data = FXCollections.observableArrayList();
         int index = 1;
         for (History history : tmp) {

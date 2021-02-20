@@ -21,8 +21,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.database.Players;
-import model.database.PlayersModels;
+import model.database.Player;
+import model.database.PlayerModel;
 
 public class LogInPage extends Pane {
 
@@ -70,7 +70,7 @@ public class LogInPage extends Pane {
                 if (!playerNameTextField.getText().isEmpty() && !playerPasswordTextPassword.getText().isEmpty()) {
                     String name = playerNameTextField.getText();
                     String password = playerPasswordTextPassword.getText();
-                    int playerId = PlayersModels.loginPlayer(name, password);
+                    int playerId = PlayerModel.loginPlayer(name, password);
                     if (playerId > 0 ) {
                         System.out.println("THIS IS positive case CASE ");
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));

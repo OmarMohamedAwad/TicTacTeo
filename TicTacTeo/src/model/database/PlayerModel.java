@@ -8,9 +8,9 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Vector;
-import model.database.Players;
+import model.database.Player;
 
-public class PlayersModels {
+public class PlayerModel {
 
     static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
@@ -20,7 +20,7 @@ public class PlayersModels {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
     }
 
-    public static boolean addPlayer(Players user) {
+    public static boolean addPlayer(Player user) {
         try {
             Connection connection = connect();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users ( User_Name,Password,Score) VALUES (?,?,?)");
@@ -53,7 +53,7 @@ public class PlayersModels {
                 }
             }
             if (!playerFound) {
-                Players newPlayer = new Players();
+                Player newPlayer = new Player();
                 newPlayer.setUserName(username);
                 newPlayer.setPassword(password);
                 boolean addedSucess = addPlayer(newPlayer);
@@ -68,7 +68,7 @@ public class PlayersModels {
             connection.close();
             return userId;
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -98,32 +98,32 @@ public class PlayersModels {
             connection.close();
             return res > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
 
-    public static Vector<Players> gameHistory() {
+    public static Vector<Player> gameHistory() {
         try {
-            Vector<Players> tmp = new Vector<Players>();
+            Vector<Player> tmp = new Vector<Player>();
 
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT User_Name,Score FROM users order by Score DESC limit 5");
             while (resultSet.next()) {
-                Players currentPlayer = new Players(resultSet.getString("User_Name"), resultSet.getInt("Score"));
+                Player currentPlayer = new Player(resultSet.getString("User_Name"), resultSet.getInt("Score"));
                 tmp.add(currentPlayer);
             }
             resultSet.close();
             connection.close();
             return tmp;
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public static Players playerInfo(int userId) {
+    public static Player playerInfo(int userId) {
         try {
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
@@ -133,7 +133,7 @@ public class PlayersModels {
 
                 if (resultSet.getInt("User_ID") == userId) {
 
-                    Players user = new Players(resultSet.getInt("User_ID"), resultSet.getString("User_Name"), resultSet.getString("Password"), resultSet.getInt("Score"));
+                    Player user = new Player(resultSet.getInt("User_ID"), resultSet.getString("User_Name"), resultSet.getString("Password"), resultSet.getInt("Score"));
                     resultSet.close();
                     connection.close();
                     return user;
@@ -141,7 +141,7 @@ public class PlayersModels {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author amalasaad
  */
-public class Players {
+public class Player {
 
     private int userID;
     private String userName;
@@ -17,16 +17,16 @@ public class Players {
     private SimpleStringProperty name;
     private SimpleStringProperty userScore;
     
-    public Players(){ 
+    public Player(){ 
     }
-    public Players(int userId,String userName,String password,int score ){
+    public Player(int userId,String userName,String password,int score ){
         this.userID=userId;
         this.userName=userName; 
         this.password=password;
         this.score=score;
     }
     
-    public Players(String id, String name, String score) {
+    public Player(String id, String name, String score) {
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
         this.userScore = new SimpleStringProperty(score);
@@ -88,7 +88,7 @@ public class Players {
         userScore.set(score);
     }
 
-    public Players(String userName, int score) {
+    public Player(String userName, int score) {
         this.userName = userName;
         this.score = score;
     }

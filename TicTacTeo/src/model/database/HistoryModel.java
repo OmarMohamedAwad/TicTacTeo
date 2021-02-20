@@ -9,13 +9,13 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.database.PlayersModels;
+import model.database.PlayerModel;
 
 /**
  *
  * @author amalasaad
  */
-public class HistoryModels {
+public class HistoryModel {
 
     static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
@@ -39,7 +39,7 @@ public class HistoryModels {
             connection.close();
             return res > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -63,7 +63,7 @@ public class HistoryModels {
             connection.close();
             return tmp;
         } catch (SQLException ex) {
-            Logger.getLogger(PlayersModels.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
