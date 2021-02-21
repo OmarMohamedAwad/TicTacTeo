@@ -179,9 +179,7 @@ public class MyDashboardPage extends AnchorPane {
         playButton.getStyleClass().add("play-btn");
         playButton.setText("Play");
         playButton.setTextFill(javafx.scene.paint.Color.WHITE);
-
-        playButton.setEffect(playButtonInnerShadow);
-
+      
         topScoreStackPane.setLayoutX(194.0);
         topScoreStackPane.setLayoutY(154.0);
         topScoreStackPane.setPrefHeight(113.0);
@@ -274,7 +272,7 @@ public class MyDashboardPage extends AnchorPane {
         scoreValueText.setText("80");
 
         setEffect(anchorDropShadow);
-
+playButton.setEffect(playButtonInnerShadow);
         logoStackPane.getChildren().add(logoImageView);
         getChildren().add(logoStackPane);
         getChildren().add(circle);
@@ -294,6 +292,7 @@ public class MyDashboardPage extends AnchorPane {
         getChildren().add(starImageView);
         getChildren().add(scoreText);
         getChildren().add(scoreValueText);
+        
     }
     
     public void setActions(Stage primary){
@@ -306,6 +305,14 @@ public class MyDashboardPage extends AnchorPane {
         topScoreButton.setOnAction(e -> 
                 primary.setScene(new Scene(new GameHistoryPage(primary,playerId)))
         );
+        
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+               
+                 primary.setScene(new Scene(new OptionPage( primary , playerId)));
+            }
+        });  
     }
     
     public void setPlayerInfo(){

@@ -125,7 +125,12 @@
             <DropShadow />
          </effect>
       </Text>
-      <Button layoutX="232.0" layoutY="377.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Play Now" textFill="#f8f7f7">
+      <Button layoutX="251.0" layoutY="377.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Play Now" textFill="#f8f7f7">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
+      <Button layoutX="37.0" layoutY="377.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Back" textFill="#f8f7f7">
          <effect>
             <InnerShadow />
          </effect>
