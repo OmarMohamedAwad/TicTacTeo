@@ -1,4 +1,3 @@
-
 package model.database;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -8,26 +7,28 @@ import javafx.beans.property.SimpleStringProperty;
  * @author amalasaad
  */
 public class History {
+
     private int historyID;
     private String date;
     private String vsPlayer;
     private String status;
     private int playerId;
-  
+
     private SimpleStringProperty id;
     private SimpleStringProperty tableDate;
     private SimpleStringProperty tableVsPlayer;
     private SimpleStringProperty tableStatus;
     private SimpleStringProperty tablePlayerid;
-    
-    public History(){   
+
+    public History() {
     }
-    public History(int historyID,String date,String vsPlayer,String status,int playerId ){
-        this.historyID=historyID;
-        this.date=date; 
-        this.vsPlayer=vsPlayer;
-        this.status=status;
-        this.playerId=playerId;
+
+    public History(int historyID, String date, String vsPlayer, String status, int playerId) {
+        this.historyID = historyID;
+        this.date = date;
+        this.vsPlayer = vsPlayer;
+        this.status = status;
+        this.playerId = playerId;
     }
 
     public int getHistoryID() {
@@ -73,31 +74,30 @@ public class History {
     public int size() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-        public History(String tableHistoryId,String tableDate,String tableVsPlayer,String tableStatus,String tablePlayerid ){
-         
-                  this.id=new SimpleStringProperty(tableHistoryId);
-                  this.tableDate=new SimpleStringProperty(tableDate);
-                  this.tableVsPlayer=new SimpleStringProperty(tableVsPlayer);
-                  this.tableStatus=new SimpleStringProperty(tableStatus);
-                  this.tablePlayerid=new SimpleStringProperty(tablePlayerid);
+
+    public History(String tableHistoryId, String tableDate, String tableVsPlayer, String tableStatus, String tablePlayerid) {
+
+        this.id = new SimpleStringProperty(tableHistoryId);
+        this.tableDate = new SimpleStringProperty(tableDate);
+        this.tableVsPlayer = new SimpleStringProperty(tableVsPlayer);
+        this.tableStatus = new SimpleStringProperty(tableStatus);
+        this.tablePlayerid = new SimpleStringProperty(tablePlayerid);
     }
-       
 
     public String getTableDate() {
         return tableDate.get();
     }
 
     public void setTablDate(String tableDate) {
-        this.tableDate.set(tableDate) ;
+        this.tableDate.set(tableDate);
     }
 
     public String getTableVsPlayer() {
         return tableVsPlayer.get();
     }
 
-   public void setTableVsPlayer(String tableVsPlayer) {
-        this.tableVsPlayer.set(tableVsPlayer); 
+    public void setTableVsPlayer(String tableVsPlayer) {
+        this.tableVsPlayer.set(tableVsPlayer);
     }
 
     public String getTableStatus() {
@@ -108,23 +108,20 @@ public class History {
         this.tableStatus.set(tableStatus);
     }
 
-    public String gettablePlayerId() {
+    public String getTablePlayerId() {
         return tablePlayerid.get();
     }
 
-    public void setPlayerId(String tablePlayerid) {
+    public void setTablePlayerId(String tablePlayerid) {
         this.tablePlayerid.set(tablePlayerid);
     }
 
-  
-            public String gettableHistoryId()
-       {
+    public String getId() {
         return id.get();
     }
 
-    public void setHistoryID(String tableHistoryId) {
-       id.set(tableHistoryId);
+    public void setId(String tableHistoryId) {
+        id.set(tableHistoryId);
     }
-            
-    
+
 }
