@@ -1,6 +1,10 @@
 package tictacteo;
 
 import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -13,9 +17,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class OptionPage extends AnchorPane {
-
+    protected final Button BackButton;
+    protected final InnerShadow innerShadow0;
     protected final Line line;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
@@ -48,7 +54,7 @@ public class OptionPage extends AnchorPane {
     protected final InnerShadow playInnerShadow;
     protected final DropShadow anchorDropShadow;
 
-    public OptionPage() {
+    public OptionPage(Stage primary , int id) {
 
         line = new Line();
         logoImageView = new ImageView();
@@ -81,7 +87,8 @@ public class OptionPage extends AnchorPane {
         playButton = new Button();
         playInnerShadow = new InnerShadow();
         anchorDropShadow = new DropShadow();
-
+        BackButton = new Button();
+        innerShadow0 = new InnerShadow();
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
@@ -174,7 +181,7 @@ public class OptionPage extends AnchorPane {
 
         frindRadioButton.setEffect(frindRadioDropShadow);
 
-        xRadioButton.setLayoutX(186.0);
+        xRadioButton.setLayoutX(171.0);
         xRadioButton.setLayoutY(343.0);
         xRadioButton.setMnemonicParsing(false);
         xRadioButton.setStyle("-fx-text-fill: white;");
@@ -186,7 +193,7 @@ public class OptionPage extends AnchorPane {
 
         xRadioButton.setEffect(xRadioDropShadow);
 
-        oRadioButton.setLayoutX(371.0);
+        oRadioButton.setLayoutX(363.0);
         oRadioButton.setLayoutY(343.0);
         oRadioButton.setMnemonicParsing(false);
         oRadioButton.setStyle("-fx-text-fill: white;");
@@ -219,6 +226,49 @@ public class OptionPage extends AnchorPane {
 
         platAgainstText.setEffect(platAgainstDropShadow);
 
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+               if((xRadioButton.isSelected() || oRadioButton.isSelected()) &&(frindRadioButton.isSelected() || computerRadioButton.isSelected()))
+               {                
+                
+                primary.setScene(new Scene(new GamePage(primary , id)));
+            }
+            else {
+            
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText(null);
+        a.setContentText("You must choose your charcter and vs player");
+  
+        a.show();
+        
+                   
+               }}
+         
+        });  
+        
+        BackButton.setLayoutX(125.0);
+        BackButton.setLayoutY(377.0);
+        BackButton.setMnemonicParsing(false);
+        BackButton.setPrefHeight(26.0);
+        BackButton.setPrefWidth(130.0);
+        BackButton.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
+        BackButton.getStyleClass().add("mainFxmlClass");
+        BackButton.setText("Back");
+        BackButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
+
+        BackButton.setEffect(innerShadow0);
+       BackButton .setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                  
+          primary.setScene(new Scene(new MyDashboardPage(primary,id )));
+            }
+        });     
+        
+        
+        
+        
         yourCharcterText.setFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         yourCharcterText.setLayoutX(11.0);
         yourCharcterText.setLayoutY(283.0);
@@ -231,11 +281,11 @@ public class OptionPage extends AnchorPane {
 
         yourCharcterText.setEffect(yourCharcterDropShadow);
 
-        playButton.setLayoutX(232.0);
+        playButton.setLayoutX(322.0);
         playButton.setLayoutY(377.0);
         playButton.setMnemonicParsing(false);
         playButton.setPrefHeight(26.0);
-        playButton.setPrefWidth(114.0);
+        playButton.setPrefWidth(130.0);
         playButton.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
         playButton.getStyleClass().add("mainFxmlClass");
         playButton.setText("Play Now");
@@ -260,6 +310,7 @@ public class OptionPage extends AnchorPane {
         getChildren().add(platAgainstText);
         getChildren().add(yourCharcterText);
         getChildren().add(playButton);
+                getChildren().add(BackButton);
 
     }
 }

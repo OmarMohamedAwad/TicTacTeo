@@ -11,7 +11,6 @@ import java.util.Vector;
 import model.database.Player;
 
 public class PlayerModel {
-                                  
     static final String DB_URL = "jdbc:mysql://41.233.71.50:3306/tiktaktoe";
     static final String DB_USER = "player";
     static final String DB_PASSWD = "player";

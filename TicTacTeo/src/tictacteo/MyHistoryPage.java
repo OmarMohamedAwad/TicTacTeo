@@ -26,9 +26,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.History;
 import model.database.HistoryModel;
+import model.database.Player;
 
 public class MyHistoryPage extends AnchorPane {
 
+    int winNumbers;
+    int loseNumbers;
     protected final ImageView progressImageView;
     protected final ImageView maxScoreView;
     protected final DropShadow dropShadow;
@@ -58,7 +61,8 @@ public class MyHistoryPage extends AnchorPane {
     protected final Label userNameLabel;
 
     @SuppressWarnings("empty-statement")
-    public MyHistoryPage(Stage primary, int playerId) {
+    public MyHistoryPage(Stage primary, Player currentPlayer) {
+       int playerId=currentPlayer.getUserID();
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
         dropShadow = new DropShadow();
@@ -155,7 +159,7 @@ public class MyHistoryPage extends AnchorPane {
         backInnerShadow.setRadius(4.8774999999999995);
         backInnerShadow.setWidth(11.47);
         backToDashboardButton.setEffect(backInnerShadow);
-        
+
         winningTimesLableView.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         winningTimesLableView.setLayoutX(47.0);
         winningTimesLableView.setLayoutY(181.0);
@@ -236,10 +240,10 @@ public class MyHistoryPage extends AnchorPane {
 
         separatorRectangle.setArcHeight(5.0);
         separatorRectangle.setArcWidth(5.0);
-        separatorRectangle.setFill(javafx.scene.paint.Color.valueOf("#e4e4e4"));
-        separatorRectangle.setHeight(6.0);
+        separatorRectangle.setFill(javafx.scene.paint.Color.valueOf("#6b6b6b"));
+        separatorRectangle.setHeight(2.0);
         separatorRectangle.setLayoutY(58.0);
-        separatorRectangle.setStroke(javafx.scene.paint.Color.valueOf("#c6c6c6"));
+        separatorRectangle.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         separatorRectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         separatorRectangle.setWidth(503.0);
 
@@ -259,7 +263,7 @@ public class MyHistoryPage extends AnchorPane {
         userNameLabel.setPrefHeight(32.0);
         userNameLabel.setPrefWidth(110.0);
         userNameLabel.setStyle("-fx-background-color: #343F4B; -fx-alignment: center;");
-        userNameLabel.setText("User Name");
+        userNameLabel.setText(currentPlayer.getUserName());
         userNameLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         userNameLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         userNameLabel.setTextOverrun(javafx.scene.control.OverrunStyle.CENTER_WORD_ELLIPSIS);
@@ -272,16 +276,29 @@ public class MyHistoryPage extends AnchorPane {
         myHisoryTabelView.getColumns().add(vsPlayerColumn);
         myHisoryTabelView.getColumns().add(statusolumn);
         Vector<History> tmp = new Vector<History>();
-
         tmp = HistoryModel.userHistory(playerId);
         ObservableList<History> data = FXCollections.observableArrayList();
         int index = 1;
         for (History history : tmp) {
             data.add(new History(index + "", history.getDate(), history.getVsPlayer(), history.getStatus(), history.getPlayerId() + ""));
+            switch(history.getStatus())
+                    {
+                case("win"):
+                        
+                        winNumbers++;
+                break;
+                case("lose"):
+                    loseNumbers++;
+                break;
+                default:
+                    System.out.println(history.getStatus()); 
+            }
             index++;
 
         }
-
+         maxScoreLabelView.setText("Max score = "+currentPlayer.getScore());
+        winningTimesLableView.setText("You win "+winNumbers+" times");
+        looseTimeLabelView.setText("You lose "+loseNumbers+" times");
         gamesColumn.setCellValueFactory(new PropertyValueFactory<History, String>("id"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableDate"));
         vsPlayerColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableVsPlayer"));
