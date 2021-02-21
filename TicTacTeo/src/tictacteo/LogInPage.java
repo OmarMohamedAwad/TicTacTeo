@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -71,13 +72,29 @@ public class LogInPage extends Pane {
                     String name = playerNameTextField.getText();
                     String password = playerPasswordTextPassword.getText();
                     int playerId = PlayerModel.loginPlayer(name, password);
-                    if (playerId > 0 ) {
+                    if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
                     } else if (playerId == -1) {
-                        System.out.println("Please Enter Valid Password or Unique User Name");
-                        
+                        //System.out.println("Please Enter Valid Password or Unique User Name");
+                        playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+                        playerNameTextField.setPromptText("ALREADY EXIST!");
+                        playerPasswordTextPassword.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+                        playerPasswordTextPassword.setPromptText("PASSWORD INCORRECT!");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText(null);
+                        alert.setTitle("User Validation");
+                        alert.setContentText("Pleas Enter A Unique Name Or A Valid Password ! ");
+
+                        alert.showAndWait();
                     }
+                } else if (playerNameTextField.getText().isEmpty()) {
+                    playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+                    playerNameTextField.setText("");
+                    playerNameTextField.setPromptText("PLEASE ENTER USER NAME");
+                } else if (playerPasswordTextPassword.getText().isEmpty()) {
+                    playerPasswordTextPassword.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+                    playerPasswordTextPassword.setPromptText("PLEASE ENTER PASSWORD!");
                 }
             }
         });
