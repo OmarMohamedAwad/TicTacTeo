@@ -34,7 +34,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import sun.net.www.content.image.gif;
 import javax.imageio.ImageIO;
 
 public class GamePage extends AnchorPane {
@@ -79,6 +78,13 @@ public class GamePage extends AnchorPane {
     protected final DropShadow anchorPaneShadow;
     protected final Pane winner;
 
+    protected final ColumnConstraints columnGridPaneConstraints1;
+    protected final ColumnConstraints columnGridPaneConstrains2;
+    protected final ColumnConstraints columnGridPaneConstrains3;
+    protected final RowConstraints rowGridPaneConstrains1;
+    protected final RowConstraints rowConstraints2;
+    protected final RowConstraints rowGridPaneConstrains3;
+    
     protected final DropShadow dropShadow;
     protected final ImageView winnerMessage;
     protected final ImageView xIcone;
@@ -170,6 +176,13 @@ public class GamePage extends AnchorPane {
         xOPane = new Pane();
         gridPane = new GridPane();
 
+        columnGridPaneConstraints1 = new ColumnConstraints();
+        columnGridPaneConstrains2 = new ColumnConstraints();
+        columnGridPaneConstrains3 = new ColumnConstraints();
+        rowGridPaneConstrains1 = new RowConstraints();
+        rowConstraints2 = new RowConstraints();
+        rowGridPaneConstrains3 = new RowConstraints();
+        
         winner = new Pane();
         dropShadow = new DropShadow();
         winnerMessage = new ImageView();
@@ -473,7 +486,14 @@ public class GamePage extends AnchorPane {
         Button00.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
+                 if (Button00.getText() == "") {
+                    Button00.setText(first);
+                    Button00.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button01.setDisable(true);
 
+                }
                 record.add("x");
                 position.add("Button00");
 
@@ -717,7 +737,33 @@ public class GamePage extends AnchorPane {
         getChildren().add(exitButton);
         getChildren().add(playAgainButton);
 
+        columnGridPaneConstraints1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        columnGridPaneConstraints1.setMinWidth(10.0);
+        columnGridPaneConstraints1.setPrefWidth(100.0);
 
+        columnGridPaneConstrains2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        columnGridPaneConstrains2.setMinWidth(10.0);
+        columnGridPaneConstrains2.setPrefWidth(100.0);
+
+        columnGridPaneConstrains3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        columnGridPaneConstrains3.setMinWidth(10.0);
+        columnGridPaneConstrains3.setPrefWidth(100.0);
+
+        rowGridPaneConstrains1.setMaxHeight(50.0);
+        rowGridPaneConstrains1.setMinHeight(10.0);
+        rowGridPaneConstrains1.setPrefHeight(50.0);
+        rowGridPaneConstrains1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+        rowConstraints2.setMaxHeight(69.0);
+        rowConstraints2.setMinHeight(10.0);
+        rowConstraints2.setPrefHeight(52.0);
+        rowConstraints2.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+        rowGridPaneConstrains3.setMaxHeight(68.0);
+        rowGridPaneConstrains3.setMinHeight(10.0);
+        rowGridPaneConstrains3.setPrefHeight(54.0);
+        rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+        
         gridPane.getChildren().add(Button00);
         gridPane.getChildren().add(Button01);
         gridPane.getChildren().add(Button02);
@@ -1035,6 +1081,12 @@ public class GamePage extends AnchorPane {
         looser.getChildren().add(yIconLooser);
         looser.getChildren().add(vsIconLooser);
         looser.getChildren().add(playAgainLooser);
+        gridPane.getColumnConstraints().add(columnGridPaneConstraints1);
+        gridPane.getColumnConstraints().add(columnGridPaneConstrains2);
+        gridPane.getColumnConstraints().add(columnGridPaneConstrains3);
+        gridPane.getRowConstraints().add(rowGridPaneConstrains1);
+        gridPane.getRowConstraints().add(rowConstraints2);
+        gridPane.getRowConstraints().add(rowGridPaneConstrains3);
         looser.getChildren().add(watchVideoLooser);
         looser.getChildren().add(looserPlayerName);
         looser.getChildren().add(looserPlayerCharacter);
