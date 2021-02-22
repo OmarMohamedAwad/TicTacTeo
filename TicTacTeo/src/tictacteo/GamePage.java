@@ -1,5 +1,6 @@
 package tictacteo;
 
+import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,18 +17,26 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sun.net.www.content.image.gif;
 
-public  class GamePage extends AnchorPane {
+public class GamePage extends AnchorPane {
 
+    boolean computerTurn = false;
+    Random random = new Random();
+    protected final DropShadow ds;
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
     protected final DropShadow gameNameShadow;
     protected final Line line;
     protected final Label scoreLabel;
+    protected final Label you;
+    protected final Label computer;
+
     protected final DropShadow scoreLabelShadow;
     protected final ImageView scoreImage;
     protected final Button easyButton;
@@ -44,6 +53,7 @@ public  class GamePage extends AnchorPane {
     protected final InnerShadow playAgainButtonShadow;
     protected final Pane xOPane;
     protected final GridPane gridPane;
+
     protected final ColumnConstraints columnGridPaneConstraints1;
     protected final ColumnConstraints columnGridPaneConstrains2;
     protected final ColumnConstraints columnGridPaneConstrains3;
@@ -61,11 +71,14 @@ public  class GamePage extends AnchorPane {
     protected final ListView cell22;
     protected final DropShadow anchorPaneShadow;
 
-    public GamePage(Stage primary , int id) {
+    public GamePage(Stage primary, int id, boolean xSelected) {
 
+        ds = new DropShadow(20, Color.AQUA);
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
+        you = new Label();
+        computer = new Label();
         gameNameShadow = new DropShadow();
         line = new Line();
         scoreLabel = new Label();
@@ -85,6 +98,7 @@ public  class GamePage extends AnchorPane {
         playAgainButtonShadow = new InnerShadow();
         xOPane = new Pane();
         gridPane = new GridPane();
+
         columnGridPaneConstraints1 = new ColumnConstraints();
         columnGridPaneConstrains2 = new ColumnConstraints();
         columnGridPaneConstrains3 = new ColumnConstraints();
@@ -102,11 +116,6 @@ public  class GamePage extends AnchorPane {
         cell22 = new ListView();
         anchorPaneShadow = new DropShadow();
 
-       
-        
-        
-        
-        
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
@@ -170,6 +179,12 @@ public  class GamePage extends AnchorPane {
         easyButton.setFont(new Font("System Bold", 14.0));
 
         easyButton.setEffect(easyButtonEffect);
+        easyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                
+            }
+        });
 
         middleButton.setLayoutX(413.0);
         middleButton.setLayoutY(231.0);
@@ -182,6 +197,11 @@ public  class GamePage extends AnchorPane {
         middleButton.setFont(new Font("System Bold", 14.0));
 
         middleButton.setEffect(middleButtonEffect);
+        middleButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+            }
+        });
 
         hardButton.setLayoutX(413.0);
         hardButton.setLayoutY(288.0);
@@ -194,17 +214,27 @@ public  class GamePage extends AnchorPane {
         hardButton.setFont(new Font("System Bold", 14.0));
 
         hardButton.setEffect(hardButtonEffect);
+        hardButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                
+            }
+        });
 
         xImage.setFitHeight(55.0);
         xImage.setFitWidth(55.0);
         xImage.setLayoutX(155.0);
         xImage.setLayoutY(89.0);
+        you.setLayoutX(115.0);
+        you.setLayoutY(105.0);
         xImage.setPickOnBounds(true);
         xImage.setPreserveRatio(true);
         xImage.setImage(new Image(getClass().getResource("../view/images/options/x.jpg").toExternalForm()));
 
         oImage.setFitHeight(55.0);
         oImage.setFitWidth(55.0);
+        computer.setLayoutX(330.0);
+        computer.setLayoutY(105.0);
         oImage.setLayoutX(269.0);
         oImage.setLayoutY(89.0);
         oImage.setPickOnBounds(true);
@@ -225,13 +255,10 @@ public  class GamePage extends AnchorPane {
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new OptionPage(primary , id)));
+                primary.setScene(new Scene(new OptionPage(primary, id)));
             }
-        });     
-        
-        
-        
-        
+        });
+
         exitButton.setEffect(exitButtonShadow);
 
         playAgainButton.setLayoutX(251.0);
@@ -247,6 +274,13 @@ public  class GamePage extends AnchorPane {
         playAgainButton.setFont(new Font(16.0));
 
         playAgainButton.setEffect(playAgainButtonShadow);
+        playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                
+            }
+        });
+        
 
         xOPane.setLayoutX(120.0);
         xOPane.setLayoutY(166.0);
@@ -324,8 +358,15 @@ public  class GamePage extends AnchorPane {
         GridPane.setRowIndex(cell22, 2);
         cell22.setPrefHeight(200.0);
         cell22.setPrefWidth(200.0);
-
-        setEffect(anchorPaneShadow);
+        if (xSelected) {
+            you.setText("YOU");
+            you.setTextFill(javafx.scene.paint.Color.WHITE);
+            you.setFont(new Font("SansSerif Bold", 15.0));
+        } else {
+            computer.setText("YOU");
+            computer.setTextFill(javafx.scene.paint.Color.WHITE);
+            computer.setFont(new Font("SansSerif Bold", 15.0));
+        }
 
         getChildren().add(logoImage);
         getChildren().add(gameName);
@@ -337,6 +378,8 @@ public  class GamePage extends AnchorPane {
         getChildren().add(hardButton);
         getChildren().add(xImage);
         getChildren().add(oImage);
+        getChildren().add(you);
+        getChildren().add(computer);
         getChildren().add(exitButton);
         getChildren().add(playAgainButton);
         gridPane.getColumnConstraints().add(columnGridPaneConstraints1);
@@ -354,12 +397,44 @@ public  class GamePage extends AnchorPane {
         gridPane.getChildren().add(cell20);
         gridPane.getChildren().add(cell21);
         gridPane.getChildren().add(cell22);
+
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
 
+        firstTurn(xSelected);
+
     }
 
-  
+    public void firstTurn(boolean xSelected) {
+        if (random.nextInt(2) == 0) {
+            computerTurn = true;
+            System.out.println(computerTurn + "computer turn");
+            if (xSelected) {
+                System.out.println("X");
+                oImage.setEffect(ds);
+            } else {
+                xImage.setEffect(ds);
+            }
+        } else {
+            computerTurn = false;
+            System.out.println(computerTurn + "your turn");
+            if (xSelected) {
+                xImage.setEffect(ds);
+            } else {
+                oImage.setEffect(ds);
+            }
+        }
 
-    
+    }
+
+    public void check() {
+
+    }
+    public void xWins(){
+        
+    }
+    public void oWins(){
+        
+    }
+
 }
