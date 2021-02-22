@@ -1,6 +1,10 @@
 package tictacteo;
 
+import java.awt.AWTException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -54,7 +59,8 @@ public class OptionPage extends AnchorPane {
     protected final InnerShadow playInnerShadow;
     protected final DropShadow anchorDropShadow;
 
-    public OptionPage(Stage primary , int id) {
+
+    public OptionPage(Stage primary, int id) {
         line = new Line();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -228,24 +234,27 @@ public class OptionPage extends AnchorPane {
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-               if((xRadioButton.isSelected() || oRadioButton.isSelected()) &&(frindRadioButton.isSelected() || computerRadioButton.isSelected()))
-               {                
-                
-                primary.setScene(new Scene(new GamePage(primary , id)));
-            }
-            else {
-            
+                boolean xSelected=false;
+                if ((xRadioButton.isSelected() || oRadioButton.isSelected()) && (frindRadioButton.isSelected() || computerRadioButton.isSelected())) {
+                    if((xRadioButton.isSelected()) && (computerRadioButton.isSelected())){
+                        xSelected=true;                       
+                    }
+                    else if((oRadioButton.isSelected()) && (computerRadioButton.isSelected())){
+                        xSelected=false;
+                    }
+                    primary.setScene(new Scene(new GamePage(primary, id, xSelected)));
+                } else {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText(null);
-        a.setContentText("You must choose your charcter and vs player");
-  
-        a.show();
-        
-                   
-               }}
-         
-        });  
-        
+                    a.setContentText("You must choose your charcter and vs player");
+
+                    a.show();
+
+                }
+            }
+
+        });
+
         BackButton.setLayoutX(125.0);
         BackButton.setLayoutY(377.0);
         BackButton.setMnemonicParsing(false);
@@ -257,17 +266,14 @@ public class OptionPage extends AnchorPane {
         BackButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
 
         BackButton.setEffect(innerShadow0);
-       BackButton .setOnAction(new EventHandler<ActionEvent>() {
+        BackButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                  
-          primary.setScene(new Scene(new MyDashboardPage(primary,id )));
+
+                primary.setScene(new Scene(new MyDashboardPage(primary, id)));
             }
-        });     
-        
-        
-        
-        
+        });
+
         yourCharcterText.setFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         yourCharcterText.setLayoutX(11.0);
         yourCharcterText.setLayoutY(283.0);
@@ -309,7 +315,7 @@ public class OptionPage extends AnchorPane {
         getChildren().add(platAgainstText);
         getChildren().add(yourCharcterText);
         getChildren().add(playButton);
-                getChildren().add(BackButton);
+        getChildren().add(BackButton);
 
     }
 }
