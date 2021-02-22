@@ -67,25 +67,24 @@ public class GamePage extends AnchorPane {
     protected final InnerShadow playAgainButtonShadow;
     protected final Pane xOPane;
     protected final GridPane gridPane;
-
-    protected final ColumnConstraints columnGridPaneConstraints1;
-    protected final ColumnConstraints columnGridPaneConstrains2;
-    protected final ColumnConstraints columnGridPaneConstrains3;
-    protected final RowConstraints rowGridPaneConstrains1;
-    protected final RowConstraints rowConstraints2;
-    protected final RowConstraints rowGridPaneConstrains3;
-
-    protected final Button Button00;
-    protected final Button Button01;
-    protected final Button Button02;
-    protected final Button Button10;
-    protected final Button Button11;
-    protected final Button Button12;
-    protected final Button Button20;
-    protected final Button Button21;
-    protected final Button Button22;
+    
     protected final DropShadow anchorPaneShadow;
-    int userCount;
+    int id;
+    ClientSide curruntClient;
+    public GamePage(Stage primary , int id) {
+        this.id = id;
+        curruntClient = new ClientSide();
+        protected final Button Button00;
+        protected final Button Button01;
+        protected final Button Button02;
+        protected final Button Button10;
+        protected final Button Button11;
+        protected final Button Button12;
+        protected final Button Button20;
+        protected final Button Button21;
+        protected final Button Button22;
+        protected final DropShadow anchorPaneShadow;
+        int userCount;
 
     public GamePage(Stage primary, int id, boolean xSelected) {
         ds = new DropShadow(20, Color.AQUA);
@@ -131,7 +130,6 @@ public class GamePage extends AnchorPane {
         Button21 = new Button();
         Button22 = new Button();
         anchorPaneShadow = new DropShadow();
-
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
@@ -273,7 +271,8 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
                 primary.setScene(new Scene(new OptionPage(primary, id)));
             }
-        });
+        });     
+
 
 //        Robot r = null; 
 //                try {
@@ -298,6 +297,7 @@ public class GamePage extends AnchorPane {
 //            System.out.println("Screenshot saved"); 
 //            }
 //            } });  } 
+
         exitButton.setEffect(exitButtonShadow);
         playAgainButton.setLayoutX(251.0);
         playAgainButton.setLayoutY(353.0);
@@ -599,8 +599,19 @@ public class GamePage extends AnchorPane {
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
 
+        moveActions();
         first = firstTurn(xSelected);
         userChar = userChar(xSelected);
+    }
+
+    
+    public void moveActions(){
+        playAgainButton.setOnAction(e 
+            -> {
+                System.out.println("Her I am");
+                curruntClient.playerPrintStream.println("My Id="+id);
+        });
+        
     }
 
 //    public void computerAlgorithm(boolean xSelected) {

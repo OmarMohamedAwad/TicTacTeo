@@ -16,6 +16,7 @@ import model.database.PlayerModel;
  * @author amalasaad
  */
 public class HistoryModel {
+
     static final String DB_URL = "jdbc:mysql://localhost/tiktaktoe";
     static final String DB_USER = "root";
     static final String DB_PASSWD = "root@#123";
@@ -23,7 +24,6 @@ public class HistoryModel {
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
     }
-
 
     public static boolean addHistory(History userHistory) {
         try {
