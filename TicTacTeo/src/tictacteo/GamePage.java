@@ -37,7 +37,7 @@ import javax.imageio.ImageIO;
 public class GamePage extends AnchorPane {
 
     List<String> record = new ArrayList<String>();
-
+List<String> position = new ArrayList<String>();
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -333,7 +333,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("x");
-                record.add("Button00");
+                position.add("Button00");
 
             }
         });
@@ -348,7 +348,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("o");
-                record.add("Button01");
+                position.add("Button01");
             }
         });
         GridPane.setRowIndex(Button02, 2);
@@ -362,7 +362,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("x");
-                record.add("Button02");
+                position.add("Button02");
             }
         });
         GridPane.setColumnIndex(Button10, 1);
@@ -376,7 +376,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("o");
-                record.add("Button10");
+                position.add("Button10");
             }
         });
 
@@ -392,7 +392,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("x");
-                record.add("Button11");
+                position.add("Button11");
             }
         });
         GridPane.setColumnIndex(Button12, 1);
@@ -407,7 +407,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("o");
-                record.add("Button12");
+                position.add("Button12");
             }
         });
         GridPane.setColumnIndex(Button20, 2);
@@ -419,7 +419,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("x");
-                record.add("Button20");
+                position.add("Button20");
             }
         });
         GridPane.setColumnIndex(Button21, 2);
@@ -434,8 +434,8 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
 
                 record.add("x");
-                record.add("Button21");
-//                 for(int i =0 ; i<record.size(); i+=2){
+                position.add("Button21");
+//                 for(int i =0 ; i<record.size(); i++){
 //                System.out.println(record.get(i));
 //                 }
             }
@@ -451,7 +451,7 @@ public class GamePage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
                 record.add("o");
-                record.add("Button22");
+                position.add("Button22");
 
                 class Record extends Thread {
 
@@ -461,25 +461,27 @@ public class GamePage extends AnchorPane {
                         Thread th = new Thread();
                         th.start();
                     }
-
                     @Override
                     public void run() {
                         boolean pf = true;
-                      //  if (pf == true) {
+                      
                             while (pf) {
-                                for (int i = 0; i < record.size(); i += 2) {
+                                for (int i = 0; i < record.size(); i ++) {
                                     System.out.println(record.get(i));
                                     try {
                                         Thread.sleep(1000);
+                                           
                                     } catch (InterruptedException e) {
                                     }
-                                }
-                                if (record.size() == 0) {
+                               if (record.size()-1 == i) {
+                                
                                     pf = false;
                                 }
+                                }
+                                    
+                              
                             }
                         }
-                   // }
                 }
                 Record rd = new Record();
                 rd.run();
