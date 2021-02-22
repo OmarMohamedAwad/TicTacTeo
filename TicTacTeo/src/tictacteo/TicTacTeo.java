@@ -22,7 +22,8 @@ public class TicTacTeo extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         //LogInPage root = new LogInPage(primaryStage);
-        LogInPage root = new LogInPage(primaryStage);
+        //LogInPage root = new LogInPage(primaryStage);
+        GamePage root = new GamePage(primaryStage,1);
         Scene scene = new Scene(root, 490, 417);
         
         primaryStage.setTitle("Tic Tac Toe");

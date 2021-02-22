@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="490.0" style="-fx-background-color: #343F4B;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="23.0" layoutY="69.0" opacity="0.3" prefHeight="335.0" prefWidth="451.0" style="-fx-background-color: #0c0721;" />
+      <Pane layoutX="78.0" layoutY="132.0" prefHeight="224.0" prefWidth="344.0" style="-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="168.0" fitWidth="335.0" layoutX="5.0" layoutY="4.0">
+               <image>
+                  <Image url="@../images/gameMessages/win.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="72.0" layoutX="107.0" layoutY="-30.0">
+               <image>
+                  <Image url="@../images/gameMessages/x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="88.0" layoutX="167.0" layoutY="-29.0">
+               <image>
+                  <Image url="@../images/gameMessages/o.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="148.0" layoutY="-8.0">
+               <image>
+                  <Image url="@../images/gameMessages/vs.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="46.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Play Again" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Button layoutX="201.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Wach Video" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Label layoutX="58.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Player:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="204.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Character:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="159.0" prefHeight="21.0" prefWidth="32.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="293.0" layoutY="160.0" prefHeight="21.0" prefWidth="23.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="68.0" layoutY="144.0" prefHeight="224.0" prefWidth="344.0" style="-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="186.0" fitWidth="335.0" layoutX="5.0" layoutY="6.0">
+               <image>
+                  <Image url="@../images/gameMessages/drawc.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="72.0" layoutX="107.0" layoutY="-30.0">
+               <image>
+                  <Image url="@../images/gameMessages/x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="88.0" layoutX="167.0" layoutY="-29.0">
+               <image>
+                  <Image url="@../images/gameMessages/o.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="148.0" layoutY="-8.0">
+               <image>
+                  <Image url="@../images/gameMessages/vs.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="46.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Play Again" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Button layoutX="201.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Wach Video" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Label layoutX="58.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Player:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="204.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Character:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="159.0" prefHeight="21.0" prefWidth="32.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="293.0" layoutY="160.0" prefHeight="21.0" prefWidth="23.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="116.0" layoutY="26.0" style="-fx-font-weight: bolder;" text="DRAW" textFill="#d300b4">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Microsoft Sans Serif" size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="71.0" layoutY="150.0" prefHeight="224.0" prefWidth="344.0" style="-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: true;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="168.0" fitWidth="335.0" layoutX="5.0" layoutY="19.0">
+               <image>
+                  <Image url="@../images/gameMessages/loos.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="72.0" layoutX="107.0" layoutY="-30.0">
+               <image>
+                  <Image url="@../images/gameMessages/x.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="88.0" layoutX="167.0" layoutY="-29.0">
+               <image>
+                  <Image url="@../images/gameMessages/o.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="148.0" layoutY="-8.0">
+               <image>
+                  <Image url="@../images/gameMessages/vs.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="46.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Play Again" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Button layoutX="201.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Wach Video" textFill="WHITE">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Button>
+            <Label layoutX="58.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Player:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="204.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Character:" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="159.0" prefHeight="21.0" prefWidth="32.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="293.0" layoutY="160.0" prefHeight="21.0" prefWidth="23.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="116.0" layoutY="26.0" style="-fx-font-weight: bolder;" text="Looser" textFill="#d300b4">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Microsoft Sans Serif" size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
