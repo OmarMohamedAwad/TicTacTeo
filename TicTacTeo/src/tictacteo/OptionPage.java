@@ -55,7 +55,6 @@ public class OptionPage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
 
     public OptionPage(Stage primary , int id) {
-
         line = new Line();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();

@@ -60,9 +60,11 @@ public  class GamePage extends AnchorPane {
     protected final ListView cell21;
     protected final ListView cell22;
     protected final DropShadow anchorPaneShadow;
-
+    int id;
+    ClientSide curruntClient;
     public GamePage(Stage primary , int id) {
-
+        this.id = id;
+        curruntClient = new ClientSide();
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
@@ -101,11 +103,6 @@ public  class GamePage extends AnchorPane {
         cell21 = new ListView();
         cell22 = new ListView();
         anchorPaneShadow = new DropShadow();
-
-       
-        
-        
-        
         
         setId("AnchorPane");
         setPrefHeight(417.0);
@@ -228,9 +225,7 @@ public  class GamePage extends AnchorPane {
                 primary.setScene(new Scene(new OptionPage(primary , id)));
             }
         });     
-        
-        
-        
+
         
         exitButton.setEffect(exitButtonShadow);
 
@@ -357,9 +352,17 @@ public  class GamePage extends AnchorPane {
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
 
+        moveActions();
     }
 
-  
+    
+    public void moveActions(){
+        playAgainButton.setOnAction(e 
+            -> {
+                System.out.println("Her I am");
+                curruntClient.playerPrintStream.println("My Id="+id);
+        });
+    }
 
     
 }
