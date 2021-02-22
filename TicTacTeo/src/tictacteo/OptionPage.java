@@ -1,6 +1,10 @@
 package tictacteo;
 
+import java.awt.AWTException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -232,7 +236,13 @@ public class OptionPage extends AnchorPane {
                if((xRadioButton.isSelected() || oRadioButton.isSelected()) &&(frindRadioButton.isSelected() || computerRadioButton.isSelected()))
                {                
                 
-                primary.setScene(new Scene(new GamePage(primary , id)));
+                   try {
+                       primary.setScene(new Scene(new GamePage(primary , id)));
+                   } catch (AWTException ex) {
+                       Logger.getLogger(OptionPage.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (IOException ex) {
+                       Logger.getLogger(OptionPage.class.getName()).log(Level.SEVERE, null, ex);
+                   }
             }
             else {
             
