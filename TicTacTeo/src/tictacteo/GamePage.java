@@ -1,15 +1,20 @@
 package tictacteo;
 
+import java.util.Arrays;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,8 +34,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
-public  class GamePage extends AnchorPane {
-int num=0;
+public class GamePage extends AnchorPane {
+
+    List<String> record = new ArrayList<String>();
+
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -71,7 +78,7 @@ int num=0;
     protected final Button Button22;
     protected final DropShadow anchorPaneShadow;
 
-    public GamePage(Stage primary , int id) throws AWTException, IOException {
+    public GamePage(Stage primary, int id) throws AWTException, IOException {
 
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
@@ -228,12 +235,12 @@ int num=0;
         exitButton.setText("Exit");
         exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         exitButton.setFont(new Font(16.0));
-          
-         for(int i =0 ; i<9 ; i++){
-        exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new OptionPage(primary , id)));
+
+        for (int i = 0; i < 9; i++) {
+            exitButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent ev) {
+                    primary.setScene(new Scene(new OptionPage(primary, id)));
 //        Robot r = null; 
 //                try {
 //                    r = new Robot();
@@ -256,11 +263,11 @@ int num=0;
 //               
 //            System.out.println("Screenshot saved"); 
 //            }
-            } });  } 
-        
-        
-        
-        
+
+                }
+            });
+        }
+
         exitButton.setEffect(exitButtonShadow);
 
         playAgainButton.setLayoutX(251.0);
@@ -315,33 +322,63 @@ int num=0;
         rowGridPaneConstrains3.setPrefHeight(54.0);
         rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-
         Button00.setLayoutX(178.0);
         Button00.setLayoutY(11.0);
         Button00.setMnemonicParsing(false);
         Button00.setPrefHeight(48.0);
         Button00.setPrefWidth(84.0);
 
+        Button00.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+
+                record.add("x");
+                record.add("Button00");
+
+            }
+        });
         GridPane.setRowIndex(Button01, 1);
         Button01.setLayoutX(10.0);
         Button01.setLayoutY(118.0);
         Button01.setMnemonicParsing(false);
         Button01.setPrefHeight(48.0);
         Button01.setPrefWidth(84.0);
+        Button01.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("o");
+                record.add("Button01");
+            }
+        });
         GridPane.setRowIndex(Button02, 2);
         Button02.setLayoutX(10.0);
         Button02.setLayoutY(11.0);
         Button02.setMnemonicParsing(false);
         Button02.setPrefHeight(48.0);
         Button02.setPrefWidth(84.0);
+        Button02.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("x");
+                record.add("Button02");
+            }
+        });
         GridPane.setColumnIndex(Button10, 1);
         Button10.setLayoutX(10.0);
         Button10.setLayoutY(63.0);
         Button10.setMnemonicParsing(false);
         Button10.setPrefHeight(48.0);
         Button10.setPrefWidth(84.0);
+        Button10.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+
+                record.add("o");
+                record.add("Button10");
+            }
+        });
 
         GridPane.setColumnIndex(Button11, 1);
         GridPane.setRowIndex(Button11, 1);
@@ -350,7 +387,14 @@ int num=0;
         Button11.setMnemonicParsing(false);
         Button11.setPrefHeight(48.0);
         Button11.setPrefWidth(84.0);
+        Button11.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("x");
+                record.add("Button11");
+            }
+        });
         GridPane.setColumnIndex(Button12, 1);
         GridPane.setRowIndex(Button12, 2);
         Button12.setLayoutX(94.0);
@@ -358,12 +402,26 @@ int num=0;
         Button12.setMnemonicParsing(false);
         Button12.setPrefHeight(48.0);
         Button12.setPrefWidth(84.0);
+        Button12.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("o");
+                record.add("Button12");
+            }
+        });
         GridPane.setColumnIndex(Button20, 2);
         Button20.setMnemonicParsing(false);
         Button20.setPrefHeight(48.0);
         Button20.setPrefWidth(84.0);
+        Button20.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("x");
+                record.add("Button20");
+            }
+        });
         GridPane.setColumnIndex(Button21, 2);
         GridPane.setRowIndex(Button21, 1);
         Button21.setLayoutX(178.0);
@@ -371,7 +429,17 @@ int num=0;
         Button21.setMnemonicParsing(false);
         Button21.setPrefHeight(48.0);
         Button21.setPrefWidth(84.0);
+        Button21.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
 
+                record.add("x");
+                record.add("Button21");
+//                 for(int i =0 ; i<record.size(); i+=2){
+//                System.out.println(record.get(i));
+//                 }
+            }
+        });
         GridPane.setColumnIndex(Button22, 2);
         GridPane.setRowIndex(Button22, 2);
         Button22.setLayoutX(178.0);
@@ -379,9 +447,45 @@ int num=0;
         Button22.setMnemonicParsing(false);
         Button22.setPrefHeight(48.0);
         Button22.setPrefWidth(84.0);
+        Button22.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                record.add("o");
+                record.add("Button22");
 
- 
-        
+                class Record extends Thread {
+
+                    Thread th;
+
+                    public Record() {
+                        Thread th = new Thread();
+                        th.start();
+                    }
+
+                    @Override
+                    public void run() {
+                        boolean pf = true;
+                      //  if (pf == true) {
+                            while (pf) {
+                                for (int i = 0; i < record.size(); i += 2) {
+                                    System.out.println(record.get(i));
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                    }
+                                }
+                                if (record.size() == 0) {
+                                    pf = false;
+                                }
+                            }
+                        }
+                   // }
+                }
+                Record rd = new Record();
+                rd.run();
+            }
+        });
+
         setEffect(anchorPaneShadow);
 
         getChildren().add(logoImage);
@@ -417,7 +521,4 @@ int num=0;
 
     }
 
-  
-
-    
 }
