@@ -1,6 +1,14 @@
 package tictacteo;
 
 import java.util.Random;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,12 +30,18 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import sun.net.www.content.image.gif;
+import javax.imageio.ImageIO;
 
 public class GamePage extends AnchorPane {
 
     boolean computerTurn = false;
     Random random = new Random();
+    Random rand = new Random();
     protected final DropShadow ds;
+    String first;
+    String userChar;
+    int num = 0;
+    int score = 0;
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -60,19 +74,20 @@ public class GamePage extends AnchorPane {
     protected final RowConstraints rowGridPaneConstrains1;
     protected final RowConstraints rowConstraints2;
     protected final RowConstraints rowGridPaneConstrains3;
-    protected final ListView cell01;
-    protected final ListView cell00;
-    protected final ListView cell02;
-    protected final ListView cell12;
-    protected final ListView cell11;
-    protected final ListView cell10;
-    protected final ListView cell20;
-    protected final ListView cell21;
-    protected final ListView cell22;
+
+    protected final Button Button00;
+    protected final Button Button01;
+    protected final Button Button02;
+    protected final Button Button10;
+    protected final Button Button11;
+    protected final Button Button12;
+    protected final Button Button20;
+    protected final Button Button21;
+    protected final Button Button22;
     protected final DropShadow anchorPaneShadow;
+    int userCount;
 
     public GamePage(Stage primary, int id, boolean xSelected) {
-
         ds = new DropShadow(20, Color.AQUA);
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
@@ -105,15 +120,16 @@ public class GamePage extends AnchorPane {
         rowGridPaneConstrains1 = new RowConstraints();
         rowConstraints2 = new RowConstraints();
         rowGridPaneConstrains3 = new RowConstraints();
-        cell01 = new ListView();
-        cell00 = new ListView();
-        cell02 = new ListView();
-        cell12 = new ListView();
-        cell11 = new ListView();
-        cell10 = new ListView();
-        cell20 = new ListView();
-        cell21 = new ListView();
-        cell22 = new ListView();
+
+        Button00 = new Button();
+        Button01 = new Button();
+        Button02 = new Button();
+        Button10 = new Button();
+        Button11 = new Button();
+        Button12 = new Button();
+        Button20 = new Button();
+        Button21 = new Button();
+        Button22 = new Button();
         anchorPaneShadow = new DropShadow();
 
         setId("AnchorPane");
@@ -153,7 +169,7 @@ public class GamePage extends AnchorPane {
         scoreLabel.setLayoutY(21.0);
         scoreLabel.setPrefHeight(25.0);
         scoreLabel.setPrefWidth(65.0);
-        scoreLabel.setText("Score : 60");
+        scoreLabel.setText("Score : 0");
         scoreLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         scoreLabel.setFont(new Font("SansSerif Regular", 12.0));
 
@@ -182,7 +198,7 @@ public class GamePage extends AnchorPane {
         easyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                
+
             }
         });
 
@@ -217,7 +233,7 @@ public class GamePage extends AnchorPane {
         hardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                
+
             }
         });
 
@@ -240,7 +256,6 @@ public class GamePage extends AnchorPane {
         oImage.setPickOnBounds(true);
         oImage.setPreserveRatio(true);
         oImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
-
         exitButton.setLayoutX(127.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
@@ -252,6 +267,7 @@ public class GamePage extends AnchorPane {
         exitButton.setText("Exit");
         exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         exitButton.setFont(new Font(16.0));
+//         for(int i =0 ; i<9 ; i++){
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -259,8 +275,30 @@ public class GamePage extends AnchorPane {
             }
         });
 
+//        Robot r = null; 
+//                try {
+//                    r = new Robot();
+//                } catch (AWTException ex) {
+//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//               
+//            String path = "C:\\Users\\3com\\Desktop\\javaaaa\\java project 2// Shot"+num+".jpg"; 
+//            num++;
+//            java.awt.Rectangle capture =  
+//            new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); 
+//            BufferedImage Image = r.createScreenCapture(capture); 
+//             
+//               System.out.println(num); 
+//                try { 
+//                    ImageIO.write(Image, "jpg", new File(path));
+//                } catch (IOException ex) {
+//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//               
+//            System.out.println("Screenshot saved"); 
+//            }
+//            } });  } 
         exitButton.setEffect(exitButtonShadow);
-
         playAgainButton.setLayoutX(251.0);
         playAgainButton.setLayoutY(353.0);
         playAgainButton.setMaxHeight(37.0);
@@ -277,21 +315,41 @@ public class GamePage extends AnchorPane {
         playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                
+                xImage.setEffect(null);
+                oImage.setEffect(null);
+                first = firstTurn(xSelected);
+                Button00.setText("");
+                Button01.setText("");
+                Button02.setText("");
+                Button10.setText("");
+                Button11.setText("");
+                Button12.setText("");
+                Button20.setText("");
+                Button21.setText("");
+                Button22.setText("");
+                Button00.setStyle("-fx-background-color: #ececec;");
+                Button01.setStyle("-fx-background-color: #ececec;");
+                Button02.setStyle("-fx-background-color: #ececec;");
+                Button10.setStyle("-fx-background-color: #ececec;");
+                Button11.setStyle("-fx-background-color: #ececec; ");
+                Button12.setStyle("-fx-background-color:  #ececec ;");
+                Button20.setStyle("-fx-background-color:  #ececec ;");
+                Button21.setStyle("-fx-background-color:  #ececec ;");
+                Button22.setStyle("-fx-background-color:  #ececec ;");
+
             }
         });
-        
 
-        xOPane.setLayoutX(120.0);
+        xOPane.setLayoutX(115.0);
         xOPane.setLayoutY(166.0);
         xOPane.setPrefHeight(160.0);
-        xOPane.setPrefWidth(246.0);
+        xOPane.setPrefWidth(260.0);
         xOPane.setStyle("-fx-background-color: white;");
 
-        gridPane.setLayoutX(-5.0);
-        gridPane.setLayoutY(-6.0);
-        gridPane.setPrefHeight(167.0);
-        gridPane.setPrefWidth(253.0);
+        gridPane.setLayoutX(0.0);
+        gridPane.setLayoutY(0.0);
+        gridPane.setPrefHeight(160.0);
+        gridPane.setPrefWidth(260.0);
 
         columnGridPaneConstraints1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnGridPaneConstraints1.setMinWidth(10.0);
@@ -319,45 +377,6 @@ public class GamePage extends AnchorPane {
         rowGridPaneConstrains3.setMinHeight(10.0);
         rowGridPaneConstrains3.setPrefHeight(54.0);
         rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        GridPane.setRowIndex(cell01, 1);
-        cell01.setPrefHeight(200.0);
-        cell01.setPrefWidth(200.0);
-
-        cell00.setPrefHeight(41.0);
-        cell00.setPrefWidth(100.0);
-
-        GridPane.setRowIndex(cell02, 2);
-        cell02.setPrefHeight(200.0);
-        cell02.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell12, 1);
-        GridPane.setRowIndex(cell12, 2);
-        cell12.setPrefHeight(200.0);
-        cell12.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell11, 1);
-        GridPane.setRowIndex(cell11, 1);
-        cell11.setPrefHeight(200.0);
-        cell11.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell10, 1);
-        cell10.setPrefHeight(200.0);
-        cell10.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell20, 2);
-        cell20.setPrefHeight(200.0);
-        cell20.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell21, 2);
-        GridPane.setRowIndex(cell21, 1);
-        cell21.setPrefHeight(200.0);
-        cell21.setPrefWidth(200.0);
-
-        GridPane.setColumnIndex(cell22, 2);
-        GridPane.setRowIndex(cell22, 2);
-        cell22.setPrefHeight(200.0);
-        cell22.setPrefWidth(200.0);
         if (xSelected) {
             you.setText("YOU");
             you.setTextFill(javafx.scene.paint.Color.WHITE);
@@ -368,6 +387,185 @@ public class GamePage extends AnchorPane {
             computer.setFont(new Font("SansSerif Bold", 15.0));
         }
 
+        Button00.setLayoutX(178.0);
+        Button00.setLayoutY(11.0);
+        Button00.setMnemonicParsing(false);
+        Button00.setPrefHeight(48.0);
+        Button00.setPrefWidth(84.0);
+        Button00.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button00.getText() == "") {
+                    Button00.setText(first);
+                    Button00.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+                }
+            }
+        });
+
+        GridPane.setRowIndex(Button01, 1);
+        Button01.setLayoutX(10.0);
+        Button01.setLayoutY(118.0);
+        Button01.setMnemonicParsing(false);
+        Button01.setPrefHeight(48.0);
+        Button01.setPrefWidth(84.0);
+        Button01.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button01.getText() == "") {
+                    Button01.setText(first);
+                    Button01.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button01.setDisable(true);
+
+                }
+
+            }
+        });
+
+        GridPane.setRowIndex(Button02, 2);
+        Button02.setLayoutX(10.0);
+        Button02.setLayoutY(11.0);
+        Button02.setMnemonicParsing(false);
+        Button02.setPrefHeight(48.0);
+        Button02.setPrefWidth(84.0);
+        Button02.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button02.getText() == "") {
+                    Button02.setText(first);
+                    Button02.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button02.setDisable(true);
+                }
+
+            }
+        });
+
+        GridPane.setColumnIndex(Button10, 1);
+        Button10.setLayoutX(10.0);
+        Button10.setLayoutY(63.0);
+        Button10.setMnemonicParsing(false);
+        Button10.setPrefHeight(48.0);
+        Button10.setPrefWidth(84.0);
+        Button10.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button10.getText() == "") {
+                    Button10.setText(first);
+                    Button10.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button10.setDisable(true);
+                }
+
+            }
+        });
+
+        GridPane.setColumnIndex(Button11, 1);
+        GridPane.setRowIndex(Button11, 1);
+        Button11.setLayoutX(94.0);
+        Button11.setLayoutY(11.0);
+        Button11.setMnemonicParsing(false);
+        Button11.setPrefHeight(48.0);
+        Button11.setPrefWidth(84.0);
+        Button11.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button11.getText() == "") {
+                    Button11.setText(first);
+                    Button11.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button11.setDisable(true);
+                }
+            }
+        });
+
+        GridPane.setColumnIndex(Button12, 1);
+        GridPane.setRowIndex(Button12, 2);
+        Button12.setLayoutX(94.0);
+        Button12.setLayoutY(63.0);
+        Button12.setMnemonicParsing(false);
+        Button12.setPrefHeight(48.0);
+        Button12.setPrefWidth(84.0);
+        Button12.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button12.getText() == "") {
+                    Button12.setText(first);
+                    Button12.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button12.setDisable(true);
+                }
+            }
+
+        });
+
+        GridPane.setColumnIndex(Button20, 2);
+        Button20.setMnemonicParsing(false);
+        Button20.setPrefHeight(48.0);
+        Button20.setPrefWidth(84.0);
+        Button20.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button20.getText() == "") {
+                    Button20.setText(first);
+                    Button20.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button20.setDisable(true);
+                }
+
+            }
+        });
+
+        GridPane.setColumnIndex(Button21, 2);
+        GridPane.setRowIndex(Button21, 1);
+        Button21.setLayoutX(178.0);
+        Button21.setLayoutY(11.0);
+        Button21.setMnemonicParsing(false);
+        Button21.setPrefHeight(48.0);
+        Button21.setPrefWidth(84.0);
+        Button21.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button21.getText() == "") {
+                    Button21.setText(first);
+                    Button21.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+//                Button21.setDisable(true);
+                }
+
+            }
+        });
+
+        GridPane.setColumnIndex(Button22, 2);
+        GridPane.setRowIndex(Button22, 2);
+        Button22.setLayoutX(178.0);
+        Button22.setLayoutY(11.0);
+        Button22.setMnemonicParsing(false);
+        Button22.setPrefHeight(48.0);
+        Button22.setPrefWidth(84.0);
+        Button22.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                if (Button22.getText() == "") {
+                    Button22.setText(first);
+                    Button22.setFont(new Font("SansSerif Bold", 15.0));
+                    first = switchTurns(first);
+                    check();
+                }
+
+            }
+        });
+
+        setEffect(anchorPaneShadow);
         getChildren().add(logoImage);
         getChildren().add(gameName);
         getChildren().add(line);
@@ -388,53 +586,223 @@ public class GamePage extends AnchorPane {
         gridPane.getRowConstraints().add(rowGridPaneConstrains1);
         gridPane.getRowConstraints().add(rowConstraints2);
         gridPane.getRowConstraints().add(rowGridPaneConstrains3);
-        gridPane.getChildren().add(cell01);
-        gridPane.getChildren().add(cell00);
-        gridPane.getChildren().add(cell02);
-        gridPane.getChildren().add(cell12);
-        gridPane.getChildren().add(cell11);
-        gridPane.getChildren().add(cell10);
-        gridPane.getChildren().add(cell20);
-        gridPane.getChildren().add(cell21);
-        gridPane.getChildren().add(cell22);
 
+        gridPane.getChildren().add(Button00);
+        gridPane.getChildren().add(Button01);
+        gridPane.getChildren().add(Button02);
+        gridPane.getChildren().add(Button10);
+        gridPane.getChildren().add(Button11);
+        gridPane.getChildren().add(Button12);
+        gridPane.getChildren().add(Button20);
+        gridPane.getChildren().add(Button21);
+        gridPane.getChildren().add(Button22);
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
 
-        firstTurn(xSelected);
-
+        first = firstTurn(xSelected);
+        userChar = userChar(xSelected);
     }
 
-    public void firstTurn(boolean xSelected) {
+//    public void computerAlgorithm(boolean xSelected) {
+//        String computer;
+//        if (computerTurn) {
+//            if (xSelected) {
+//                computer = "O";       
+//                int randomNum = rand.nextInt((9 - 1) + 1) + 1;
+//                Button00.setText(computer);
+//
+//            } else {
+//                computer = "X";
+//            }
+//        }
+//    }
+    public String firstTurn(boolean xSelected) {
+        String first = "";
         if (random.nextInt(2) == 0) {
             computerTurn = true;
-            System.out.println(computerTurn + "computer turn");
             if (xSelected) {
-                System.out.println("X");
                 oImage.setEffect(ds);
+                return first;
             } else {
                 xImage.setEffect(ds);
+                first = "X";
+                return first;
             }
         } else {
             computerTurn = false;
             System.out.println(computerTurn + "your turn");
             if (xSelected) {
                 xImage.setEffect(ds);
+                first = "X";
+                return first;
             } else {
                 oImage.setEffect(ds);
+                first = "O";
+                return first;
             }
         }
 
     }
 
     public void check() {
+        String status = "";
+        String b1 = Button00.getText();
+        String b2 = Button01.getText();
+        String b3 = Button02.getText();
+        String b4 = Button10.getText();
+        String b5 = Button11.getText();
+        String b6 = Button12.getText();
+        String b7 = Button20.getText();
+        String b8 = Button21.getText();
+        String b9 = Button22.getText();
+
+        if (b1 == "X" && b2 == "X" && b3 == "X") {
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button01.setStyle("-fx-background-color: yellow; ");
+            Button02.setStyle("-fx-background-color: yellow; ");
+            userXWin(status);
+        } else if (b4 == "X" && b5 == "X" && b6 == "X") {
+            userXWin(status);
+            Button10.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button12.setStyle("-fx-background-color: yellow; ");
+        } else if (b7 == "X" && b8 == "X" && b9 == "X") {
+            userXWin(status);
+            Button20.setStyle("-fx-background-color: yellow; ");
+            Button21.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+        } else if (b1 == "X" && b4 == "X" && b7 == "X") {
+            userXWin(status);
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button10.setStyle("-fx-background-color: yellow; ");
+            Button20.setStyle("-fx-background-color: yellow; ");
+        } else if (b2 == "X" && b5 == "X" && b8 == "X") {
+
+            userXWin(status);
+            Button01.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button21.setStyle("-fx-background-color: yellow; ");
+        } else if (b3 == "X" && b6 == "X" && b9 == "X") {
+
+            userXWin(status);
+            Button02.setStyle("-fx-background-color: yellow; ");
+            Button12.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+        } else if (b1 == "X" && b5 == "X" && b9 == "X") {
+
+            userXWin(status);
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+        } else if (b3 == "X" && b5 == "X" && b7 == "X") {
+
+            userXWin(status);
+            Button02.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button20.setStyle("-fx-background-color: yellow; ");
+        } else if (b1 == "O" && b2 == "O" && b3 == "O") {
+
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button01.setStyle("-fx-background-color: yellow; ");
+            Button02.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else if (b4 == "O" && b5 == "O" && b6 == "O") {
+            userOWin(status);
+            Button10.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button12.setStyle("-fx-background-color: yellow; ");
+        } else if (b7 == "O" && b8 == "O" && b9 == "O") {
+            userOWin(status);
+            Button20.setStyle("-fx-background-color: yellow; ");
+            Button21.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+
+        } else if (b1 == "O" && b4 == "O" && b7 == "O") {
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button10.setStyle("-fx-background-color: yellow; ");
+            Button20.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else if (b2 == "O" && b5 == "O" && b8 == "O") {
+            Button01.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button21.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else if (b3 == "O" && b6 == "O" && b9 == "O") {
+            Button02.setStyle("-fx-background-color: yellow; ");
+            Button12.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else if (b1 == "O" && b5 == "O" && b9 == "O") {
+            Button00.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button22.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else if (b3 == "O" && b5 == "O" && b7 == "O") {
+            Button02.setStyle("-fx-background-color: yellow; ");
+            Button11.setStyle("-fx-background-color: yellow; ");
+            Button20.setStyle("-fx-background-color: yellow; ");
+            userOWin(status);
+        } else {
+            userEqual(status);
+        }
+    }
+
+    public void userXWin(String status) {
+        if (userChar == "X") {
+            score++;
+            status = "winner";
+            oImage.setEffect(null);
+            xImage.setEffect(null);
+            scoreLabel.setText("Score :" + score);
+        } else {
+            status = "Lose";
+            oImage.setEffect(null);
+            xImage.setEffect(null);
+        }
+    }
+
+    public void userOWin(String status) {
+        if (userChar == "O") {
+            score++;
+            status = "winner";
+            scoreLabel.setText("Score :" + score);
+            oImage.setEffect(null);
+            xImage.setEffect(null);
+        } else {
+            status = "Loose";
+            oImage.setEffect(null);
+            xImage.setEffect(null);
+        }
+    }
+
+    public void userEqual(String status) {
+        status = "Equal";
+    }
+
+    public String userChar(boolean xSelected) {
+        String userChar;
+        if (xSelected) {
+            userChar = "X";
+            return userChar;
+        } else {
+            userChar = "O";
+            return userChar;
+        }
 
     }
-    public void xWins(){
-        
-    }
-    public void oWins(){
-        
-    }
 
+    public String switchTurns(String first) {
+        if (xImage.getEffect() == null) {
+            oImage.setEffect(null);
+            xImage.setEffect(ds);
+            first = "X";
+            return first;
+        } else if (oImage.getEffect() == null) {
+            xImage.setEffect(null);
+            oImage.setEffect(ds);
+            first = "O";
+            return first;
+        }
+        return null;
+    }
 }
