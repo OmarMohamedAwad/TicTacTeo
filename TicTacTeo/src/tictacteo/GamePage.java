@@ -1,5 +1,13 @@
 package tictacteo;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -19,9 +27,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 public  class GamePage extends AnchorPane {
-
+int num=0;
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -50,18 +59,19 @@ public  class GamePage extends AnchorPane {
     protected final RowConstraints rowGridPaneConstrains1;
     protected final RowConstraints rowConstraints2;
     protected final RowConstraints rowGridPaneConstrains3;
-    protected final ListView cell01;
-    protected final ListView cell00;
-    protected final ListView cell02;
-    protected final ListView cell12;
-    protected final ListView cell11;
-    protected final ListView cell10;
-    protected final ListView cell20;
-    protected final ListView cell21;
-    protected final ListView cell22;
+
+    protected final Button Button00;
+    protected final Button Button01;
+    protected final Button Button02;
+    protected final Button Button10;
+    protected final Button Button11;
+    protected final Button Button12;
+    protected final Button Button20;
+    protected final Button Button21;
+    protected final Button Button22;
     protected final DropShadow anchorPaneShadow;
 
-    public GamePage(Stage primary , int id) {
+    public GamePage(Stage primary , int id) throws AWTException, IOException {
 
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
@@ -91,22 +101,18 @@ public  class GamePage extends AnchorPane {
         rowGridPaneConstrains1 = new RowConstraints();
         rowConstraints2 = new RowConstraints();
         rowGridPaneConstrains3 = new RowConstraints();
-        cell01 = new ListView();
-        cell00 = new ListView();
-        cell02 = new ListView();
-        cell12 = new ListView();
-        cell11 = new ListView();
-        cell10 = new ListView();
-        cell20 = new ListView();
-        cell21 = new ListView();
-        cell22 = new ListView();
+
+        Button00 = new Button();
+        Button01 = new Button();
+        Button02 = new Button();
+        Button10 = new Button();
+        Button11 = new Button();
+        Button12 = new Button();
+        Button20 = new Button();
+        Button21 = new Button();
+        Button22 = new Button();
         anchorPaneShadow = new DropShadow();
 
-       
-        
-        
-        
-        
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
@@ -222,12 +228,35 @@ public  class GamePage extends AnchorPane {
         exitButton.setText("Exit");
         exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         exitButton.setFont(new Font(16.0));
+          
+         for(int i =0 ; i<9 ; i++){
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
                 primary.setScene(new Scene(new OptionPage(primary , id)));
-            }
-        });     
+//        Robot r = null; 
+//                try {
+//                    r = new Robot();
+//                } catch (AWTException ex) {
+//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//               
+//            String path = "C:\\Users\\3com\\Desktop\\javaaaa\\java project 2// Shot"+num+".jpg"; 
+//            num++;
+//            java.awt.Rectangle capture =  
+//            new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); 
+//            BufferedImage Image = r.createScreenCapture(capture); 
+//             
+//               System.out.println(num); 
+//                try { 
+//                    ImageIO.write(Image, "jpg", new File(path));
+//                } catch (IOException ex) {
+//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//               
+//            System.out.println("Screenshot saved"); 
+//            }
+            } });  } 
         
         
         
@@ -248,16 +277,16 @@ public  class GamePage extends AnchorPane {
 
         playAgainButton.setEffect(playAgainButtonShadow);
 
-        xOPane.setLayoutX(120.0);
+        xOPane.setLayoutX(115.0);
         xOPane.setLayoutY(166.0);
         xOPane.setPrefHeight(160.0);
-        xOPane.setPrefWidth(246.0);
+        xOPane.setPrefWidth(260.0);
         xOPane.setStyle("-fx-background-color: white;");
 
-        gridPane.setLayoutX(-5.0);
-        gridPane.setLayoutY(-6.0);
-        gridPane.setPrefHeight(167.0);
-        gridPane.setPrefWidth(253.0);
+        gridPane.setLayoutX(0.0);
+        gridPane.setLayoutY(0.0);
+        gridPane.setPrefHeight(160.0);
+        gridPane.setPrefWidth(260.0);
 
         columnGridPaneConstraints1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnGridPaneConstraints1.setMinWidth(10.0);
@@ -286,45 +315,73 @@ public  class GamePage extends AnchorPane {
         rowGridPaneConstrains3.setPrefHeight(54.0);
         rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        GridPane.setRowIndex(cell01, 1);
-        cell01.setPrefHeight(200.0);
-        cell01.setPrefWidth(200.0);
 
-        cell00.setPrefHeight(41.0);
-        cell00.setPrefWidth(100.0);
+        Button00.setLayoutX(178.0);
+        Button00.setLayoutY(11.0);
+        Button00.setMnemonicParsing(false);
+        Button00.setPrefHeight(48.0);
+        Button00.setPrefWidth(84.0);
 
-        GridPane.setRowIndex(cell02, 2);
-        cell02.setPrefHeight(200.0);
-        cell02.setPrefWidth(200.0);
+        GridPane.setRowIndex(Button01, 1);
+        Button01.setLayoutX(10.0);
+        Button01.setLayoutY(118.0);
+        Button01.setMnemonicParsing(false);
+        Button01.setPrefHeight(48.0);
+        Button01.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell12, 1);
-        GridPane.setRowIndex(cell12, 2);
-        cell12.setPrefHeight(200.0);
-        cell12.setPrefWidth(200.0);
+        GridPane.setRowIndex(Button02, 2);
+        Button02.setLayoutX(10.0);
+        Button02.setLayoutY(11.0);
+        Button02.setMnemonicParsing(false);
+        Button02.setPrefHeight(48.0);
+        Button02.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell11, 1);
-        GridPane.setRowIndex(cell11, 1);
-        cell11.setPrefHeight(200.0);
-        cell11.setPrefWidth(200.0);
+        GridPane.setColumnIndex(Button10, 1);
+        Button10.setLayoutX(10.0);
+        Button10.setLayoutY(63.0);
+        Button10.setMnemonicParsing(false);
+        Button10.setPrefHeight(48.0);
+        Button10.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell10, 1);
-        cell10.setPrefHeight(200.0);
-        cell10.setPrefWidth(200.0);
+        GridPane.setColumnIndex(Button11, 1);
+        GridPane.setRowIndex(Button11, 1);
+        Button11.setLayoutX(94.0);
+        Button11.setLayoutY(11.0);
+        Button11.setMnemonicParsing(false);
+        Button11.setPrefHeight(48.0);
+        Button11.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell20, 2);
-        cell20.setPrefHeight(200.0);
-        cell20.setPrefWidth(200.0);
+        GridPane.setColumnIndex(Button12, 1);
+        GridPane.setRowIndex(Button12, 2);
+        Button12.setLayoutX(94.0);
+        Button12.setLayoutY(63.0);
+        Button12.setMnemonicParsing(false);
+        Button12.setPrefHeight(48.0);
+        Button12.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell21, 2);
-        GridPane.setRowIndex(cell21, 1);
-        cell21.setPrefHeight(200.0);
-        cell21.setPrefWidth(200.0);
+        GridPane.setColumnIndex(Button20, 2);
+        Button20.setMnemonicParsing(false);
+        Button20.setPrefHeight(48.0);
+        Button20.setPrefWidth(84.0);
 
-        GridPane.setColumnIndex(cell22, 2);
-        GridPane.setRowIndex(cell22, 2);
-        cell22.setPrefHeight(200.0);
-        cell22.setPrefWidth(200.0);
+        GridPane.setColumnIndex(Button21, 2);
+        GridPane.setRowIndex(Button21, 1);
+        Button21.setLayoutX(178.0);
+        Button21.setLayoutY(11.0);
+        Button21.setMnemonicParsing(false);
+        Button21.setPrefHeight(48.0);
+        Button21.setPrefWidth(84.0);
 
+        GridPane.setColumnIndex(Button22, 2);
+        GridPane.setRowIndex(Button22, 2);
+        Button22.setLayoutX(178.0);
+        Button22.setLayoutY(11.0);
+        Button22.setMnemonicParsing(false);
+        Button22.setPrefHeight(48.0);
+        Button22.setPrefWidth(84.0);
+
+ 
+        
         setEffect(anchorPaneShadow);
 
         getChildren().add(logoImage);
@@ -345,15 +402,16 @@ public  class GamePage extends AnchorPane {
         gridPane.getRowConstraints().add(rowGridPaneConstrains1);
         gridPane.getRowConstraints().add(rowConstraints2);
         gridPane.getRowConstraints().add(rowGridPaneConstrains3);
-        gridPane.getChildren().add(cell01);
-        gridPane.getChildren().add(cell00);
-        gridPane.getChildren().add(cell02);
-        gridPane.getChildren().add(cell12);
-        gridPane.getChildren().add(cell11);
-        gridPane.getChildren().add(cell10);
-        gridPane.getChildren().add(cell20);
-        gridPane.getChildren().add(cell21);
-        gridPane.getChildren().add(cell22);
+
+        gridPane.getChildren().add(Button00);
+        gridPane.getChildren().add(Button01);
+        gridPane.getChildren().add(Button02);
+        gridPane.getChildren().add(Button10);
+        gridPane.getChildren().add(Button11);
+        gridPane.getChildren().add(Button12);
+        gridPane.getChildren().add(Button20);
+        gridPane.getChildren().add(Button21);
+        gridPane.getChildren().add(Button22);
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
 
