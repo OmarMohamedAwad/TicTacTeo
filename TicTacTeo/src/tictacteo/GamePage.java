@@ -1,4 +1,5 @@
 package tictacteo;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.awt.AWTException;
@@ -33,15 +34,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-
-
- 
 import sun.net.www.content.image.gif;
 import javax.imageio.ImageIO;
 
 public class GamePage extends AnchorPane {
-    
+
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean computerTurn = false;
@@ -78,10 +75,10 @@ public class GamePage extends AnchorPane {
     protected final InnerShadow playAgainButtonShadow;
     protected final Pane xOPane;
     protected final GridPane gridPane;
-    
+
     protected final DropShadow anchorPaneShadow;
-     protected final Pane winner;
-    
+    protected final Pane winner;
+
     protected final DropShadow dropShadow;
     protected final ImageView winnerMessage;
     protected final ImageView xIcone;
@@ -95,9 +92,9 @@ public class GamePage extends AnchorPane {
     protected final Label playerCharacter;
     protected final Label labelWinnerPlayerName;
     protected final Label labelWinnerCharacter;
-    
+
     protected final Pane draw;
-    
+
     protected final DropShadow dropShadow0;
     protected final ImageView drawMessage;
     protected final ImageView xIconDraw;
@@ -113,9 +110,7 @@ public class GamePage extends AnchorPane {
     protected final Label labelDrawPlayerCharater;
     protected final Label drawLabel;
     protected final DropShadow dropShadow1;
-    
     protected final Pane looser;
-    
     protected final DropShadow dropShadow2;
     protected final ImageView looseMessage;
     protected final ImageView xIconeLooser;
@@ -131,33 +126,25 @@ public class GamePage extends AnchorPane {
     protected final Label labelLooserPlayerCharacter;
     protected final Label looseLabel;
     protected final DropShadow dropShadow3;
-
-
-    public GamePage(Stage primary , int id) {
-        backPane = new Pane();
-
-    public GamePage(Stage primary, int id) throws AWTException, IOException {
-
+    protected final Button Button00;
+    protected final Button Button01;
+    protected final Button Button02;
+    protected final Button Button10;
+    protected final Button Button11;
+    protected final Button Button12;
+    protected final Button Button20;
+    protected final Button Button21;
+    protected final Button Button22;
     int id;
     ClientSide curruntClient;
-    public GamePage(Stage primary , int id) {
-        this.id = id;
-        curruntClient = new ClientSide();
-        protected final Button Button00;
-        protected final Button Button01;
-        protected final Button Button02;
-        protected final Button Button10;
-        protected final Button Button11;
-        protected final Button Button12;
-        protected final Button Button20;
-        protected final Button Button21;
-        protected final Button Button22;
-        protected final DropShadow anchorPaneShadow;
-        int userCount;
+
+    int userCount;
 
     public GamePage(Stage primary, int id, boolean xSelected) {
         ds = new DropShadow(20, Color.AQUA);
-
+        backPane = new Pane();
+        this.id = id;
+        curruntClient = new ClientSide();
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
@@ -183,14 +170,6 @@ public class GamePage extends AnchorPane {
         xOPane = new Pane();
         gridPane = new GridPane();
 
-        columnGridPaneConstraints1 = new ColumnConstraints();
-        columnGridPaneConstrains2 = new ColumnConstraints();
-        columnGridPaneConstrains3 = new ColumnConstraints();
-        rowGridPaneConstrains1 = new RowConstraints();
-        rowConstraints2 = new RowConstraints();
-        rowGridPaneConstrains3 = new RowConstraints();
-
-       
         winner = new Pane();
         dropShadow = new DropShadow();
         winnerMessage = new ImageView();
@@ -205,7 +184,7 @@ public class GamePage extends AnchorPane {
         playerCharacter = new Label();
         labelWinnerPlayerName = new Label();
         labelWinnerCharacter = new Label();
-        
+
         draw = new Pane();
         dropShadow0 = new DropShadow();
         drawMessage = new ImageView();
@@ -222,7 +201,7 @@ public class GamePage extends AnchorPane {
         labelDrawPlayerCharater = new Label();
         drawLabel = new Label();
         dropShadow1 = new DropShadow();
-        
+
         looser = new Pane();
         dropShadow2 = new DropShadow();
         looseMessage = new ImageView();
@@ -239,9 +218,6 @@ public class GamePage extends AnchorPane {
         labelLooserPlayerCharacter = new Label();
         looseLabel = new Label();
         dropShadow3 = new DropShadow();
-        
-        
-        
 
         Button00 = new Button();
         Button01 = new Button();
@@ -265,7 +241,7 @@ public class GamePage extends AnchorPane {
         backPane.setPrefHeight(360.0);
         backPane.setPrefWidth(500.0);
         backPane.setStyle("-fx-background-color: #0c0721;");
-        
+
         logoImage.setFitHeight(45.0);
         logoImage.setFitWidth(45.0);
         logoImage.setLayoutX(14.0);
@@ -397,55 +373,22 @@ public class GamePage extends AnchorPane {
         exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         exitButton.setFont(new Font(16.0));
 
-
         for (int i = 0; i < 9; i++) {
             exitButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent ev) {
                     primary.setScene(new Scene(new OptionPage(primary, id)));
-
-//         for(int i =0 ; i<9 ; i++){
-        exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new OptionPage(primary, id)));
-            }
-        });     
-
-
-//        Robot r = null; 
-//                try {
-//                    r = new Robot();
-//                } catch (AWTException ex) {
-//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//               
-//            String path = "C:\\Users\\3com\\Desktop\\javaaaa\\java project 2// Shot"+num+".jpg"; 
-//            num++;
-//            java.awt.Rectangle capture =  
-//            new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); 
-//            BufferedImage Image = r.createScreenCapture(capture); 
-//             
-//               System.out.println(num); 
-//                try { 
-//                    ImageIO.write(Image, "jpg", new File(path));
-//                } catch (IOException ex) {
-//                    Logger.getLogger(GamePage.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//               
-//            System.out.println("Screenshot saved"); 
-//            }
-
+                    exitButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent ev) {
+                            primary.setScene(new Scene(new OptionPage(primary, id)));
+                        }
+                    });
 
                 }
             });
         }
-
         exitButton.setEffect(exitButtonShadow);
-
-//            } });  } 
-
-
         exitButton.setEffect(exitButtonShadow);
         playAgainButton.setLayoutX(251.0);
         playAgainButton.setLayoutY(353.0);
@@ -499,34 +442,7 @@ public class GamePage extends AnchorPane {
         gridPane.setPrefHeight(160.0);
         gridPane.setPrefWidth(260.0);
 
-        columnGridPaneConstraints1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-        columnGridPaneConstraints1.setMinWidth(10.0);
-        columnGridPaneConstraints1.setPrefWidth(100.0);
-
-        columnGridPaneConstrains2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-        columnGridPaneConstrains2.setMinWidth(10.0);
-        columnGridPaneConstrains2.setPrefWidth(100.0);
-
-        columnGridPaneConstrains3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-        columnGridPaneConstrains3.setMinWidth(10.0);
-        columnGridPaneConstrains3.setPrefWidth(100.0);
-
-        rowGridPaneConstrains1.setMaxHeight(50.0);
-        rowGridPaneConstrains1.setMinHeight(10.0);
-        rowGridPaneConstrains1.setPrefHeight(50.0);
-        rowGridPaneConstrains1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        rowConstraints2.setMaxHeight(69.0);
-        rowConstraints2.setMinHeight(10.0);
-        rowConstraints2.setPrefHeight(52.0);
-        rowConstraints2.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        rowGridPaneConstrains3.setMaxHeight(68.0);
-        rowGridPaneConstrains3.setMinHeight(10.0);
-        rowGridPaneConstrains3.setPrefHeight(54.0);
-        rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-
+        
         if (xSelected) {
             you.setText("YOU");
             you.setTextFill(javafx.scene.paint.Color.WHITE);
@@ -536,7 +452,6 @@ public class GamePage extends AnchorPane {
             computer.setTextFill(javafx.scene.paint.Color.WHITE);
             computer.setFont(new Font("SansSerif Bold", 15.0));
         }
-
 
         Button00.setLayoutX(178.0);
         Button00.setLayoutY(11.0);
@@ -582,15 +497,13 @@ public class GamePage extends AnchorPane {
 //                Button01.setDisable(true);
 
                 }
-
-            }
-        });
-
-
                 record.add("o");
                 position.add("Button01");
+ 
             }
         });
+
+       
         GridPane.setRowIndex(Button02, 2);
         Button02.setLayoutX(10.0);
         Button02.setLayoutY(11.0);
@@ -598,8 +511,8 @@ public class GamePage extends AnchorPane {
         Button02.setPrefHeight(48.0);
         Button02.setPrefWidth(84.0);
         Button02.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
+        @Override
+        public void handle(ActionEvent ev) {
 
                 if (Button02.getText() == "") {
                     Button02.setText(first);
@@ -608,15 +521,13 @@ public class GamePage extends AnchorPane {
                     check();
 //                Button02.setDisable(true);
                 }
-
-            }
-        });
-
-
                 record.add("x");
                 position.add("Button02");
             }
         });
+
+                
+           
         GridPane.setColumnIndex(Button10, 1);
         Button10.setLayoutX(10.0);
         Button10.setLayoutY(63.0);
@@ -624,10 +535,8 @@ public class GamePage extends AnchorPane {
         Button10.setPrefHeight(48.0);
         Button10.setPrefWidth(84.0);
         Button10.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-
+        @Override
+        public void handle(ActionEvent ev) {
                 record.add("o");
                 position.add("Button10");
 
@@ -652,8 +561,7 @@ public class GamePage extends AnchorPane {
         Button11.setPrefWidth(84.0);
         Button11.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent ev) {
-
+        public void handle(ActionEvent ev) {
                 if (Button11.getText() == "") {
                     Button11.setText(first);
                     Button11.setFont(new Font("SansSerif Bold", 15.0));
@@ -661,14 +569,11 @@ public class GamePage extends AnchorPane {
                     check();
 //                Button11.setDisable(true);
                 }
-            }
-        });
-
-
                 record.add("x");
                 position.add("Button11");
             }
         });
+
         GridPane.setColumnIndex(Button12, 1);
         GridPane.setRowIndex(Button12, 2);
         Button12.setLayoutX(94.0);
@@ -677,8 +582,8 @@ public class GamePage extends AnchorPane {
         Button12.setPrefHeight(48.0);
         Button12.setPrefWidth(84.0);
         Button12.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
+        @Override
+        public void handle(ActionEvent ev) {
 
                 if (Button12.getText() == "") {
                     Button12.setText(first);
@@ -687,22 +592,20 @@ public class GamePage extends AnchorPane {
                     check();
 //                Button12.setDisable(true);
                 }
-            }
-
-        });
-
-
                 record.add("o");
                 position.add("Button12");
             }
+
         });
+
+
         GridPane.setColumnIndex(Button20, 2);
         Button20.setMnemonicParsing(false);
         Button20.setPrefHeight(48.0);
         Button20.setPrefWidth(84.0);
         Button20.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent ev) {
+        public void handle(ActionEvent ev) {
 
                 if (Button20.getText() == "") {
                     Button20.setText(first);
@@ -711,15 +614,12 @@ public class GamePage extends AnchorPane {
                     check();
 //                Button20.setDisable(true);
                 }
-
-            }
-        });
-
-
                 record.add("x");
                 position.add("Button20");
             }
         });
+
+
         GridPane.setColumnIndex(Button21, 2);
         GridPane.setRowIndex(Button21, 1);
         Button21.setLayoutX(178.0);
@@ -728,8 +628,8 @@ public class GamePage extends AnchorPane {
         Button21.setPrefHeight(48.0);
         Button21.setPrefWidth(84.0);
         Button21.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
+        @Override
+        public void handle(ActionEvent ev) {
 
                 if (Button21.getText() == "") {
                     Button21.setText(first);
@@ -738,18 +638,13 @@ public class GamePage extends AnchorPane {
                     check();
 //                Button21.setDisable(true);
                 }
-
-            }
-        });
-
-
                 record.add("x");
                 position.add("Button21");
-//                 for(int i =0 ; i<record.size(); i++){
-//                System.out.println(record.get(i));
-//                 }
+
             }
         });
+
+
         GridPane.setColumnIndex(Button22, 2);
         GridPane.setRowIndex(Button22, 2);
         Button22.setLayoutX(178.0);
@@ -758,59 +653,52 @@ public class GamePage extends AnchorPane {
         Button22.setPrefHeight(48.0);
         Button22.setPrefWidth(84.0);
         Button22.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                record.add("o");
-                position.add("Button22");
-
-                class Record extends Thread {
-
-                    Thread th;
-
-                    public Record() {
-                        Thread th = new Thread();
-                        th.start();
-                    }
-                    @Override
-                    public void run() {
-                        boolean pf = true;
-                      
-                            while (pf) {
-                                for (int i = 0; i < record.size(); i ++) {
-                                    System.out.println(record.get(i));
-                                    try {
-                                        Thread.sleep(1000);
-                                           
-                                    } catch (InterruptedException e) {
-                                    }
-                               if (record.size()-1 == i) {
-                                
-                                    pf = false;
-                                }
-                                }
-                                    
-                              
-                            }
-                        }
-                }
-                Record rd = new Record();
-                rd.run();
-            }
-        });
-
-        setEffect(anchorPaneShadow);
-
-
+        @Override
+        public void handle(ActionEvent ev) {
                 if (Button22.getText() == "") {
                     Button22.setText(first);
                     Button22.setFont(new Font("SansSerif Bold", 15.0));
                     first = switchTurns(first);
                     check();
                 }
-
+                record.add("o");
+                position.add("Button22");
+//                class Record extends Thread {
+//
+//                    Thread th;
+//
+//                    public Record() {
+//                        Thread th = new Thread();
+//                        th.start();
+//                    }
+//
+//                    @Override
+//                    public void run() {
+//                        boolean pf = true;
+//
+//                        while (pf) {
+//                            for (int i = 0; i < record.size(); i++) {
+//                                System.out.println(record.get(i));
+//                                try {
+//                                    Thread.sleep(1000);
+//
+//                                } catch (InterruptedException e) {
+//                                }
+//                                if (record.size() - 1 == i) {
+//
+//                                    pf = false;
+//                                }
+//                            }
+//
+//                        }
+//    }
+//}
+//                Record rd = new Record();
+//                rd.run();
             }
         });
+
+        setEffect(anchorPaneShadow);
 
         setEffect(anchorPaneShadow);
 
@@ -828,12 +716,7 @@ public class GamePage extends AnchorPane {
         getChildren().add(computer);
         getChildren().add(exitButton);
         getChildren().add(playAgainButton);
-        gridPane.getColumnConstraints().add(columnGridPaneConstraints1);
-        gridPane.getColumnConstraints().add(columnGridPaneConstrains2);
-        gridPane.getColumnConstraints().add(columnGridPaneConstrains3);
-        gridPane.getRowConstraints().add(rowGridPaneConstrains1);
-        gridPane.getRowConstraints().add(rowConstraints2);
-        gridPane.getRowConstraints().add(rowGridPaneConstrains3);
+
 
         gridPane.getChildren().add(Button00);
         gridPane.getChildren().add(Button01);
@@ -848,7 +731,7 @@ public class GamePage extends AnchorPane {
         getChildren().add(xOPane);
         
         
-  winner.setLayoutX(78.0);
+        winner.setLayoutX(78.0);
         winner.setLayoutY(132.0);
         winner.setPrefHeight(224.0);
         winner.setPrefWidth(344.0);
@@ -1123,7 +1006,7 @@ public class GamePage extends AnchorPane {
 
         looseLabel.setEffect(dropShadow3);
         looseLabel.setFont(new Font("Microsoft Sans Serif", 37.0));
-        getChildren().add(backPane);
+//        getChildren().add(backPane);
         winner.getChildren().add(winnerMessage);
         winner.getChildren().add(xIcone);
         winner.getChildren().add(yIcone);
@@ -1134,7 +1017,7 @@ public class GamePage extends AnchorPane {
         winner.getChildren().add(playerCharacter);
         winner.getChildren().add(labelWinnerPlayerName);
         winner.getChildren().add(labelWinnerCharacter);
-        getChildren().add(winner);
+//        getChildren().add(winner);
         draw.getChildren().add(drawMessage);
         draw.getChildren().add(xIconDraw);
         draw.getChildren().add(yIconDraw);
@@ -1158,7 +1041,7 @@ public class GamePage extends AnchorPane {
         looser.getChildren().add(labelLooserPlayerName);
         looser.getChildren().add(labelLooserPlayerCharacter);
         looser.getChildren().add(looseLabel);
-        getChildren().add(looser);
+//        getChildren().add(looser);
         
         
 
@@ -1169,11 +1052,11 @@ public class GamePage extends AnchorPane {
 
 
     public void moveActions(){
-        playAgainButton.setOnAction(e 
-            -> {
-                System.out.println("Her I am");
-                curruntClient.playerPrintStream.println("My Id="+id);
-        });
+//        playAgainButton.setOnAction(e 
+//            -> {
+//                System.out.println("Her I am");
+//                curruntClient.playerPrintStream.println("My Id="+id);
+//        });
         
     }
 
