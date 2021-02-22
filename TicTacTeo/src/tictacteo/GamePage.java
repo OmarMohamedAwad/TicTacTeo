@@ -33,11 +33,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+
+
+ 
 import sun.net.www.content.image.gif;
 import javax.imageio.ImageIO;
 
 public class GamePage extends AnchorPane {
-
+    
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean computerTurn = false;
@@ -48,6 +52,7 @@ public class GamePage extends AnchorPane {
     String userChar;
     int num = 0;
     int score = 0;
+    protected final Pane backPane;
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -75,6 +80,61 @@ public class GamePage extends AnchorPane {
     protected final GridPane gridPane;
     
     protected final DropShadow anchorPaneShadow;
+     protected final Pane winner;
+    
+    protected final DropShadow dropShadow;
+    protected final ImageView winnerMessage;
+    protected final ImageView xIcone;
+    protected final ImageView yIcone;
+    protected final ImageView vsIcon;
+    protected final Button platAgainWinner;
+    protected final InnerShadow innerShadow;
+    protected final Button watchVideoWinner;
+    protected final InnerShadow innerShadow0;
+    protected final Label playerNameLabel;
+    protected final Label playerCharacter;
+    protected final Label labelWinnerPlayerName;
+    protected final Label labelWinnerCharacter;
+    
+    protected final Pane draw;
+    
+    protected final DropShadow dropShadow0;
+    protected final ImageView drawMessage;
+    protected final ImageView xIconDraw;
+    protected final ImageView yIconDraw;
+    protected final ImageView vsIconDraw;
+    protected final Button playAgainDraw;
+    protected final InnerShadow innerShadow1;
+    protected final Button watchVideoDraw;
+    protected final InnerShadow innerShadow2;
+    protected final Label drawPlayerName;
+    protected final Label drawPlayerCharacter;
+    protected final Label labelDrawPlayerName;
+    protected final Label labelDrawPlayerCharater;
+    protected final Label drawLabel;
+    protected final DropShadow dropShadow1;
+    
+    protected final Pane looser;
+    
+    protected final DropShadow dropShadow2;
+    protected final ImageView looseMessage;
+    protected final ImageView xIconeLooser;
+    protected final ImageView yIconLooser;
+    protected final ImageView vsIconLooser;
+    protected final Button playAgainLooser;
+    protected final InnerShadow innerShadow3;
+    protected final Button watchVideoLooser;
+    protected final InnerShadow innerShadow4;
+    protected final Label looserPlayerName;
+    protected final Label looserPlayerCharacter;
+    protected final Label labelLooserPlayerName;
+    protected final Label labelLooserPlayerCharacter;
+    protected final Label looseLabel;
+    protected final DropShadow dropShadow3;
+
+
+    public GamePage(Stage primary , int id) {
+        backPane = new Pane();
 
     public GamePage(Stage primary, int id) throws AWTException, IOException {
 
@@ -97,6 +157,7 @@ public class GamePage extends AnchorPane {
 
     public GamePage(Stage primary, int id, boolean xSelected) {
         ds = new DropShadow(20, Color.AQUA);
+
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
@@ -129,6 +190,59 @@ public class GamePage extends AnchorPane {
         rowConstraints2 = new RowConstraints();
         rowGridPaneConstrains3 = new RowConstraints();
 
+       
+        winner = new Pane();
+        dropShadow = new DropShadow();
+        winnerMessage = new ImageView();
+        xIcone = new ImageView();
+        yIcone = new ImageView();
+        vsIcon = new ImageView();
+        platAgainWinner = new Button();
+        innerShadow = new InnerShadow();
+        watchVideoWinner = new Button();
+        innerShadow0 = new InnerShadow();
+        playerNameLabel = new Label();
+        playerCharacter = new Label();
+        labelWinnerPlayerName = new Label();
+        labelWinnerCharacter = new Label();
+        
+        draw = new Pane();
+        dropShadow0 = new DropShadow();
+        drawMessage = new ImageView();
+        xIconDraw = new ImageView();
+        yIconDraw = new ImageView();
+        vsIconDraw = new ImageView();
+        playAgainDraw = new Button();
+        innerShadow1 = new InnerShadow();
+        watchVideoDraw = new Button();
+        innerShadow2 = new InnerShadow();
+        drawPlayerName = new Label();
+        drawPlayerCharacter = new Label();
+        labelDrawPlayerName = new Label();
+        labelDrawPlayerCharater = new Label();
+        drawLabel = new Label();
+        dropShadow1 = new DropShadow();
+        
+        looser = new Pane();
+        dropShadow2 = new DropShadow();
+        looseMessage = new ImageView();
+        xIconeLooser = new ImageView();
+        yIconLooser = new ImageView();
+        vsIconLooser = new ImageView();
+        playAgainLooser = new Button();
+        innerShadow3 = new InnerShadow();
+        watchVideoLooser = new Button();
+        innerShadow4 = new InnerShadow();
+        looserPlayerName = new Label();
+        looserPlayerCharacter = new Label();
+        labelLooserPlayerName = new Label();
+        labelLooserPlayerCharacter = new Label();
+        looseLabel = new Label();
+        dropShadow3 = new DropShadow();
+        
+        
+        
+
         Button00 = new Button();
         Button01 = new Button();
         Button02 = new Button();
@@ -139,11 +253,19 @@ public class GamePage extends AnchorPane {
         Button21 = new Button();
         Button22 = new Button();
         anchorPaneShadow = new DropShadow();
+
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
 
+        backPane.setLayoutX(0.0);
+        backPane.setLayoutY(69.0);
+        backPane.setOpacity(0.7);
+        backPane.setPrefHeight(360.0);
+        backPane.setPrefWidth(500.0);
+        backPane.setStyle("-fx-background-color: #0c0721;");
+        
         logoImage.setFitHeight(45.0);
         logoImage.setFitWidth(45.0);
         logoImage.setLayoutX(14.0);
@@ -679,6 +801,7 @@ public class GamePage extends AnchorPane {
 
         setEffect(anchorPaneShadow);
 
+
                 if (Button22.getText() == "") {
                     Button22.setText(first);
                     Button22.setFont(new Font("SansSerif Bold", 15.0));
@@ -690,6 +813,7 @@ public class GamePage extends AnchorPane {
         });
 
         setEffect(anchorPaneShadow);
+
         getChildren().add(logoImage);
         getChildren().add(gameName);
         getChildren().add(line);
@@ -722,6 +846,321 @@ public class GamePage extends AnchorPane {
         gridPane.getChildren().add(Button22);
         xOPane.getChildren().add(gridPane);
         getChildren().add(xOPane);
+        
+        
+  winner.setLayoutX(78.0);
+        winner.setLayoutY(132.0);
+        winner.setPrefHeight(224.0);
+        winner.setPrefWidth(344.0);
+        winner.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
+
+        winner.setEffect(dropShadow);
+
+        winnerMessage.setFitHeight(168.0);
+        winnerMessage.setFitWidth(335.0);
+        winnerMessage.setLayoutX(5.0);
+        winnerMessage.setLayoutY(4.0);
+        winnerMessage.setImage(new Image(getClass().getResource("../view/images/gameMessages/win.png").toExternalForm()));
+
+        xIcone.setFitHeight(45.0);
+        xIcone.setFitWidth(72.0);
+        xIcone.setLayoutX(107.0);
+        xIcone.setLayoutY(-30.0);
+        xIcone.setImage(new Image(getClass().getResource("../view/images/gameMessages/x.png").toExternalForm()));
+
+        yIcone.setFitHeight(45.0);
+        yIcone.setFitWidth(88.0);
+        yIcone.setLayoutX(167.0);
+        yIcone.setLayoutY(-29.0);
+        yIcone.setImage(new Image(getClass().getResource("../view/images/gameMessages/o.png").toExternalForm()));
+
+        vsIcon.setFitHeight(45.0);
+        vsIcon.setFitWidth(45.0);
+        vsIcon.setLayoutX(148.0);
+        vsIcon.setLayoutY(-8.0);
+        vsIcon.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
+
+        platAgainWinner.setLayoutX(46.0);
+        platAgainWinner.setLayoutY(193.0);
+        platAgainWinner.setMnemonicParsing(false);
+        platAgainWinner.setPrefHeight(17.0);
+        platAgainWinner.setPrefWidth(88.0);
+        platAgainWinner.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        platAgainWinner.getStyleClass().add("play-btn");
+        platAgainWinner.setText("Play Again");
+        platAgainWinner.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        platAgainWinner.setEffect(innerShadow);
+
+        watchVideoWinner.setLayoutX(201.0);
+        watchVideoWinner.setLayoutY(193.0);
+        watchVideoWinner.setMnemonicParsing(false);
+        watchVideoWinner.setPrefHeight(17.0);
+        watchVideoWinner.setPrefWidth(88.0);
+        watchVideoWinner.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        watchVideoWinner.getStyleClass().add("play-btn");
+        watchVideoWinner.setText("Wach Video");
+        watchVideoWinner.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        watchVideoWinner.setEffect(innerShadow0);
+
+        playerNameLabel.setLayoutX(58.0);
+        playerNameLabel.setLayoutY(158.0);
+        playerNameLabel.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        playerNameLabel.setText("Player:");
+        playerNameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        playerNameLabel.setFont(new Font(15.0));
+
+        playerCharacter.setLayoutX(204.0);
+        playerCharacter.setLayoutY(158.0);
+        playerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        playerCharacter.setText("Character:");
+        playerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        playerCharacter.setFont(new Font(15.0));
+
+        labelWinnerPlayerName.setLayoutX(123.0);
+        labelWinnerPlayerName.setLayoutY(159.0);
+        labelWinnerPlayerName.setPrefHeight(21.0);
+        labelWinnerPlayerName.setPrefWidth(32.0);
+        labelWinnerPlayerName.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelWinnerPlayerName.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelWinnerPlayerName.setFont(new Font(15.0));
+
+        labelWinnerCharacter.setLayoutX(293.0);
+        labelWinnerCharacter.setLayoutY(160.0);
+        labelWinnerCharacter.setPrefHeight(21.0);
+        labelWinnerCharacter.setPrefWidth(23.0);
+        labelWinnerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelWinnerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelWinnerCharacter.setFont(new Font(15.0));
+
+        draw.setLayoutX(68.0);
+        draw.setLayoutY(144.0);
+        draw.setPrefHeight(224.0);
+        draw.setPrefWidth(344.0);
+        draw.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
+
+        draw.setEffect(dropShadow0);
+
+        drawMessage.setFitHeight(186.0);
+        drawMessage.setFitWidth(335.0);
+        drawMessage.setLayoutX(5.0);
+        drawMessage.setLayoutY(6.0);
+        drawMessage.setImage(new Image(getClass().getResource("../view/images/gameMessages/drawc.jpg").toExternalForm()));
+
+        xIconDraw.setFitHeight(45.0);
+        xIconDraw.setFitWidth(72.0);
+        xIconDraw.setLayoutX(107.0);
+        xIconDraw.setLayoutY(-30.0);
+        xIconDraw.setImage(new Image(getClass().getResource("../view/images/gameMessages/x.png").toExternalForm()));
+
+        yIconDraw.setFitHeight(45.0);
+        yIconDraw.setFitWidth(88.0);
+        yIconDraw.setLayoutX(167.0);
+        yIconDraw.setLayoutY(-29.0);
+        yIconDraw.setImage(new Image(getClass().getResource("../view/images/gameMessages/o.png").toExternalForm()));
+
+        vsIconDraw.setFitHeight(45.0);
+        vsIconDraw.setFitWidth(45.0);
+        vsIconDraw.setLayoutX(148.0);
+        vsIconDraw.setLayoutY(-8.0);
+        vsIconDraw.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
+
+        playAgainDraw.setLayoutX(46.0);
+        playAgainDraw.setLayoutY(193.0);
+        playAgainDraw.setMnemonicParsing(false);
+        playAgainDraw.setPrefHeight(17.0);
+        playAgainDraw.setPrefWidth(88.0);
+        playAgainDraw.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        playAgainDraw.getStyleClass().add("play-btn");
+        playAgainDraw.setText("Play Again");
+        playAgainDraw.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        playAgainDraw.setEffect(innerShadow1);
+
+        watchVideoDraw.setLayoutX(201.0);
+        watchVideoDraw.setLayoutY(193.0);
+        watchVideoDraw.setMnemonicParsing(false);
+        watchVideoDraw.setPrefHeight(17.0);
+        watchVideoDraw.setPrefWidth(88.0);
+        watchVideoDraw.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        watchVideoDraw.getStyleClass().add("play-btn");
+        watchVideoDraw.setText("Wach Video");
+        watchVideoDraw.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        watchVideoDraw.setEffect(innerShadow2);
+
+        drawPlayerName.setLayoutX(58.0);
+        drawPlayerName.setLayoutY(158.0);
+        drawPlayerName.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        drawPlayerName.setText("Player:");
+        drawPlayerName.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        drawPlayerName.setFont(new Font(15.0));
+
+        drawPlayerCharacter.setLayoutX(204.0);
+        drawPlayerCharacter.setLayoutY(158.0);
+        drawPlayerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        drawPlayerCharacter.setText("Character:");
+        drawPlayerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        drawPlayerCharacter.setFont(new Font(15.0));
+
+        labelDrawPlayerName.setLayoutX(123.0);
+        labelDrawPlayerName.setLayoutY(159.0);
+        labelDrawPlayerName.setPrefHeight(21.0);
+        labelDrawPlayerName.setPrefWidth(32.0);
+        labelDrawPlayerName.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelDrawPlayerName.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelDrawPlayerName.setFont(new Font(15.0));
+
+        labelDrawPlayerCharater.setLayoutX(293.0);
+        labelDrawPlayerCharater.setLayoutY(160.0);
+        labelDrawPlayerCharater.setPrefHeight(21.0);
+        labelDrawPlayerCharater.setPrefWidth(23.0);
+        labelDrawPlayerCharater.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelDrawPlayerCharater.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelDrawPlayerCharater.setFont(new Font(15.0));
+
+        drawLabel.setLayoutX(116.0);
+        drawLabel.setLayoutY(26.0);
+        drawLabel.setStyle("-fx-font-weight: bolder;");
+        drawLabel.setText("DRAW");
+        drawLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d300b4"));
+
+        drawLabel.setEffect(dropShadow1);
+        drawLabel.setFont(new Font("Microsoft Sans Serif", 37.0));
+
+        looser.setLayoutX(71.0);
+        looser.setLayoutY(150.0);
+        looser.setPrefHeight(224.0);
+        looser.setPrefWidth(344.0);
+        looser.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: true;");
+
+        looser.setEffect(dropShadow2);
+
+        looseMessage.setFitHeight(168.0);
+        looseMessage.setFitWidth(335.0);
+        looseMessage.setLayoutX(5.0);
+        looseMessage.setLayoutY(19.0);
+        looseMessage.setImage(new Image(getClass().getResource("../view/images/gameMessages/loos.png").toExternalForm()));
+
+        xIconeLooser.setFitHeight(45.0);
+        xIconeLooser.setFitWidth(72.0);
+        xIconeLooser.setLayoutX(107.0);
+        xIconeLooser.setLayoutY(-30.0);
+        xIconeLooser.setImage(new Image(getClass().getResource("../view/images/gameMessages/x.png").toExternalForm()));
+
+        yIconLooser.setFitHeight(45.0);
+        yIconLooser.setFitWidth(88.0);
+        yIconLooser.setLayoutX(167.0);
+        yIconLooser.setLayoutY(-29.0);
+        yIconLooser.setImage(new Image(getClass().getResource("../view/images/gameMessages/o.png").toExternalForm()));
+
+        vsIconLooser.setFitHeight(45.0);
+        vsIconLooser.setFitWidth(45.0);
+        vsIconLooser.setLayoutX(148.0);
+        vsIconLooser.setLayoutY(-8.0);
+        vsIconLooser.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
+
+        playAgainLooser.setLayoutX(46.0);
+        playAgainLooser.setLayoutY(193.0);
+        playAgainLooser.setMnemonicParsing(false);
+        playAgainLooser.setPrefHeight(17.0);
+        playAgainLooser.setPrefWidth(88.0);
+        playAgainLooser.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        playAgainLooser.getStyleClass().add("play-btn");
+        playAgainLooser.setText("Play Again");
+        playAgainLooser.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        playAgainLooser.setEffect(innerShadow3);
+
+        watchVideoLooser.setLayoutX(201.0);
+        watchVideoLooser.setLayoutY(193.0);
+        watchVideoLooser.setMnemonicParsing(false);
+        watchVideoLooser.setPrefHeight(17.0);
+        watchVideoLooser.setPrefWidth(88.0);
+        watchVideoLooser.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        watchVideoLooser.getStyleClass().add("play-btn");
+        watchVideoLooser.setText("Wach Video");
+        watchVideoLooser.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        watchVideoLooser.setEffect(innerShadow4);
+
+        looserPlayerName.setLayoutX(58.0);
+        looserPlayerName.setLayoutY(158.0);
+        looserPlayerName.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        looserPlayerName.setText("Player:");
+        looserPlayerName.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        looserPlayerName.setFont(new Font(15.0));
+
+        looserPlayerCharacter.setLayoutX(204.0);
+        looserPlayerCharacter.setLayoutY(158.0);
+        looserPlayerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        looserPlayerCharacter.setText("Character:");
+        looserPlayerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        looserPlayerCharacter.setFont(new Font(15.0));
+
+        labelLooserPlayerName.setLayoutX(123.0);
+        labelLooserPlayerName.setLayoutY(159.0);
+        labelLooserPlayerName.setPrefHeight(21.0);
+        labelLooserPlayerName.setPrefWidth(32.0);
+        labelLooserPlayerName.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelLooserPlayerName.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelLooserPlayerName.setFont(new Font(15.0));
+
+        labelLooserPlayerCharacter.setLayoutX(293.0);
+        labelLooserPlayerCharacter.setLayoutY(160.0);
+        labelLooserPlayerCharacter.setPrefHeight(21.0);
+        labelLooserPlayerCharacter.setPrefWidth(23.0);
+        labelLooserPlayerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        labelLooserPlayerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        labelLooserPlayerCharacter.setFont(new Font(15.0));
+
+        looseLabel.setLayoutX(116.0);
+        looseLabel.setLayoutY(26.0);
+        looseLabel.setStyle("-fx-font-weight: bolder;");
+        looseLabel.setText("Looser");
+        looseLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d300b4"));
+
+        looseLabel.setEffect(dropShadow3);
+        looseLabel.setFont(new Font("Microsoft Sans Serif", 37.0));
+        getChildren().add(backPane);
+        winner.getChildren().add(winnerMessage);
+        winner.getChildren().add(xIcone);
+        winner.getChildren().add(yIcone);
+        winner.getChildren().add(vsIcon);
+        winner.getChildren().add(platAgainWinner);
+        winner.getChildren().add(watchVideoWinner);
+        winner.getChildren().add(playerNameLabel);
+        winner.getChildren().add(playerCharacter);
+        winner.getChildren().add(labelWinnerPlayerName);
+        winner.getChildren().add(labelWinnerCharacter);
+        getChildren().add(winner);
+        draw.getChildren().add(drawMessage);
+        draw.getChildren().add(xIconDraw);
+        draw.getChildren().add(yIconDraw);
+        draw.getChildren().add(vsIconDraw);
+        draw.getChildren().add(playAgainDraw);
+        draw.getChildren().add(watchVideoDraw);
+        draw.getChildren().add(drawPlayerName);
+        draw.getChildren().add(drawPlayerCharacter);
+        draw.getChildren().add(labelDrawPlayerName);
+        draw.getChildren().add(labelDrawPlayerCharater);
+        draw.getChildren().add(drawLabel);
+        getChildren().add(draw);
+        looser.getChildren().add(looseMessage);
+        looser.getChildren().add(xIconeLooser);
+        looser.getChildren().add(yIconLooser);
+        looser.getChildren().add(vsIconLooser);
+        looser.getChildren().add(playAgainLooser);
+        looser.getChildren().add(watchVideoLooser);
+        looser.getChildren().add(looserPlayerName);
+        looser.getChildren().add(looserPlayerCharacter);
+        looser.getChildren().add(labelLooserPlayerName);
+        looser.getChildren().add(labelLooserPlayerCharacter);
+        looser.getChildren().add(looseLabel);
+        getChildren().add(looser);
+        
+        
 
         moveActions();
         first = firstTurn(xSelected);
