@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -54,8 +55,8 @@ public class LogInPage extends Pane {
     protected final DropShadow dropShadow4;
     protected final DropShadow dropShadow5;
 
-    public LogInPage(Stage primary, Thread thread) {
-
+    public LogInPage(Stage primary) {
+        AudioClip plonkSound = new AudioClip(this.getClass().getResource("../view/audio/start-click.mp3").toString());
         recrangleSeparator = new Rectangle();
         lableGame = new Label();
         logInFormContainer = new Rectangle();
@@ -77,6 +78,7 @@ public class LogInPage extends Pane {
                     int playerId = PlayerModel.loginPlayer(name, password);
                     if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
+                        plonkSound.play();
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
                     } else if (playerId == -1) {
                         //System.out.println("Please Enter Valid Password or Unique User Name");
@@ -253,33 +255,7 @@ public class LogInPage extends Pane {
         getChildren().add(joisticImage);
         getChildren().add(lockImage);
         getChildren().add(logoImage);
-        
-        
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                
-                for (int i = 0; i < 10; i++) {
-                    try {
-//                        labelReady.setText(newS);
-//                        System.out.println(".run()");
-                        Thread.sleep(2000);
-                        newS += "1";
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            newS += "1";
-                            labelReady.setText(newS);
-                        }
-                    });
-                }
-            }
-        });
-        
-        thread.start();
+       
 
     }
 }
