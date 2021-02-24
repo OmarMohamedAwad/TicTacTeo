@@ -51,7 +51,7 @@ public class LogInPage extends Pane {
     protected final DropShadow dropShadow4;
     protected final DropShadow dropShadow5;
 
-    public LogInPage(Stage primary) {
+    public LogInPage(Stage primary , Thread thread) {
 
         recrangleSeparator = new Rectangle();
         lableGame = new Label();
@@ -74,7 +74,7 @@ public class LogInPage extends Pane {
                     int playerId = PlayerModel.loginPlayer(name, password);
                     if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
-                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId , thread)));
                     } else if (playerId == -1) {
                         //System.out.println("Please Enter Valid Password or Unique User Name");
                         playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");

@@ -3,6 +3,8 @@ package tictacteo;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -60,7 +62,8 @@ public class OptionPage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
 
 
-    public OptionPage(Stage primary, int id) {
+    public OptionPage(Stage primary, int id , Thread thread) {
+          
         line = new Line();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -242,12 +245,11 @@ public class OptionPage extends AnchorPane {
                     else if((oRadioButton.isSelected()) && (computerRadioButton.isSelected())){
                         xSelected=false;
                     }
-                    primary.setScene(new Scene(new GamePage(primary, id, xSelected)));
+                    primary.setScene(new Scene(new GamePage(primary, id, xSelected , thread )));
                 } else {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText(null);
                     a.setContentText("You must choose your charcter and vs player");
-
                     a.show();
 
                 }
@@ -270,7 +272,7 @@ public class OptionPage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
 
-                primary.setScene(new Scene(new MyDashboardPage(primary, id)));
+                primary.setScene(new Scene(new MyDashboardPage(primary, id , thread)));
             }
         });
 
