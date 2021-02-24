@@ -22,8 +22,9 @@ public class TicTacTeo extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         //GamePage root = new GamePage(primaryStage,1);
-      
-        LogInPage root = new LogInPage(primaryStage);
+        Thread thread = new Thread();
+        thread.start();
+        LogInPage root = new LogInPage(primaryStage, thread);
 
         Scene scene = new Scene(root, 490, 417);
         

@@ -74,7 +74,7 @@ public class MyHistoryPage extends AnchorPane {
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+                //primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
             }
         });
         backInnerShadow = new InnerShadow();

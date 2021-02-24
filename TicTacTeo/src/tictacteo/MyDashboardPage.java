@@ -2,10 +2,12 @@ package tictacteo;
 
 import java.util.Iterator;
 import java.util.Vector;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -90,6 +92,7 @@ public class MyDashboardPage extends AnchorPane {
         playerId = id;
 
         setDesignProperty();
+        
         setActions(primary);
         setPlayerInfo();
     }
@@ -293,6 +296,7 @@ public class MyDashboardPage extends AnchorPane {
         getChildren().add(starImageView);
         getChildren().add(scoreText);
         getChildren().add(scoreValueText);
+        
 
     }
 
