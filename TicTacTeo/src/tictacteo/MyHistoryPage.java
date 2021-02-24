@@ -61,7 +61,7 @@ public class MyHistoryPage extends AnchorPane {
     protected final Label userNameLabel;
 
     @SuppressWarnings("empty-statement")
-    public MyHistoryPage(Stage primary, Player currentPlayer) {
+    public MyHistoryPage(Stage primary, Player currentPlayer , Thread thread) {
        int playerId=currentPlayer.getUserID();
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
@@ -74,7 +74,7 @@ public class MyHistoryPage extends AnchorPane {
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+                primary.setScene(new Scene(new MyDashboardPage(primary, playerId , thread)));
             }
         });
         backInnerShadow = new InnerShadow();
