@@ -11,11 +11,10 @@ import java.util.Vector;
 import model.database.Player;
 
 public class PlayerModel {
+    static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
+    static final String DB_USER = "root";
+    static final String DB_PASSWD = "root@#123";
 
-    static final String DB_URL = "jdbc:mysql://41.233.71.50:3306/tiktaktoe";
-    static final String DB_USER = "player";
-    static final String DB_PASSWD = "player";
-   
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
     }
@@ -58,7 +57,7 @@ public class PlayerModel {
                 newPlayer.setPassword(password);
                 boolean addedSucess = addPlayer(newPlayer);
                 if (addedSucess) {
-                    ResultSet result = statement.executeQuery("SELECT User_ID FROM users where User_Name='" + username +"'");
+                    ResultSet result = statement.executeQuery("SELECT User_ID FROM users where User_Name='" + username + "'");
                     while (result.next()) {
                         userId = result.getInt("User_ID");
                     }
@@ -73,21 +72,20 @@ public class PlayerModel {
         return -1;
     }
 
-    public static boolean updatePlayerScore(int userid, String gameResult) {
+    public static boolean updatePlayerScore(int userid, int score) {
         try {
             Connection connection = connect();
             int lastScore = 0;
             Statement statement = (Statement) connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-            if ("Win".equals(gameResult)) {
-                while (resultSet.next()) {
-                    if (resultSet.getInt("User_ID") == userid) {
-                        lastScore = resultSet.getInt("Score");
-                        break;
-                    }
+            while (resultSet.next()) {
+                if (resultSet.getInt("User_ID") == userid) {
+                    lastScore = resultSet.getInt("Score");
+                    break;
                 }
-                lastScore++;
             }
+            lastScore += score;
+
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET Score = ? where User_ID=? ");
 
             preparedStatement.setInt(1, lastScore);
