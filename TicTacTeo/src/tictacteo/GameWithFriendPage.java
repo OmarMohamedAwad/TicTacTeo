@@ -92,6 +92,7 @@ public class GameWithFriendPage extends AnchorPane {
     static boolean stopThread = true;
     Player currentPlayer;
     public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+        stopThread = true;
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -627,7 +628,6 @@ public class GameWithFriendPage extends AnchorPane {
     }
 
     public String firstTurn(boolean xSelected) {
-        String first = "";
         if (random.nextInt(2) == 0) {
             friendTurn = true;
             if (xSelected) {
@@ -769,6 +769,7 @@ public class GameWithFriendPage extends AnchorPane {
         xImageView.setEffect(null);
         oImageView.setEffect(null);
         drawCounter = 0;
+        stopThread = true;
         oTurnLabel.setStyle("visibility: false;");
         xTurnLabel.setStyle("visibility: false;");
         first = firstTurn(xSelected);
