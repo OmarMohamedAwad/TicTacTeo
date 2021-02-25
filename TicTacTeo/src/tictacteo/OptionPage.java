@@ -247,9 +247,9 @@ public class OptionPage extends AnchorPane {
                     }
 
                     if(computerRadioButton.isSelected())
-                        primary.setScene(new Scene(new GamePage(primary, id, xSelected)));
+                        primary.setScene(new Scene(new GamePage(primary, id, xSelected, thread)));
                     else if(frindRadioButton.isSelected())
-                        primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected)));
+                        primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected, thread)));
                 } else {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText(null);

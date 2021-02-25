@@ -1098,7 +1098,7 @@ public class GamePage extends AnchorPane {
         exitButton.setOnAction(e 
             -> {
                 System.out.println("Her I am");
-                curruntClient.playerPrintStream.println("My Id="+id);
+                //curruntClient.playerPrintStream.println("My Id="+id);
         });
         
     }

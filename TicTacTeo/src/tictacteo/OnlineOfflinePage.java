@@ -44,8 +44,9 @@ public class OnlineOfflinePage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
     int playerId;
     boolean xSelected;
-    
-    public OnlineOfflinePage(Stage primary, int id, boolean xSelected) {
+    Thread thread;
+    public OnlineOfflinePage(Stage primary, int id, boolean xSelected, Thread thread) {
+        this.thread = thread;
         playerId = id;
         this.xSelected = xSelected;
         line = new Line();
@@ -213,15 +214,15 @@ public class OnlineOfflinePage extends AnchorPane {
     public void setActions(Stage primary) {
        
         offlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected, thread)))
         );
 
         onlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected, thread)))
         );
 
         backButton.setOnAction(e
-                -> primary.setScene(new Scene(new OptionPage(primary, playerId)))
+                -> primary.setScene(new Scene(new OptionPage(primary, playerId,thread)))
             
         );
     }

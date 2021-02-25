@@ -85,8 +85,10 @@ public class GameWithFriendPage extends AnchorPane {
     int drawCounter = 0;
     int id; 
     boolean xSelected;
+    Thread thread;
     
-    public GameWithFriendPage(Stage primary, int id, boolean xSelected) {
+    public GameWithFriendPage(Stage primary, int id, boolean xSelected, Thread thread) {
+        this.thread = thread;
         this.id = id;
         this.xSelected = xSelected;
         ds = new DropShadow(20, Color.AQUA);
@@ -514,7 +516,7 @@ public class GameWithFriendPage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
         
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected))));
+        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected, thread))));
         
         playAgainEnd.setOnAction(e
             -> { 

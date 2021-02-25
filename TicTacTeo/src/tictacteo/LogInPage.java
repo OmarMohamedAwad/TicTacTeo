@@ -79,7 +79,7 @@ public class LogInPage extends Pane {
                     if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
                         plonkSound.play();
-                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId, thread)));
 
                     } else if (playerId == -1) {
                         //System.out.println("Please Enter Valid Password or Unique User Name");
