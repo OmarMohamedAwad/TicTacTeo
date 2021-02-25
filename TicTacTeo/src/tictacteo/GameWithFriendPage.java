@@ -21,7 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
-import static tictacteo.RecordPage.thread2;
+
 
 public class GameWithFriendPage extends AnchorPane {
 
@@ -491,10 +491,10 @@ public class GameWithFriendPage extends AnchorPane {
         playerNameEndGameLabel.setText(currentPlayer.getUserName());
         playerNameEndGameLabel.setLayoutY(150.0);
         playerNameEndGameLabel.setPrefHeight(21.0);
-        playerNameEndGameLabel.setPrefWidth(50.0);
+        playerNameEndGameLabel.setPrefWidth(80.0);
         playerNameEndGameLabel.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
         playerNameEndGameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
-        playerNameEndGameLabel.setFont(new Font(15.0));
+        playerNameEndGameLabel.setFont(new Font(13.0));
 
         characterEndGameLable.setLayoutX(275.0);
         characterEndGameLable.setLayoutY(150.0);
@@ -503,7 +503,7 @@ public class GameWithFriendPage extends AnchorPane {
         characterEndGameLable.setText(userChar);
         characterEndGameLable.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
-        characterEndGameLable.setFont(new Font(15.0));
+        characterEndGameLable.setFont(new Font(13.0));
 
         getChildren().add(backPane);
         endGamePane.getChildren().add(endGameImageView);
@@ -716,7 +716,7 @@ public class GameWithFriendPage extends AnchorPane {
     }
 
     public void displayEndGame(String img) {
-        thread2 = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -742,7 +742,7 @@ public class GameWithFriendPage extends AnchorPane {
             }
 
         });
-        thread2.start();
+        thread.start();
     }
 
     public void changeButtonsColor(Button btn1, Button btn2, Button btn3) {

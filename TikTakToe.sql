@@ -93,3 +93,6 @@ Room_ID int AUTO_INCREMENT,
 PRIMARY KEY (Room_ID),
  FOREIGN KEY(player_1_Id) references users(User_ID)
 );
+
+
+alter table roomsCrearion ADD CONSTRAINT uniqueName UNIQUE (Room_Name);

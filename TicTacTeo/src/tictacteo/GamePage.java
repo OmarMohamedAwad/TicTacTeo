@@ -150,7 +150,7 @@ public class GamePage extends AnchorPane {
     int id;
     int userCount;
     Player user;
-    int userCount;
+   
     int score = 0;
     String status = "";
     History newUserHistory = new History();
@@ -167,9 +167,8 @@ public class GamePage extends AnchorPane {
         newUserHistory.setVsPlayer("Computer" + computerChar);
         newUserHistory.setPlayerId(id);
         this.id = id;
-        ds = new DropShadow(20, Color.AQUA);
-        backPane = new Pane();
-        curruntClient = new ClientSide();
+      
+   
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
@@ -421,7 +420,7 @@ public class GamePage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
                 PlayerModel.updatePlayerScore(id, score);
-                primary.setScene(new Scene(new OptionPage(primary, id, thread)));
+                primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)));
             }
         });
 
