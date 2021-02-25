@@ -3,8 +3,6 @@ package tictacteo;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -84,6 +82,7 @@ public class GameWithFriendPage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     
+    int drawCounter = 0;
     int id; 
     boolean xSelected;
     
@@ -549,6 +548,11 @@ public class GameWithFriendPage extends AnchorPane {
         String b8 = button21.getText();
         String b9 = button22.getText();
 
+        if(drawCounter >= 9){
+            status = "Equal";
+            displayEndGame("../view/images/gameMessages/drawc.jpg");
+        }
+        
         if (b1 == "X" && b2 == "X" && b3 == "X") {
             changeButtonsColor(button00, button01, button02);
             userXWin(status);
@@ -597,9 +601,8 @@ public class GameWithFriendPage extends AnchorPane {
         } else if (b3 == "O" && b5 == "O" && b7 == "O") {
             changeButtonsColor(button02, button11, button20);
             userOWin(status);
-        } else {
-            userEqual(status);
-        }
+        }   
+        
     }
     
     public String userChar(boolean xSelected) {
@@ -702,11 +705,6 @@ public class GameWithFriendPage extends AnchorPane {
             displayEndGame("../view/images/gameMessages/loos.png");
         }
     }
-
-    public void userEqual(String status) {
-        status = "Equal";
-        //displayEndGame("../view/images/gameMessages/drawc.jpj");
-    }
     
     public void displayEndGame(String img){
         backPane.setStyle("-fx-background-color: #0c0721; visibility: true;");
@@ -722,6 +720,7 @@ public class GameWithFriendPage extends AnchorPane {
     
     public void changeButtonStatus(Button button){
         if (button.getText() == "") {
+            drawCounter += 1;
             button.setText(first);
             button.setFont(new Font("SansSerif Bold", 15.0));
             first = switchTurns(first);
@@ -732,6 +731,7 @@ public class GameWithFriendPage extends AnchorPane {
     public void resetAll(){
         xImageView.setEffect(null);
         oImageView.setEffect(null);
+        drawCounter = 0;
         oTurnLabel.setStyle("visibility: false;");
         xTurnLabel.setStyle("visibility: false;");
         first = firstTurn(xSelected);
