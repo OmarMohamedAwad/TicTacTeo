@@ -58,7 +58,7 @@ public class MyDashboardPage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
     private int playerId;
 
-    public MyDashboardPage(Stage primary, int id) {
+    public MyDashboardPage(Stage primary, int id , Thread thread) {
 
         logoStackPane = new StackPane();
         logoImageView = new ImageView();
@@ -92,8 +92,7 @@ public class MyDashboardPage extends AnchorPane {
         playerId = id;
 
         setDesignProperty();
-        
-        setActions(primary);
+        setActions(primary , thread);
         setPlayerInfo();
     }
 
@@ -300,24 +299,20 @@ public class MyDashboardPage extends AnchorPane {
 
     }
 
-    public void setActions(Stage primary) {
+    public void setActions(Stage primary , Thread thread) {
         //DISPLAY HISTORY OF THE USER HIMSELF
         myHistoryButton.setOnAction(e
-                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer)))
+                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer , thread)))
         );
 
         //SELECT TOP SCORE PAGE
         topScoreButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId)))
+                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId , thread)))
         );
 
-        playButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                primary.setScene(new Scene(new OptionPage(primary, playerId)));
-            }
-        });
+        playButton.setOnAction(e
+                -> primary.setScene(new Scene(new OptionPage(primary, playerId ,thread)))
+        );
     }
 
     public void setPlayerInfo() {

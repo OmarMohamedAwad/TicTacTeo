@@ -55,7 +55,7 @@ public class LogInPage extends Pane {
     protected final DropShadow dropShadow4;
     protected final DropShadow dropShadow5;
 
-    public LogInPage(Stage primary) {
+    public LogInPage(Stage primary , Thread thread) {
         AudioClip plonkSound = new AudioClip(this.getClass().getResource("../view/audio/start-click.mp3").toString());
         recrangleSeparator = new Rectangle();
         lableGame = new Label();
@@ -80,6 +80,7 @@ public class LogInPage extends Pane {
                         System.out.println("THIS IS positive case CASE ");
                         plonkSound.play();
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+
                     } else if (playerId == -1) {
                         //System.out.println("Please Enter Valid Password or Unique User Name");
                         playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");

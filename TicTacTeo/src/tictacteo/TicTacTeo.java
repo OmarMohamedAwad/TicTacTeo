@@ -16,17 +16,17 @@ public class TicTacTeo extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Thread thread = new Thread();
+        thread.start();
 
-                
-        //GamePage root = new GamePage(primaryStage,1);
-        
-        LogInPage root = new LogInPage(primaryStage);
-
+        LogInPage root = new LogInPage(primaryStage , thread);
         Scene scene = new Scene(root, 490, 417);
         
         primaryStage.setTitle("Tic Tac Toe");
