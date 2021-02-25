@@ -28,11 +28,11 @@ public class HistoryModel {
     public static boolean addHistory(History userHistory) {
         try {
             Connection connection = connect();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO history (Date,Vs_Player,Status,Player_ID) VALUES (?,?,?,?)");
-            preparedStatement.setString(1, userHistory.getDate());
-            preparedStatement.setString(2, userHistory.getVsPlayer());
-            preparedStatement.setString(3, userHistory.getStatus());
-            preparedStatement.setInt(4, userHistory.getPlayerId());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO history (Date,Vs_Player,Status,Player_ID) VALUES (now(),?,?,?)");
+//            preparedStatement.setString(1, "now()");
+            preparedStatement.setString(1, userHistory.getVsPlayer());
+            preparedStatement.setString(2, userHistory.getStatus());
+            preparedStatement.setInt(3, userHistory.getPlayerId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();

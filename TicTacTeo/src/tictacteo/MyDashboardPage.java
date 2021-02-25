@@ -2,10 +2,12 @@ package tictacteo;
 
 import java.util.Iterator;
 import java.util.Vector;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -56,7 +58,7 @@ public class MyDashboardPage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
     private int playerId;
 
-    public MyDashboardPage(Stage primary, int id) {
+    public MyDashboardPage(Stage primary, int id , Thread thread) {
 
         logoStackPane = new StackPane();
         logoImageView = new ImageView();
@@ -90,7 +92,7 @@ public class MyDashboardPage extends AnchorPane {
         playerId = id;
 
         setDesignProperty();
-        setActions(primary);
+        setActions(primary , thread);
         setPlayerInfo();
     }
 
@@ -293,27 +295,24 @@ public class MyDashboardPage extends AnchorPane {
         getChildren().add(starImageView);
         getChildren().add(scoreText);
         getChildren().add(scoreValueText);
+        
 
     }
 
-    public void setActions(Stage primary) {
+    public void setActions(Stage primary , Thread thread) {
         //DISPLAY HISTORY OF THE USER HIMSELF
         myHistoryButton.setOnAction(e
-                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer)))
+                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer , thread)))
         );
 
         //SELECT TOP SCORE PAGE
         topScoreButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId)))
+                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId , thread)))
         );
 
-        playButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                primary.setScene(new Scene(new OptionPage(primary, playerId)));
-            }
-        });
+        playButton.setOnAction(e
+                -> primary.setScene(new Scene(new OptionPage(primary, playerId ,thread)))
+        );
     }
 
     public void setPlayerInfo() {

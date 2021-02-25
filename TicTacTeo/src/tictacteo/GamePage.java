@@ -148,6 +148,7 @@ public class GamePage extends AnchorPane {
     protected final Button Button22;
     int id;
     ClientSide curruntClient;
+
     int userCount;
     int score = 0;
     String status = "";
@@ -155,13 +156,12 @@ public class GamePage extends AnchorPane {
     String gameLevel;
     boolean gameOver;
 
-    public GamePage(Stage primary, int id, boolean xSelected) {
+    public GamePage(Stage primary, int id, boolean xSelected, Thread thread) {
         Player user = new Player();
         user = PlayerModel.playerInfo(id);
         String userName = user.getUserName();
-        newUserHistory.setVsPlayer("Computer");
+        newUserHistory.setVsPlayer("Computer" + computerChar);
         newUserHistory.setPlayerId(id);
-        newUserHistory.setDate("ay haga");
         this.id = id;
         ds = new DropShadow(20, Color.AQUA);
         backPane = new Pane();
@@ -256,7 +256,6 @@ public class GamePage extends AnchorPane {
         Button20 = new Button();
         Button21 = new Button();
         Button22 = new Button();
-
         anchorPaneShadow = new DropShadow();
 
         setId("AnchorPane");
@@ -386,7 +385,7 @@ public class GamePage extends AnchorPane {
 
         xImage.setFitHeight(55.0);
         xImage.setFitWidth(55.0);
-        xImage.setLayoutX(155.0);
+        xImage.setLayoutX(145.0);
         xImage.setLayoutY(89.0);
         you.setLayoutX(115.0);
         you.setLayoutY(105.0);
@@ -397,12 +396,12 @@ public class GamePage extends AnchorPane {
         oImage.setFitWidth(55.0);
         computer.setLayoutX(330.0);
         computer.setLayoutY(105.0);
-        oImage.setLayoutX(269.0);
+        oImage.setLayoutX(250.0);
         oImage.setLayoutY(89.0);
         oImage.setPickOnBounds(true);
         oImage.setPreserveRatio(true);
         oImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
-        exitButton.setLayoutX(127.0);
+        exitButton.setLayoutX(110.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
         exitButton.setMaxWidth(129.0);
@@ -417,13 +416,13 @@ public class GamePage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
                 PlayerModel.updatePlayerScore(id, score);
-                primary.setScene(new Scene(new OptionPage(primary, id)));
+                primary.setScene(new Scene(new OptionPage(primary, id, thread)));
             }
         });
 
         exitButton.setEffect(exitButtonShadow);
         exitButton.setEffect(exitButtonShadow);
-        playAgainButton.setLayoutX(251.0);
+        playAgainButton.setLayoutX(230.0);
         playAgainButton.setLayoutY(353.0);
         playAgainButton.setMaxHeight(37.0);
         playAgainButton.setMaxWidth(129.0);
@@ -438,7 +437,9 @@ public class GamePage extends AnchorPane {
         playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
+
                 gameReset(xSelected);
+
             }
         });
 
@@ -446,12 +447,12 @@ public class GamePage extends AnchorPane {
         xOPane.setLayoutY(166.0);
         xOPane.setPrefHeight(160.0);
         xOPane.setPrefWidth(260.0);
-        xOPane.setStyle("-fx-background-color: white;");
+        xOPane.setStyle("-fx-background-color:  #343F4B;");
 
-        gridPane.setLayoutX(0.0);
-        gridPane.setLayoutY(0.0);
-        gridPane.setPrefHeight(160.0);
-        gridPane.setPrefWidth(260.0);
+        gridPane.setLayoutX(5.0);
+        gridPane.setLayoutY(-8.0);
+        gridPane.setPrefHeight(178.0);
+        gridPane.setPrefWidth(221.0);
 
         if (xSelected) {
             you.setText("YOU");
@@ -467,7 +468,7 @@ public class GamePage extends AnchorPane {
         Button00.setLayoutY(11.0);
         Button00.setMnemonicParsing(false);
         Button00.setPrefHeight(48.0);
-        Button00.setPrefWidth(84.0);
+        Button00.setPrefWidth(60.0);
         Button00.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -486,12 +487,12 @@ public class GamePage extends AnchorPane {
                 if (Button00.getText() == "") {
                     Button00.setText(first);
                     Button00.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("00");
                     first = switchTurns(first);
                     check(userName);
 
                 }
-                record.add("x");
-                position.add("Button00");
 
             }
         });
@@ -500,66 +501,84 @@ public class GamePage extends AnchorPane {
         Button01.setLayoutY(118.0);
         Button01.setMnemonicParsing(false);
         Button01.setPrefHeight(48.0);
-        Button01.setPrefWidth(84.0);
+        Button01.setPrefWidth(60.0);
         Button01.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-
                 if (Button01.getText() == "") {
                     Button01.setText(first);
                     Button01.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("01");
                     first = switchTurns(first);
+
                     check(userName);
 
                 }
-                record.add("o");
-                position.add("Button01");
 
             }
+
         });
 
-        GridPane.setRowIndex(Button02, 2);
-        Button02.setLayoutX(10.0);
-        Button02.setLayoutY(11.0);
-        Button02.setMnemonicParsing(false);
-        Button02.setPrefHeight(48.0);
-        Button02.setPrefWidth(84.0);
-        Button02.setOnAction(new EventHandler<ActionEvent>() {
+        GridPane.setRowIndex(Button02,
+                2);
+        Button02.setLayoutX(
+                10.0);
+        Button02.setLayoutY(
+                11.0);
+        Button02.setMnemonicParsing(
+                false);
+        Button02.setPrefHeight(
+                48.0);
+        Button02.setPrefWidth(
+                60.0);
+        Button02.setOnAction(
+                new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent ev) {
+            public void handle(ActionEvent ev
+            ) {
 
                 if (Button02.getText() == "") {
                     Button02.setText(first);
                     Button02.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("02");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("x");
-                position.add("Button02");
-            }
-        });
 
-        GridPane.setColumnIndex(Button10, 1);
-        Button10.setLayoutX(10.0);
-        Button10.setLayoutY(63.0);
-        Button10.setMnemonicParsing(false);
-        Button10.setPrefHeight(48.0);
-        Button10.setPrefWidth(84.0);
+            }
+        }
+        );
+
+        GridPane.setColumnIndex(Button10,
+                1);
+        Button10.setLayoutX(
+                10.0);
+        Button10.setLayoutY(
+                63.0);
+        Button10.setMnemonicParsing(
+                false);
+        Button10.setPrefHeight(
+                48.0);
+        Button10.setPrefWidth(
+                60.0);
         Button10.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent ev) {
-                record.add("o");
-                position.add("Button10");
-
                 if (Button10.getText() == "") {
                     Button10.setText(first);
                     Button10.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("10");
                     first = switchTurns(first);
                     check(userName);
                 }
 
             }
-        });
+        }
+        );
 
         GridPane.setColumnIndex(Button11, 1);
         GridPane.setRowIndex(Button11, 1);
@@ -567,18 +586,19 @@ public class GamePage extends AnchorPane {
         Button11.setLayoutY(11.0);
         Button11.setMnemonicParsing(false);
         Button11.setPrefHeight(48.0);
-        Button11.setPrefWidth(84.0);
+        Button11.setPrefWidth(60.0);
         Button11.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
                 if (Button11.getText() == "") {
                     Button11.setText(first);
                     Button11.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("11");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("x");
-                position.add("Button11");
+
             }
         });
 
@@ -588,7 +608,7 @@ public class GamePage extends AnchorPane {
         Button12.setLayoutY(63.0);
         Button12.setMnemonicParsing(false);
         Button12.setPrefHeight(48.0);
-        Button12.setPrefWidth(84.0);
+        Button12.setPrefWidth(60.0);
         Button12.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -596,11 +616,12 @@ public class GamePage extends AnchorPane {
                 if (Button12.getText() == "") {
                     Button12.setText(first);
                     Button12.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("12");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("o");
-                position.add("Button12");
+
             }
 
         });
@@ -608,7 +629,7 @@ public class GamePage extends AnchorPane {
         GridPane.setColumnIndex(Button20, 2);
         Button20.setMnemonicParsing(false);
         Button20.setPrefHeight(48.0);
-        Button20.setPrefWidth(84.0);
+        Button20.setPrefWidth(60.0);
         Button20.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -616,11 +637,12 @@ public class GamePage extends AnchorPane {
                 if (Button20.getText() == "") {
                     Button20.setText(first);
                     Button20.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("20");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("x");
-                position.add("Button20");
+
             }
         });
 
@@ -630,7 +652,7 @@ public class GamePage extends AnchorPane {
         Button21.setLayoutY(11.0);
         Button21.setMnemonicParsing(false);
         Button21.setPrefHeight(48.0);
-        Button21.setPrefWidth(84.0);
+        Button21.setPrefWidth(60.0);
         Button21.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -638,11 +660,11 @@ public class GamePage extends AnchorPane {
                 if (Button21.getText() == "") {
                     Button21.setText(first);
                     Button21.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("21");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("x");
-                position.add("Button21");
 
             }
         });
@@ -653,50 +675,19 @@ public class GamePage extends AnchorPane {
         Button22.setLayoutY(11.0);
         Button22.setMnemonicParsing(false);
         Button22.setPrefHeight(48.0);
-        Button22.setPrefWidth(84.0);
+        Button22.setPrefWidth(60.0);
         Button22.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
                 if (Button22.getText() == "") {
                     Button22.setText(first);
                     Button22.setFont(new Font("SansSerif Bold", 15.0));
+                    record.add(first);
+                    position.add("22");
                     first = switchTurns(first);
                     check(userName);
                 }
-                record.add("o");
-                position.add("Button22");
-//                class Record extends Thread {
-//
-//                    Thread th;
-//
-//                    public Record() {
-//                        Thread th = new Thread();
-//                        th.start();
-//                    }
-//
-//                    @Override
-//                    public void run() {
-//                        boolean pf = true;
-//
-//                        while (pf) {
-//                            for (int i = 0; i < record.size(); i++) {
-//                                System.out.println(record.get(i));
-//                                try {
-//                                    Thread.sleep(1000);
-//
-//                                } catch (InterruptedException e) {
-//                                }
-//                                if (record.size() - 1 == i) {
-//
-//                                    pf = false;
-//                                }
-//                            }
-//
-//                        }
-//    }
-//}
-//                Record rd = new Record();
-//                rd.run();
+
             }
         });
 
@@ -731,19 +722,19 @@ public class GamePage extends AnchorPane {
         columnGridPaneConstrains3.setMinWidth(10.0);
         columnGridPaneConstrains3.setPrefWidth(100.0);
 
-        rowGridPaneConstrains1.setMaxHeight(50.0);
+        rowGridPaneConstrains1.setMaxHeight(69.0);
         rowGridPaneConstrains1.setMinHeight(10.0);
-        rowGridPaneConstrains1.setPrefHeight(50.0);
+        rowGridPaneConstrains1.setPrefHeight(57.0);
         rowGridPaneConstrains1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         rowConstraints2.setMaxHeight(69.0);
         rowConstraints2.setMinHeight(10.0);
-        rowConstraints2.setPrefHeight(52.0);
+        rowConstraints2.setPrefHeight(57.0);
         rowConstraints2.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        rowGridPaneConstrains3.setMaxHeight(68.0);
+        rowGridPaneConstrains3.setMaxHeight(69.0);
         rowGridPaneConstrains3.setMinHeight(10.0);
-        rowGridPaneConstrains3.setPrefHeight(54.0);
+        rowGridPaneConstrains3.setPrefHeight(52.0);
         rowGridPaneConstrains3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         gridPane.getChildren().add(Button00);
@@ -756,7 +747,6 @@ public class GamePage extends AnchorPane {
         gridPane.getChildren().add(Button21);
         gridPane.getChildren().add(Button22);
         xOPane.getChildren().add(gridPane);
-        getChildren().add(xOPane);
 
         winner.setLayoutX(78.0);
         winner.setLayoutY(132.0);
@@ -772,6 +762,7 @@ public class GamePage extends AnchorPane {
         winnerMessage.setLayoutY(4.0);
         winnerMessage.setImage(new Image(getClass().getResource("../view/images/gameMessages/win.png").toExternalForm()));
 
+        getChildren().add(xOPane);
         xIcone.setFitHeight(45.0);
         xIcone.setFitWidth(72.0);
         xIcone.setLayoutX(107.0);
@@ -820,6 +811,12 @@ public class GamePage extends AnchorPane {
         watchVideoWinner.getStyleClass().add("play-btn");
         watchVideoWinner.setText("Wach Video");
         watchVideoWinner.setTextFill(javafx.scene.paint.Color.WHITE);
+        watchVideoWinner.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                primary.setScene(new Scene(new RecordPage(primary, id, record, position, thread)));
+            }
+        });
 
         watchVideoWinner.setEffect(innerShadow0);
 
@@ -1060,7 +1057,9 @@ public class GamePage extends AnchorPane {
 
         looseLabel.setEffect(dropShadow3);
         looseLabel.setFont(new Font("Microsoft Sans Serif", 37.0));
+
         getChildren().add(backPane);
+
         winner.getChildren().add(winnerMessage);
         winner.getChildren().add(xIcone);
         winner.getChildren().add(yIcone);
@@ -1104,10 +1103,10 @@ public class GamePage extends AnchorPane {
         getChildren().add(looser);
         userChar = userChar(xSelected);
         initialize();
-        moveActions();
+
         first = firstTurn(xSelected);
+        System.out.println(rand.nextInt((9 - 1) + 1) + 1); 
         computerAlgorithm();
-        
 
     }
 
@@ -1124,21 +1123,16 @@ public class GamePage extends AnchorPane {
         board[2][2] = Button22;
         gameLevel = "unknown";
         gameOver = false;
-    }
-    public void moveActions() {
-        playAgainButton.setOnAction(e 
-            -> {
-                System.out.println("Her I am");
-                curruntClient.playerPrintStream.println("My Id="+id);
-        });
 
     }
+
     public void computerAlgorithm() {
         boolean empty = false;
+        int row, column;
         if (first == computerChar) {
             while (!empty) {
-                int row = rand.nextInt((9 - 1) + 1) + 1;
-                int column = rand.nextInt((9 - 1) + 1) + 1;
+                row = rand.nextInt((2 - 0) + 1) + 0;
+                column = rand.nextInt((2 - 0) + 1) + 0;
                 if (board[row][column].getText() == "") {
                     board[row][column].setText(computerChar);
                     empty = true;
@@ -1146,6 +1140,7 @@ public class GamePage extends AnchorPane {
             }
         }
     }
+
     public String firstTurn(boolean xSelected) {
         if (random.nextInt(2) == 0) {
             computerTurn = true;
@@ -1176,6 +1171,7 @@ public class GamePage extends AnchorPane {
 
     public void decorateWin() {
     }
+
     public void check(String userName) {
 
         String b1 = Button00.getText();
@@ -1192,61 +1188,76 @@ public class GamePage extends AnchorPane {
             Button00.setStyle("-fx-background-color: yellow; ");
             Button01.setStyle("-fx-background-color: yellow; ");
             Button02.setStyle("-fx-background-color: yellow; ");
-            userXWin(userName);
+
+            userXWin(status);
+
         } else if (b4 == "X" && b5 == "X" && b6 == "X") {
 
             Button10.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
             userXWin(userName);
+
         } else if (b7 == "X" && b8 == "X" && b9 == "X") {
 
             Button20.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
             userXWin(userName);
+
         } else if (b1 == "X" && b4 == "X" && b7 == "X") {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button10.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
             userXWin(userName);
+
         } else if (b2 == "X" && b5 == "X" && b8 == "X") {
 
             Button01.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
+
             userXWin(userName);
+
         } else if (b3 == "X" && b6 == "X" && b9 == "X") {
 
             Button02.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
+
             userXWin(userName);
+
         } else if (b1 == "X" && b5 == "X" && b9 == "X") {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
+
             userXWin(userName);
+
         } else if (b3 == "X" && b5 == "X" && b7 == "X") {
 
             Button02.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
+
             userXWin(userName);
+
         } else if (b1 == "O" && b2 == "O" && b3 == "O") {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button01.setStyle("-fx-background-color: yellow; ");
             Button02.setStyle("-fx-background-color: yellow; ");
             userOWin(userName);
+
         } else if (b4 == "O" && b5 == "O" && b6 == "O") {
 
             Button10.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
             userOWin(userName);
+
         } else if (b7 == "O" && b8 == "O" && b9 == "O") {
 
             Button20.setStyle("-fx-background-color: yellow; ");
@@ -1264,6 +1275,7 @@ public class GamePage extends AnchorPane {
             Button11.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
             userOWin(userName);
+
         } else if (b3 == "O" && b6 == "O" && b9 == "O") {
             Button02.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
@@ -1274,14 +1286,17 @@ public class GamePage extends AnchorPane {
             Button11.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
             userOWin(userName);
+
         } else if (b3 == "O" && b5 == "O" && b7 == "O") {
             Button02.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
+
             userOWin(userName);
         } else if (b1 != "" && b2 != "" && b3 != "" && b4 != "" && b5 != "" && b6 != "" && b7 != "" && b8 != "" && b9 != "") {
             userEqual(userName);
         }
+
     }
 
     public void userXWin(String userName) {
@@ -1296,7 +1311,7 @@ public class GamePage extends AnchorPane {
             labelWinnerPlayerName.setText(userName);
             labelWinnerCharacter.setText(userChar);
             newUserHistory.setStatus(status);
-            System.out.println( HistoryModel.addHistory(newUserHistory));
+            System.out.println(HistoryModel.addHistory(newUserHistory));
 
         } else {
             status = "looser";
@@ -1307,7 +1322,7 @@ public class GamePage extends AnchorPane {
             labelLooserPlayerCharacter.setText(userChar);
             labelLooserPlayerName.setText(userName);
             newUserHistory.setStatus(status);
-            System.out.println( HistoryModel.addHistory(newUserHistory));
+            System.out.println(HistoryModel.addHistory(newUserHistory));
 
         }
     }
@@ -1324,7 +1339,7 @@ public class GamePage extends AnchorPane {
             labelWinnerPlayerName.setText(userName);
             labelWinnerCharacter.setText(userChar);
             newUserHistory.setStatus(status);
-            System.out.println( HistoryModel.addHistory(newUserHistory));
+            System.out.println(HistoryModel.addHistory(newUserHistory));
 
         } else {
             status = "loose";
@@ -1335,7 +1350,7 @@ public class GamePage extends AnchorPane {
             labelLooserPlayerCharacter.setText(userChar);
             labelLooserPlayerName.setText(userName);
             newUserHistory.setStatus(status);
-            System.out.println( HistoryModel.addHistory(newUserHistory));
+            System.out.println(HistoryModel.addHistory(newUserHistory));
 
         }
     }
@@ -1347,12 +1362,16 @@ public class GamePage extends AnchorPane {
         labelDrawPlayerCharater.setText(userChar);
         labelDrawPlayerName.setText(userName);
         newUserHistory.setStatus(status);
-        System.out.println( HistoryModel.addHistory(newUserHistory));
+        System.out.println(HistoryModel.addHistory(newUserHistory));
 
     }
 
     public void gameReset(boolean xSelected) {
-
+        record.clear();
+        position.clear();
+        xImage.setEffect(null);
+        oImage.setEffect(null);
+        first = firstTurn(xSelected);
         xImage.setEffect(null);
         oImage.setEffect(null);
         first = firstTurn(xSelected);
@@ -1382,17 +1401,17 @@ public class GamePage extends AnchorPane {
         String userChar;
         if (xSelected) {
             userChar = "X";
-            computerChar="O";
+            computerChar = "O";
             return userChar;
         } else {
             userChar = "O";
-            computerChar="X";
+            computerChar = "X";
             return userChar;
         }
 
     }
 
-   public String switchTurns(String first) {
+    public String switchTurns(String first) {
         if (xImage.getEffect() == null) {
             oImage.setEffect(null);
             xImage.setEffect(ds);

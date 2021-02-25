@@ -49,7 +49,7 @@ public class GameHistoryPage extends Pane {
     protected final DropShadow dropShadow3;
     private int playerId;
     
-    public GameHistoryPage(Stage primary, int id) {
+    public GameHistoryPage(Stage primary, int id , Thread thread) {
 
         separatorRectangle = new Rectangle();
         gameNameLabelView = new Label();
@@ -72,7 +72,7 @@ public class GameHistoryPage extends Pane {
         playerId = id;
         
         setDesignProperty();
-        setActions(primary);
+        setActions(primary , thread);
     }
     
     public void setDesignProperty(){
@@ -179,10 +179,10 @@ public class GameHistoryPage extends Pane {
         
     }
     
-    public void setActions(Stage primary){
+    public void setActions(Stage primary ,Thread thread){
         //Back Again to Dahboard
         backButton.setOnAction(e -> 
-                primary.setScene(new Scene(new MyDashboardPage(primary,playerId)))
+                primary.setScene(new Scene(new MyDashboardPage(primary,playerId , thread)))
         );
     }
     
