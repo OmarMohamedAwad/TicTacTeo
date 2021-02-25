@@ -3,6 +3,8 @@ package tictacteo;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,12 +62,28 @@ public class GameWithFriendPage extends AnchorPane {
     protected final Button button22;
     protected final ImageView xImageView;
     protected final ImageView oImageView;
-    protected final Label oTurnLabel;
-    protected final DropShadow dropShadow2;
-    protected final ImageView vsImageView;
     protected final Label xTurnLabel;
+    protected final DropShadow looserDropShadow;
+    protected final ImageView vsImageView;
+    protected final Label oTurnLabel;
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
+    protected final Pane backPane;
+    
+    protected final Pane endGamePane;
+    protected final ImageView endGameImageView;
+    protected final ImageView xIcone;
+    protected final ImageView yIcone;
+    protected final ImageView vsIcon;
+    protected final Button playAgainEnd;
+    protected final InnerShadow innerShadow;
+    protected final Button watchVideoEndGame;
+    protected final InnerShadow innerShadow0;
+    protected final Label playerNameLabel;
+    protected final Label playerCharacter;
+    protected final Label playerNameEndGameLabel;
+    protected final Label characterEndGameLable;
+    
     int id; 
     boolean xSelected;
     
@@ -102,17 +120,36 @@ public class GameWithFriendPage extends AnchorPane {
         button22 = new Button();
         xImageView = new ImageView();
         oImageView = new ImageView();
-        oTurnLabel = new Label();
-        dropShadow2 = new DropShadow();
-        vsImageView = new ImageView();
         xTurnLabel = new Label();
+        looserDropShadow = new DropShadow();
+        vsImageView = new ImageView();
+        oTurnLabel = new Label();
         dropShadow3 = new DropShadow();
         dropShadow4 = new DropShadow();
+        backPane = new Pane();
+        
+        endGamePane = new Pane();
+        endGameImageView = new ImageView();
+        xIcone = new ImageView();
+        yIcone = new ImageView();
+        vsIcon = new ImageView();
+        playAgainEnd = new Button();
+        innerShadow = new InnerShadow();
+        watchVideoEndGame = new Button();
+        innerShadow0 = new InnerShadow();
+        playerNameLabel = new Label();
+        playerCharacter = new Label();
+        playerNameEndGameLabel = new Label();
+        characterEndGameLable = new Label();
+    
+        userChar = userChar(xSelected);        
         
         setDesignProperty();
-        setActionsPage(primary);
+        endGameDesign();
         first = firstTurn(xSelected);
-        userChar = userChar(xSelected);
+        setActionsPage(primary);
+        setButtonsAction();
+        
     }
     
     public void setDesignProperty(){
@@ -297,25 +334,7 @@ public class GameWithFriendPage extends AnchorPane {
         oImageView.setPreserveRatio(true);
         oImageView.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
-        oTurnLabel.setLayoutX(22.0);
-        oTurnLabel.setLayoutY(254.0);
-        oTurnLabel.setPrefHeight(26.0);
-        oTurnLabel.setPrefWidth(72.0);
-        oTurnLabel.setText("Your Turn");
-        oTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        oTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-        oTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
-
-        dropShadow2.setColor(javafx.scene.paint.Color.valueOf("#1b1a1a"));
-        oTurnLabel.setEffect(dropShadow2);
-
-        vsImageView.setFitHeight(78.0);
-        vsImageView.setFitWidth(83.0);
-        vsImageView.setLayoutX(209.0);
-        vsImageView.setLayoutY(70.0);
-        vsImageView.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
-
-        xTurnLabel.setLayoutX(398.0);
+        xTurnLabel.setLayoutX(22.0);
         xTurnLabel.setLayoutY(254.0);
         xTurnLabel.setPrefHeight(26.0);
         xTurnLabel.setPrefWidth(72.0);
@@ -324,9 +343,36 @@ public class GameWithFriendPage extends AnchorPane {
         xTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         xTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
 
-        dropShadow3.setColor(javafx.scene.paint.Color.valueOf("#1b1a1a"));
-        xTurnLabel.setEffect(dropShadow3);
+        xTurnLabel.setEffect(looserDropShadow);
+        xTurnLabel.setStyle("visibility: false;");
+        
+        vsImageView.setFitHeight(78.0);
+        vsImageView.setFitWidth(83.0);
+        vsImageView.setLayoutX(209.0);
+        vsImageView.setLayoutY(70.0);
+        vsImageView.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
 
+        oTurnLabel.setLayoutX(398.0);
+        oTurnLabel.setLayoutY(254.0);
+        oTurnLabel.setPrefHeight(26.0);
+        oTurnLabel.setPrefWidth(72.0);
+        oTurnLabel.setText("Your Turn");
+        oTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        oTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        oTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
+        xImageView.setEffect(null);
+        oImageView.setEffect(null);
+        dropShadow3.setColor(javafx.scene.paint.Color.valueOf("#1b1a1a"));
+        oTurnLabel.setEffect(dropShadow3);
+        oTurnLabel.setStyle("visibility: false;");
+        
+        backPane.setLayoutX(0.0);
+        backPane.setLayoutY(69.0);
+        backPane.setOpacity(0.7);
+        backPane.setPrefHeight(360.0);
+        backPane.setPrefWidth(500.0);
+        backPane.setStyle("-fx-background-color: #0c0721;");
+        
         setEffect(dropShadow4);
 
         getChildren().add(logoImageView);
@@ -354,72 +400,206 @@ public class GameWithFriendPage extends AnchorPane {
         getChildren().add(containerPane);
         getChildren().add(xImageView);
         getChildren().add(oImageView);
-        getChildren().add(oTurnLabel);
-        getChildren().add(vsImageView);
         getChildren().add(xTurnLabel);
+        getChildren().add(vsImageView);
+        getChildren().add(oTurnLabel);
     }
     
-    public void setWinDesignProperty(){
+    public void endGameDesign(){
+        backPane.setLayoutX(0.0);
+        backPane.setLayoutY(69.0);
+        backPane.setOpacity(0.7);
+        backPane.setPrefHeight(360.0);
+        backPane.setPrefWidth(500.0);
+        backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
+        
+        endGamePane.setLayoutX(78.0);
+        endGamePane.setLayoutY(132.0);
+        endGamePane.setPrefHeight(224.0);
+        endGamePane.setPrefWidth(344.0);
+        endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
+
+        endGameImageView.setFitHeight(168.0);
+        endGameImageView.setFitWidth(335.0);
+        endGameImageView.setLayoutX(5.0);
+        endGameImageView.setLayoutY(4.0);
+        //endGameImageView.setImage(new Image(getClass().getResource("../view/images/gameMessages/win.jpg").toExternalForm()));
+
+        xIcone.setFitHeight(45.0);
+        xIcone.setFitWidth(72.0);
+        xIcone.setLayoutX(107.0);
+        xIcone.setLayoutY(-30.0);
+        xIcone.setImage(new Image(getClass().getResource("../view/images/gameMessages/x.png").toExternalForm()));
+
+        yIcone.setFitHeight(45.0);
+        yIcone.setFitWidth(88.0);
+        yIcone.setLayoutX(167.0);
+        yIcone.setLayoutY(-29.0);
+        yIcone.setImage(new Image(getClass().getResource("../view/images/gameMessages/o.png").toExternalForm()));
+
+        vsIcon.setFitHeight(45.0);
+        vsIcon.setFitWidth(45.0);
+        vsIcon.setLayoutX(148.0);
+        vsIcon.setLayoutY(-8.0);
+        vsIcon.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
+
+        playAgainEnd.setLayoutX(35.0);
+        playAgainEnd.setLayoutY(185.0);
+        playAgainEnd.setMnemonicParsing(false);
+        playAgainEnd.setPrefHeight(17.0);
+        playAgainEnd.setPrefWidth(100.0);
+        playAgainEnd.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        playAgainEnd.getStyleClass().add("play-btn");
+        playAgainEnd.setText("Play Again");
+        playAgainEnd.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        playAgainEnd.setEffect(innerShadow);
+
+        watchVideoEndGame.setLayoutX(190.0);
+        watchVideoEndGame.setLayoutY(185.0);
+        watchVideoEndGame.setMnemonicParsing(false);
+        watchVideoEndGame.setPrefHeight(17.0);
+        watchVideoEndGame.setPrefWidth(100.0);
+        watchVideoEndGame.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        watchVideoEndGame.getStyleClass().add("play-btn");
+        watchVideoEndGame.setText("Wach Video");
+        watchVideoEndGame.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        watchVideoEndGame.setEffect(innerShadow0);
+
+        playerNameLabel.setLayoutX(40.0);
+        playerNameLabel.setLayoutY(150.0);
+        playerNameLabel.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        playerNameLabel.setText("Player:");
+        playerNameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        playerNameLabel.setFont(new Font(15.0));
+
+        playerCharacter.setLayoutX(195.0);
+        playerCharacter.setLayoutY(150.0);
+        playerCharacter.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        playerCharacter.setText("Character:");
+        playerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        playerCharacter.setFont(new Font(15.0));
+
+        playerNameEndGameLabel.setLayoutX(123.0);
+        playerNameEndGameLabel.setLayoutY(150.0);
+        playerNameEndGameLabel.setPrefHeight(21.0);
+        playerNameEndGameLabel.setPrefWidth(50.0);
+        playerNameEndGameLabel.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        playerNameEndGameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        playerNameEndGameLabel.setFont(new Font(15.0));
+
+        characterEndGameLable.setLayoutX(290.0);
+        characterEndGameLable.setLayoutY(150.0);
+        characterEndGameLable.setPrefHeight(21.0);
+        characterEndGameLable.setPrefWidth(50.0);
+        characterEndGameLable.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
+        characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
+        characterEndGameLable.setFont(new Font(15.0));
+
+        getChildren().add(backPane);
+        endGamePane.getChildren().add(endGameImageView);
+        endGamePane.getChildren().add(xIcone);
+        endGamePane.getChildren().add(yIcone);
+        endGamePane.getChildren().add(vsIcon);
+        endGamePane.getChildren().add(playAgainEnd);
+        endGamePane.getChildren().add(watchVideoEndGame);
+        endGamePane.getChildren().add(playerNameLabel);
+        endGamePane.getChildren().add(playerCharacter);
+        endGamePane.getChildren().add(playerNameEndGameLabel);
+        endGamePane.getChildren().add(characterEndGameLable);
+        getChildren().add(endGamePane);
+
     }
     
     public void setActionsPage(Stage primary) {
-
-        playAginButton.setOnAction(e
-                -> {
-                        xImageView.setEffect(null);
-                        oImageView.setEffect(null);
-                        first = firstTurn(xSelected);
-                        button00.setText("");
-                        button01.setText("");
-                        button02.setText("");
-                        button10.setText("");
-                        button11.setText("");
-                        button12.setText("");
-                        button20.setText("");
-                        button21.setText("");
-                        button22.setText("");
-                        button00.setStyle("-fx-background-color: #ececec;");
-                        button01.setStyle("-fx-background-color: #ececec;");
-                        button02.setStyle("-fx-background-color: #ececec;");
-                        button10.setStyle("-fx-background-color: #ececec;");
-                        button11.setStyle("-fx-background-color: #ececec;");
-                        button12.setStyle("-fx-background-color: #ececec;");
-                        button20.setStyle("-fx-background-color: #ececec;");
-                        button21.setStyle("-fx-background-color: #ececec;");
-                        button22.setStyle("-fx-background-color: #ececec;");
+        playAginButton.setOnAction(e -> resetAll());
+        
+        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected))));
+        
+        playAgainEnd.setOnAction(e
+            -> { 
+                resetAll();
+                backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
+                endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
         });
-
-        exitButton.setOnAction(e
-                -> primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected)))
-            
-        );
     }
     
-    public String firstTurn(boolean xSelected) {
-        String first = "";
-        if (random.nextInt(2) == 0) {
-            friendTurn = true;
-            if (xSelected) {
-                oImageView.setEffect(ds);
-                return first;
-            } else {
-                xImageView.setEffect(ds);
-                first = "X";
-                return first;
-            }
-        } else {
-            friendTurn = false;
-            if (xSelected) {
-                xImageView.setEffect(ds);
-                first = "X";
-                return first;
-            } else {
-                oImageView.setEffect(ds);
-                first = "O";
-                return first;
-            }
-        }
+    public void setButtonsAction(){
+        button00.setOnAction(e-> changeButtonStatus(button00));
+        button01.setOnAction(e-> changeButtonStatus(button01));
+        button02.setOnAction(e-> changeButtonStatus(button02));
+        button10.setOnAction(e-> changeButtonStatus(button10));
+        button11.setOnAction(e-> changeButtonStatus(button11));
+        button12.setOnAction(e-> changeButtonStatus(button12));
+        button20.setOnAction(e-> changeButtonStatus(button20));
+        button21.setOnAction(e-> changeButtonStatus(button21));
+        button22.setOnAction(e-> changeButtonStatus(button22));
+    }
+    
+    public void checkStatus() {
+        String status = "";
+        String b1 = button00.getText();
+        String b2 = button01.getText();
+        String b3 = button02.getText();
+        String b4 = button10.getText();
+        String b5 = button11.getText();
+        String b6 = button12.getText();
+        String b7 = button20.getText();
+        String b8 = button21.getText();
+        String b9 = button22.getText();
 
+        if (b1 == "X" && b2 == "X" && b3 == "X") {
+            changeButtonsColor(button00, button01, button02);
+            userXWin(status);
+        } else if (b4 == "X" && b5 == "X" && b6 == "X") {
+            changeButtonsColor(button10, button11, button12);
+            userXWin(status);
+        } else if (b7 == "X" && b8 == "X" && b9 == "X") {
+            changeButtonsColor(button20, button21, button22);
+            userXWin(status);
+        } else if (b1 == "X" && b4 == "X" && b7 == "X") {
+            changeButtonsColor(button00, button10, button20);
+            userXWin(status);
+        } else if (b2 == "X" && b5 == "X" && b8 == "X") {
+            changeButtonsColor(button01, button11, button21);
+            userXWin(status);
+        } else if (b3 == "X" && b6 == "X" && b9 == "X") {
+            changeButtonsColor(button02, button12, button22);
+            userXWin(status);
+        } else if (b1 == "X" && b5 == "X" && b9 == "X") {
+            changeButtonsColor(button00, button11, button22);
+            userXWin(status);
+        } else if (b3 == "X" && b5 == "X" && b7 == "X") {
+            changeButtonsColor(button02, button11, button20);
+            userXWin(status);
+        } else if (b1 == "O" && b2 == "O" && b3 == "O") {
+            changeButtonsColor(button00, button01, button02);
+            userOWin(status);
+        } else if (b4 == "O" && b5 == "O" && b6 == "O") {
+            changeButtonsColor(button10, button11, button12);
+            userOWin(status);
+        } else if (b7 == "O" && b8 == "O" && b9 == "O") {
+            changeButtonsColor(button20, button21, button22);
+            userOWin(status);
+        } else if (b1 == "O" && b4 == "O" && b7 == "O") {
+            changeButtonsColor(button00, button10, button20);
+            userOWin(status);
+        } else if (b2 == "O" && b5 == "O" && b8 == "O") {
+            changeButtonsColor(button01, button11, button21);
+            userOWin(status);
+        } else if (b3 == "O" && b6 == "O" && b9 == "O") {
+            changeButtonsColor(button02, button12, button22);
+            userOWin(status);
+        } else if (b1 == "O" && b5 == "O" && b9 == "O") {
+            changeButtonsColor(button00, button11, button22);
+            userOWin(status);
+        } else if (b3 == "O" && b5 == "O" && b7 == "O") {
+            changeButtonsColor(button02, button11, button20);
+            userOWin(status);
+        } else {
+            userEqual(status);
+        }
     }
     
     public String userChar(boolean xSelected) {
@@ -433,4 +613,146 @@ public class GameWithFriendPage extends AnchorPane {
         }
 
     }
+    
+    public String firstTurn(boolean xSelected) {
+        String first = "";
+        if (random.nextInt(2) == 0) {
+            friendTurn = true;
+            if (xSelected) {
+                oImageView.setEffect(ds);
+                xImageView.setEffect(null);
+                oTurnLabel.setStyle("visibility: true;");
+                xTurnLabel.setStyle("visibility: false;");
+                first = "O";
+                return first;
+            } else {
+                xImageView.setEffect(ds);
+                oImageView.setEffect(null);
+                xTurnLabel.setStyle("visibility: true;");
+                oTurnLabel.setStyle("visibility: false;");
+                first = "X";
+                return first;
+            }
+        } else {
+            friendTurn = false;
+            if (xSelected) {
+                xImageView.setEffect(ds);
+                oImageView.setEffect(null);
+                oTurnLabel.setStyle("visibility: false;");
+                xTurnLabel.setStyle("visibility: true;");
+                first = "X";
+                return first;
+            } else {
+                oImageView.setEffect(ds);
+                xImageView.setEffect(null);
+                xTurnLabel.setStyle("visibility: false;");
+                oTurnLabel.setStyle("visibility: true;");
+                first = "O";
+                return first;
+            }
+        }
+
+    }
+    
+    public String switchTurns(String first) {
+        if (first == "O") {
+            oImageView.setEffect(null);
+            xImageView.setEffect(ds);
+            first = "X";
+            oTurnLabel.setStyle("visibility: false;");
+            xTurnLabel.setStyle("visibility: true;");
+            return first;
+        } else if (first == "X") {
+            oImageView.setEffect(ds);
+            xImageView.setEffect(null);
+            xTurnLabel.setStyle("visibility: false;");
+            oTurnLabel.setStyle("visibility: true;");
+            first = "O";
+            return first;
+        }
+        return null;
+    }
+    
+    public void userXWin(String status) {
+        if (userChar == "X") {
+            score++;
+            status = "winner";
+            oImageView.setEffect(null);
+            xImageView.setEffect(null);
+            displayEndGame("../view/images/gameMessages/win.png");
+        } else {
+            status = "Lose";
+            oImageView.setEffect(null);
+            xImageView.setEffect(null);
+            displayEndGame("../view/images/gameMessages/loos.png");
+        }
+    }
+    
+    public void userOWin(String status) {
+        if (userChar == "O") {
+            score++;
+            status = "winner";
+            oImageView.setEffect(null);
+            xImageView.setEffect(null);
+            displayEndGame("../view/images/gameMessages/win.png");
+        } else {
+            status = "Loose";
+            oImageView.setEffect(null);
+            xImageView.setEffect(null);
+            displayEndGame("../view/images/gameMessages/loos.png");
+        }
+    }
+
+    public void userEqual(String status) {
+        status = "Equal";
+        //displayEndGame("../view/images/gameMessages/drawc.jpj");
+    }
+    
+    public void displayEndGame(String img){
+        backPane.setStyle("-fx-background-color: #0c0721; visibility: true;");
+        endGameImageView.setImage(new Image(getClass().getResource(img).toExternalForm()));
+        endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: true;");
+    }
+
+    public void changeButtonsColor(Button btn1, Button btn2, Button btn3){
+        btn1.setStyle("-fx-background-color: yellow; ");
+        btn2.setStyle("-fx-background-color: yellow; ");
+        btn3.setStyle("-fx-background-color: yellow; ");
+    }
+    
+    public void changeButtonStatus(Button button){
+        if (button.getText() == "") {
+            button.setText(first);
+            button.setFont(new Font("SansSerif Bold", 15.0));
+            first = switchTurns(first);
+            checkStatus();
+        }
+    }
+    
+    public void resetAll(){
+        xImageView.setEffect(null);
+        oImageView.setEffect(null);
+        oTurnLabel.setStyle("visibility: false;");
+        xTurnLabel.setStyle("visibility: false;");
+        first = firstTurn(xSelected);
+        button00.setText("");
+        button01.setText("");
+        button02.setText("");
+        button10.setText("");
+        button11.setText("");
+        button12.setText("");
+        button20.setText("");
+        button21.setText("");
+        button22.setText("");
+        button00.setStyle("-fx-background-color: #ececec;");
+        button01.setStyle("-fx-background-color: #ececec;");
+        button02.setStyle("-fx-background-color: #ececec;");
+        button10.setStyle("-fx-background-color: #ececec;");
+        button11.setStyle("-fx-background-color: #ececec;");
+        button12.setStyle("-fx-background-color: #ececec;");
+        button20.setStyle("-fx-background-color: #ececec;");
+        button21.setStyle("-fx-background-color: #ececec;");
+        button22.setStyle("-fx-background-color: #ececec;");
+    }
 }
+
