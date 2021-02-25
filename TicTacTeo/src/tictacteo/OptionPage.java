@@ -3,8 +3,12 @@ package tictacteo;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.net.URL;
+
+import java.util.Vector;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -26,8 +30,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.database.Player;
+import model.database.History;
+import model.database.HistoryModel;
+import model.database.Player;
+import model.database.PlayerModel;
 
 public class OptionPage extends AnchorPane {
+
     protected final Button BackButton;
     protected final InnerShadow innerShadow0;
     protected final Line line;
@@ -65,6 +74,7 @@ public class OptionPage extends AnchorPane {
 
     public OptionPage(Stage primary, Player currentPlayer , Thread thread) {
         this.currentPlayer = currentPlayer;
+
         line = new Line();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -238,13 +248,15 @@ public class OptionPage extends AnchorPane {
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                boolean xSelected=false;
+                boolean xSelected = false;
                 if ((xRadioButton.isSelected() || oRadioButton.isSelected()) && (frindRadioButton.isSelected() || computerRadioButton.isSelected())) {
+
                     if((xRadioButton.isSelected()) && (computerRadioButton.isSelected() || frindRadioButton.isSelected())){
                         xSelected=true;                       
                     }
                     else if((oRadioButton.isSelected()) && (computerRadioButton.isSelected() || frindRadioButton.isSelected())){
                         xSelected=false;
+
                     }
 
                     if(computerRadioButton.isSelected())

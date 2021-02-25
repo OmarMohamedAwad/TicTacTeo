@@ -19,7 +19,7 @@ public class HistoryModel {
 
     static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
-    static final String DB_PASSWD = "1234abjd";
+    static final String DB_PASSWD = "root@#123";
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
@@ -28,16 +28,15 @@ public class HistoryModel {
     public static boolean addHistory(History userHistory) {
         try {
             Connection connection = connect();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO history ( History_ID,Date,Vs_Player,Status,Player_ID) VALUES (?,?,?,?,?)");
-            preparedStatement.setInt(1, userHistory.getHistoryID());
-            preparedStatement.setString(2, userHistory.getDate());
-            preparedStatement.setString(3, userHistory.getVsPlayer());
-            preparedStatement.setString(4, userHistory.getStatus());
-            preparedStatement.setInt(5, userHistory.getPlayerId());
-            int res = preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO history (Date,Vs_Player,Status,Player_ID) VALUES (now(),?,?,?)");
+//            preparedStatement.setString(1, "now()");
+            preparedStatement.setString(1, userHistory.getVsPlayer());
+            preparedStatement.setString(2, userHistory.getStatus());
+            preparedStatement.setInt(3, userHistory.getPlayerId());
+            preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
-            return res > 0;
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(PlayerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,14 +49,12 @@ public class HistoryModel {
 
             Connection connection = connect();
             Statement statement = (Statement) connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM history where Player_ID="+playerId);
-           // if (resultSet.getInt("Player_ID") == playerId) {
-                while (resultSet.next()) {
-                    History currentHistory = new History(resultSet.getInt("History_ID"), resultSet.getString("Date"), resultSet.getString("Vs_Player"), resultSet.getString("Status"),resultSet.getInt("Player_ID"));
-                    tmp.add(currentHistory);
-                }
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM history where Player_ID=" + playerId);
 
-           // }
+            while (resultSet.next()) {
+                History currentHistory = new History(resultSet.getInt("History_ID"), resultSet.getString("Date"), resultSet.getString("Vs_Player"), resultSet.getString("Status"), resultSet.getInt("Player_ID"));
+                tmp.add(currentHistory);
+            }
 
             resultSet.close();
             connection.close();

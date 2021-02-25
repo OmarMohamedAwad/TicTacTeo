@@ -1,5 +1,6 @@
 package model.database;
 
+import java.sql.Date;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -19,7 +20,6 @@ public class History {
     private SimpleStringProperty tableVsPlayer;
     private SimpleStringProperty tableStatus;
     private SimpleStringProperty tablePlayerid;
-
     public History() {
     }
 
@@ -66,17 +66,10 @@ public class History {
     public int getPlayerId() {
         return playerId;
     }
-
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
-
-    public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public History(String tableHistoryId, String tableDate, String tableVsPlayer, String tableStatus, String tablePlayerid) {
-
         this.id = new SimpleStringProperty(tableHistoryId);
         this.tableDate = new SimpleStringProperty(tableDate);
         this.tableVsPlayer = new SimpleStringProperty(tableVsPlayer);
@@ -87,41 +80,32 @@ public class History {
     public String getTableDate() {
         return tableDate.get();
     }
-
     public void setTablDate(String tableDate) {
         this.tableDate.set(tableDate);
     }
-
     public String getTableVsPlayer() {
         return tableVsPlayer.get();
     }
-
-    public void setTableVsPlayer(String tableVsPlayer) {
-        this.tableVsPlayer.set(tableVsPlayer);
-    }
-
     public String getTableStatus() {
         return tableStatus.get();
     }
-
     public void setTableStatus(String tableStatus) {
         this.tableStatus.set(tableStatus);
     }
-
     public String getTablePlayerId() {
         return tablePlayerid.get();
     }
-
     public void setTablePlayerId(String tablePlayerid) {
         this.tablePlayerid.set(tablePlayerid);
     }
-
     public String getId() {
         return id.get();
     }
-
     public void setId(String tableHistoryId) {
         id.set(tableHistoryId);
+    }
+     public void setTableVsPlayer(String tableVsPlayer) {
+        this.tableVsPlayer.set(tableVsPlayer);
     }
 
 }

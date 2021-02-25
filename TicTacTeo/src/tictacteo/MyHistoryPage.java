@@ -283,11 +283,10 @@ public class MyHistoryPage extends AnchorPane {
             data.add(new History(index + "", history.getDate(), history.getVsPlayer(), history.getStatus(), history.getPlayerId() + ""));
             switch(history.getStatus())
                     {
-                case("win"):
-                        
+                case("winner"):
                         winNumbers++;
                 break;
-                case("lose"):
+                case("looser"):
                     loseNumbers++;
                 break;
                 default:
@@ -296,7 +295,7 @@ public class MyHistoryPage extends AnchorPane {
             index++;
 
         }
-         maxScoreLabelView.setText("Max score = "+currentPlayer.getScore());
+        maxScoreLabelView.setText("Max score = "+currentPlayer.getScore());
         winningTimesLableView.setText("You win "+winNumbers+" times");
         looseTimeLabelView.setText("You lose "+loseNumbers+" times");
         gamesColumn.setCellValueFactory(new PropertyValueFactory<History, String>("id"));
