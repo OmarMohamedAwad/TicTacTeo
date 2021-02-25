@@ -29,6 +29,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.database.Player;
 import model.database.History;
 import model.database.HistoryModel;
 import model.database.Player;
@@ -69,10 +70,10 @@ public class OptionPage extends AnchorPane {
     protected final Button playButton;
     protected final InnerShadow playInnerShadow;
     protected final DropShadow anchorDropShadow;
+    public static Player currentPlayer;
 
-
-
-    public OptionPage(Stage primary, int id , Thread thread) {
+    public OptionPage(Stage primary, Player currentPlayer , Thread thread) {
+        this.currentPlayer = currentPlayer;
 
         line = new Line();
         logoImageView = new ImageView();
@@ -259,9 +260,9 @@ public class OptionPage extends AnchorPane {
                     }
 
                     if(computerRadioButton.isSelected())
-                        primary.setScene(new Scene(new GamePage(primary, id, xSelected, thread)));
+                        primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread)));
                     else if(frindRadioButton.isSelected())
-                        primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected, thread)));
+                        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
                 } else {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText(null);
@@ -288,7 +289,7 @@ public class OptionPage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
 
-                primary.setScene(new Scene(new MyDashboardPage(primary, id , thread)));
+                primary.setScene(new Scene(new MyDashboardPage(primary, currentPlayer.getUserID() , thread)));
             }
         });
 

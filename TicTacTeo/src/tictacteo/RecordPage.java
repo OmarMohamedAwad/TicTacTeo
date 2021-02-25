@@ -20,6 +20,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.database.Player;
 
 public class RecordPage extends AnchorPane {
 
@@ -63,8 +64,9 @@ public class RecordPage extends AnchorPane {
     protected final DropShadow dropShadow3;
     static int index = 0;
     static Thread thread2 = new Thread();
-
-    public RecordPage(Stage primary, int id, List<String> record, List<String> position, Thread thread) {
+    Player currentPlayer;
+    public RecordPage(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
+        this.currentPlayer = currentPlayer;
         index = 0;
         System.out.println(index);
         thread2 = thread;
@@ -200,7 +202,10 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new GamePage(primary, id, xSelected, thread2)));
+                if (page == "computer")
+                    primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
+                else if (page == "localFriend")
+                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
             }
         });
 

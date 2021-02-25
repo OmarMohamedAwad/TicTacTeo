@@ -16,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.database.Player;
 import model.database.PlayerModel;
 import static tictacteo.MyDashboardPage.currentPlayer;
 
@@ -42,13 +43,15 @@ public class OnlineOfflinePage extends AnchorPane {
     protected final Button backButton;
     protected final InnerShadow backButtonInnerShadow;
     protected final DropShadow anchorDropShadow;
-    int playerId;
     boolean xSelected;
+    public static Player currentPlayer;
     Thread thread;
-    public OnlineOfflinePage(Stage primary, int id, boolean xSelected, Thread thread) {
+    
+    public OnlineOfflinePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
         this.thread = thread;
-        playerId = id;
         this.xSelected = xSelected;
+        this.currentPlayer = currentPlayer;
+
         line = new Line();
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
@@ -214,15 +217,15 @@ public class OnlineOfflinePage extends AnchorPane {
     public void setActions(Stage primary) {
        
         offlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected, thread)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,currentPlayer,xSelected, thread)))
         );
 
         onlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected, thread)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,currentPlayer,xSelected, thread)))
         );
 
         backButton.setOnAction(e
-                -> primary.setScene(new Scene(new OptionPage(primary, playerId,thread)))
+                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer,thread)))
             
         );
     }

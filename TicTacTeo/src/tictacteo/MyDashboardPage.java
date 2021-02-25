@@ -1,20 +1,13 @@
 package tictacteo;
 
-import java.util.Iterator;
-import java.util.Vector;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -311,7 +304,7 @@ public class MyDashboardPage extends AnchorPane {
         );
 
         playButton.setOnAction(e
-                -> primary.setScene(new Scene(new OptionPage(primary, playerId ,thread)))
+                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer ,thread)))
         );
     }
 
