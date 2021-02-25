@@ -818,7 +818,7 @@ public class GamePage extends AnchorPane {
         watchVideoWinner.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new RecordPage(primary , id , record , position , thread)));
+                primary.setScene(new Scene(new RecordPage(primary , id , record , position , thread, "computer")));
             }
         });
 
@@ -1088,20 +1088,10 @@ public class GamePage extends AnchorPane {
         
         
 
-        moveActions();
         first = firstTurn(xSelected);
         userChar = userChar(xSelected);
     }
 
-
-    public void moveActions(){
-        exitButton.setOnAction(e 
-            -> {
-                System.out.println("Her I am");
-                //curruntClient.playerPrintStream.println("My Id="+id);
-        });
-        
-    }
 
 //    public void computerAlgorithm(boolean xSelected) {
 //        String computer;

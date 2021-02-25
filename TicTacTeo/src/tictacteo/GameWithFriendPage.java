@@ -524,18 +524,20 @@ public class GameWithFriendPage extends AnchorPane {
                 backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
                 endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
         });
+        
+        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary , id , record , position , thread, "localFriend"))));
     }
     
     public void setButtonsAction(){
-        button00.setOnAction(e-> changeButtonStatus(button00));
-        button01.setOnAction(e-> changeButtonStatus(button01));
-        button02.setOnAction(e-> changeButtonStatus(button02));
-        button10.setOnAction(e-> changeButtonStatus(button10));
-        button11.setOnAction(e-> changeButtonStatus(button11));
-        button12.setOnAction(e-> changeButtonStatus(button12));
-        button20.setOnAction(e-> changeButtonStatus(button20));
-        button21.setOnAction(e-> changeButtonStatus(button21));
-        button22.setOnAction(e-> changeButtonStatus(button22));
+        button00.setOnAction(e-> changeButtonStatus(button00,"00"));
+        button01.setOnAction(e-> changeButtonStatus(button01,"01"));
+        button02.setOnAction(e-> changeButtonStatus(button02,"02"));
+        button10.setOnAction(e-> changeButtonStatus(button10,"10"));
+        button11.setOnAction(e-> changeButtonStatus(button11,"11"));
+        button12.setOnAction(e-> changeButtonStatus(button12,"12"));
+        button20.setOnAction(e-> changeButtonStatus(button20,"20"));
+        button21.setOnAction(e-> changeButtonStatus(button21,"21"));
+        button22.setOnAction(e-> changeButtonStatus(button22,"22"));
     }
     
     public void checkStatus() {
@@ -720,17 +722,21 @@ public class GameWithFriendPage extends AnchorPane {
         btn3.setStyle("-fx-background-color: yellow; ");
     }
     
-    public void changeButtonStatus(Button button){
+    public void changeButtonStatus(Button button, String symbol){
         if (button.getText() == "") {
             drawCounter += 1;
             button.setText(first);
             button.setFont(new Font("SansSerif Bold", 15.0));
+            record.add(first);
+            position.add(symbol);
             first = switchTurns(first);
             checkStatus();
         }
     }
     
     public void resetAll(){
+        record.clear();
+        position.clear();
         xImageView.setEffect(null);
         oImageView.setEffect(null);
         drawCounter = 0;

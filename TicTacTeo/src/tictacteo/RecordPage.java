@@ -64,7 +64,7 @@ public class RecordPage extends AnchorPane {
     static int index = 0;
     static Thread thread2 = new Thread();
 
-    public RecordPage(Stage primary, int id, List<String> record, List<String> position, Thread thread) {
+    public RecordPage(Stage primary, int id, List<String> record, List<String> position, Thread thread, String page) {
         index = 0;
         System.out.println(index);
         thread2 = thread;
@@ -200,7 +200,10 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new GamePage(primary, id, xSelected, thread2)));
+                if (page == "computer")
+                    primary.setScene(new Scene(new GamePage(primary, id, xSelected, thread2)));
+                else if (page == "localFriend")
+                    primary.setScene(new Scene(new GameWithFriendPage(primary, id, xSelected, thread2)));
             }
         });
 
