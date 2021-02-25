@@ -24,88 +24,6 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Pane layoutX="78.0" layoutY="138.0" prefHeight="224.0" prefWidth="344.0" style="-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; -fx-display: none;" visible="false">
-         <effect>
-            <DropShadow />
-         </effect>
-         <children>
-            <ImageView fitHeight="168.0" fitWidth="335.0" layoutX="5.0" layoutY="4.0">
-               <image>
-                  <Image url="@../images/gameMessages/win.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="144.0" layoutY="-8.0">
-               <image>
-                  <Image url="@../images/gameMessages/vs.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="45.0" fitWidth="72.0" layoutX="107.0" layoutY="-30.0">
-               <image>
-                  <Image url="@../images/gameMessages/x.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="45.0" fitWidth="88.0" layoutX="167.0" layoutY="-29.0">
-               <image>
-                  <Image url="@../images/gameMessages/o.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="39.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Play Again" textFill="WHITE">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Button>
-            <Button layoutX="201.0" layoutY="193.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="88.0" style="-fx-background-radius: 15; -fx-background-color: #006fb2;" styleClass="play-btn" text="Wach Video" textFill="WHITE">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Button>
-            <Label layoutX="54.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Player:" textFill="#d955eb">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="203.0" layoutY="158.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" text="Character:" textFill="#d955eb">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="123.0" layoutY="159.0" prefHeight="21.0" prefWidth="32.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="293.0" layoutY="160.0" prefHeight="21.0" prefWidth="23.0" style="-fx-font-family: sans serif; -fx-font-weight: bold;" textFill="#d955eb">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            </children>
-      </Pane>
-      <Label layoutX="85.0" layoutY="23.0" prefHeight="25.0" prefWidth="84.0" text="Tic Tac Teo" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Bold" size="15.0" />
-         </font>
-         <effect>
-            <DropShadow color="#1b1a1a" />
-         </effect>
-      </Label>
-      <Line endX="400.0" layoutX="101.0" layoutY="68.0" startX="-100.0" stroke="#6b6b6b" strokeWidth="2.0" />
-      <Button layoutX="143.0" layoutY="353.0" maxHeight="37.0" maxWidth="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15px;" text="Exit" textFill="#f8f7f7">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <effect>
-            <InnerShadow />
-         </effect>
-      </Button>
-      <Button layoutX="257.0" layoutY="353.0" maxHeight="37.0" maxWidth="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15px;" text="Play again" textFill="#f8f7f7">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <effect>
-            <InnerShadow />
-         </effect>
-      </Button>
       <Pane layoutX="141.0" layoutY="158.0" prefHeight="159.0" prefWidth="218.0" style="-fx-background-color: #343F4B;">
          <children>
             <GridPane layoutX="5.0" layoutY="-8.0" prefHeight="178.0" prefWidth="221.0" style="-fx-background-color: #343F4B;">
@@ -134,6 +52,31 @@
 
          </children>
       </Pane>
+      <Label layoutX="85.0" layoutY="23.0" prefHeight="25.0" prefWidth="84.0" text="Tic Tac Teo" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="15.0" />
+         </font>
+         <effect>
+            <DropShadow color="#1b1a1a" />
+         </effect>
+      </Label>
+      <Line endX="400.0" layoutX="101.0" layoutY="68.0" startX="-100.0" stroke="#6b6b6b" strokeWidth="2.0" />
+      <Button layoutX="143.0" layoutY="353.0" maxHeight="37.0" maxWidth="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15px;" text="Exit" textFill="#f8f7f7">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
+      <Button layoutX="257.0" layoutY="353.0" maxHeight="37.0" maxWidth="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15px;" text="Play again" textFill="#f8f7f7">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
       <ImageView fitHeight="84.0" fitWidth="88.0" layoutX="16.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/options/x.jpg" />

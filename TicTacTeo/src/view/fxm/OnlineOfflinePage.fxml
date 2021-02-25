@@ -55,7 +55,7 @@
             <Image url="@../images/onlineOffline/vs.png" />
          </image>
       </ImageView>
-      <Pane layoutX="14.0" layoutY="172.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-radius: 5;">
+      <Pane layoutX="14.0" layoutY="155.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-radius: 5;">
          <children>
             <TextField layoutX="35.0" layoutY="74.0" prefHeight="26.0" prefWidth="132.0" promptText="Create New Rome" style="-fx-border-radius: 10;" />
             <TextField layoutX="35.0" layoutY="115.0" prefHeight="26.0" prefWidth="132.0" promptText="Or Enter Room Name" style="-fx-border-radius: 10;" />
@@ -66,7 +66,7 @@
             </Button>
          </children>
       </Pane>
-      <StackPane layoutX="59.0" layoutY="108.0" prefHeight="106.0" prefWidth="106.0">
+      <StackPane layoutX="59.0" layoutY="90.0" prefHeight="106.0" prefWidth="106.0">
          <children>
             <ImageView fitHeight="110.0" fitWidth="109.0">
                <image>
@@ -78,6 +78,11 @@
             </ImageView>
          </children>
       </StackPane>
+      <Button layoutX="194.0" layoutY="375.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Back" textFill="#f8f7f7">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
    </children>
    <effect>
       <DropShadow />

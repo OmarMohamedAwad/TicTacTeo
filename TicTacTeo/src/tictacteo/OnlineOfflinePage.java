@@ -1,6 +1,8 @@
 package tictacteo;
 
-import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -8,55 +10,77 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import model.database.PlayerModel;
+import static tictacteo.MyDashboardPage.currentPlayer;
 
 public class OnlineOfflinePage extends AnchorPane {
 
     protected final Line line;
     protected final ImageView logoImageView;
-    protected final DropShadow dropShadow;
-    protected final Text text;
-    protected final DropShadow dropShadow0;
+    protected final DropShadow logoDropShadow;
+    protected final Text gametext;
+    protected final DropShadow gameTitleDropShadow;
+    protected final ImageView offlineImageView;
+    protected final DropShadow offlineDropShadow;
+    protected final Button offlineButton;
+    protected final InnerShadow offlineButtonInnerShadow;
+    protected final ImageView vsImageView;
+    protected final Pane onlinePane;
+    protected final TextField roomTextField;
+    protected final TextField enterOnlineRoomTextField;
+    protected final Button onlineButton;
+    protected final InnerShadow onlineButtonInnerShadow;
     protected final StackPane stackPane;
-    protected final ImageView imageView0;
-    protected final DropShadow dropShadow1;
-    protected final ImageView imageView1;
-    protected final DropShadow dropShadow2;
-    protected final Button button;
-    protected final InnerShadow innerShadow;
-    protected final Button button0;
-    protected final InnerShadow innerShadow0;
-    protected final TextField textField;
-    protected final DropShadow dropShadow3;
-
-    public OnlineOfflinePage() {
-
+    protected final ImageView onlineImageView;
+    protected final DropShadow onlineImageDropShadow;
+    protected final Button backButton;
+    protected final InnerShadow backButtonInnerShadow;
+    protected final DropShadow anchorDropShadow;
+    int playerId;
+    boolean xSelected;
+    
+    public OnlineOfflinePage(Stage primary, int id, boolean xSelected) {
+        playerId = id;
+        this.xSelected = xSelected;
         line = new Line();
         logoImageView = new ImageView();
-        dropShadow = new DropShadow();
-        text = new Text();
-        dropShadow0 = new DropShadow();
+        logoDropShadow = new DropShadow();
+        gametext = new Text();
+        gameTitleDropShadow = new DropShadow();
+        offlineImageView = new ImageView();
+        offlineDropShadow = new DropShadow();
+        offlineButton = new Button();
+        offlineButtonInnerShadow = new InnerShadow();
+        vsImageView = new ImageView();
+        onlinePane = new Pane();
+        roomTextField = new TextField();
+        enterOnlineRoomTextField = new TextField();
+        onlineButton = new Button();
+        onlineButtonInnerShadow = new InnerShadow();
         stackPane = new StackPane();
-        imageView0 = new ImageView();
-        dropShadow1 = new DropShadow();
-        imageView1 = new ImageView();
-        dropShadow2 = new DropShadow();
-        button = new Button();
-        innerShadow = new InnerShadow();
-        button0 = new Button();
-        innerShadow0 = new InnerShadow();
-        textField = new TextField();
-        dropShadow3 = new DropShadow();
+        backButton = new Button();
+        onlineImageView = new ImageView();
+        onlineImageDropShadow = new DropShadow();
+        backButtonInnerShadow = new InnerShadow();
+        anchorDropShadow = new DropShadow();
 
+        setDesignProperty();        
+        setActions(primary);
+        
+    }
+    
+    public void setDesignProperty(){
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
         getStyleClass().add("mainFxmlClass");
-        getStylesheets().add("/view/fxm/fxml.css");
 
         line.setEndX(400.0);
         line.setLayoutX(101.0);
@@ -72,82 +96,134 @@ public class OnlineOfflinePage extends AnchorPane {
         logoImageView.setLayoutY(11.0);
         logoImageView.setPickOnBounds(true);
         logoImageView.setPreserveRatio(true);
-        logoImageView.setImage(new Image(getClass().getResource("../images/options/tic-tac-toe-game.jpg").toExternalForm()));
+        logoImageView.setImage(new Image(getClass().getResource("../view/images/tic-tac-toe.jpg").toExternalForm()));
 
-        logoImageView.setEffect(dropShadow);
+        logoImageView.setEffect(logoDropShadow);
 
-        text.setFill(javafx.scene.paint.Color.valueOf("#fffdfd"));
-        text.setLayoutX(83.0);
-        text.setLayoutY(39.0);
-        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text.setStrokeWidth(0.0);
-        text.setText("Tic Tac Teo");
-        text.setFont(new Font("System Bold", 15.0));
+        gametext.setFill(javafx.scene.paint.Color.valueOf("#fffdfd"));
+        gametext.setLayoutX(83.0);
+        gametext.setLayoutY(39.0);
+        gametext.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        gametext.setStrokeWidth(0.0);
+        gametext.setText("Tic Tac Teo");
+        gametext.setFont(new Font("System Bold", 15.0));
 
-        text.setEffect(dropShadow0);
+        gametext.setEffect(gameTitleDropShadow);
 
-        stackPane.setLayoutX(51.0);
-        stackPane.setLayoutY(155.0);
+        offlineImageView.setFitHeight(106.0);
+        offlineImageView.setFitWidth(141.0);
+        offlineImageView.setLayoutX(329.0);
+        offlineImageView.setLayoutY(198.0);
+        offlineImageView.setPickOnBounds(true);
+        offlineImageView.setPreserveRatio(true);
+        offlineImageView.setImage(new Image(getClass().getResource("../view/images/onlineOffline/offline.jpg").toExternalForm()));
+
+        offlineImageView.setEffect(offlineDropShadow);
+
+        offlineButton.setLayoutX(325.0);
+        offlineButton.setLayoutY(329.0);
+        offlineButton.setMnemonicParsing(false);
+        offlineButton.setPrefHeight(26.0);
+        offlineButton.setPrefWidth(114.0);
+        offlineButton.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
+        offlineButton.getStyleClass().add("mainFxmlClass");
+        offlineButton.setText("Play Offline");
+        offlineButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
+
+        offlineButton.setEffect(offlineButtonInnerShadow);
+
+        vsImageView.setFitHeight(140.0);
+        vsImageView.setFitWidth(200.0);
+        vsImageView.setLayoutX(282.0);
+        vsImageView.setLayoutY(-1.0);
+        vsImageView.setImage(new Image(getClass().getResource("../view/images/onlineOffline/vs.png").toExternalForm()));
+
+        onlinePane.setLayoutX(14.0);
+        onlinePane.setLayoutY(155.0);
+        onlinePane.setPrefHeight(200.0);
+        onlinePane.setPrefWidth(200.0);
+        onlinePane.setStyle("-fx-border-color: #ffffff; -fx-border-radius: 5;");
+
+        roomTextField.setLayoutX(35.0);
+        roomTextField.setLayoutY(74.0);
+        roomTextField.setPrefHeight(26.0);
+        roomTextField.setPrefWidth(132.0);
+        roomTextField.setPromptText("Create New Rome");
+        roomTextField.setStyle("-fx-border-radius: 10;");
+
+        enterOnlineRoomTextField.setLayoutX(35.0);
+        enterOnlineRoomTextField.setLayoutY(115.0);
+        enterOnlineRoomTextField.setPrefHeight(26.0);
+        enterOnlineRoomTextField.setPrefWidth(132.0);
+        enterOnlineRoomTextField.setPromptText("Or Enter Room Name");
+        enterOnlineRoomTextField.setStyle("-fx-border-radius: 10;");
+
+        onlineButton.setLayoutX(44.0);
+        onlineButton.setLayoutY(160.0);
+        onlineButton.setMnemonicParsing(false);
+        onlineButton.setPrefHeight(26.0);
+        onlineButton.setPrefWidth(114.0);
+        onlineButton.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
+        onlineButton.getStyleClass().add("mainFxmlClass");
+        onlineButton.setText("Play Online");
+        onlineButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
+
+        onlineButton.setEffect(onlineButtonInnerShadow);
+
+        stackPane.setLayoutX(59.0);
+        stackPane.setLayoutY(90.0);
         stackPane.setPrefHeight(106.0);
         stackPane.setPrefWidth(106.0);
 
-        imageView0.setFitHeight(110.0);
-        imageView0.setFitWidth(109.0);
-        imageView0.setImage(new Image(getClass().getResource("../images/onlineOffline/online.jpg").toExternalForm()));
+        onlineImageView.setFitHeight(110.0);
+        onlineImageView.setFitWidth(109.0);
+        onlineImageView.setImage(new Image(getClass().getResource("../view/images/onlineOffline/online.jpg").toExternalForm()));
 
-        imageView0.setEffect(dropShadow1);
+        onlineImageView.setEffect(onlineImageDropShadow);
 
-        imageView1.setFitHeight(106.0);
-        imageView1.setFitWidth(141.0);
-        imageView1.setLayoutX(353.0);
-        imageView1.setLayoutY(156.0);
-        imageView1.setPickOnBounds(true);
-        imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("../images/onlineOffline/offline.jpg").toExternalForm()));
+        backButton.setLayoutX(194.0);
+        backButton.setLayoutY(375.0);
+        backButton.setMnemonicParsing(false);
+        backButton.setPrefHeight(26.0);
+        backButton.setPrefWidth(114.0);
+        backButton.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
+        backButton.getStyleClass().add("mainFxmlClass");
+        backButton.setText("Back");
+        backButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
 
-        imageView1.setEffect(dropShadow2);
-
-        button.setLayoutX(47.0);
-        button.setLayoutY(323.0);
-        button.setMnemonicParsing(false);
-        button.setPrefHeight(26.0);
-        button.setPrefWidth(114.0);
-        button.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
-        button.getStyleClass().add("mainFxmlClass");
-        button.setText("Play Online");
-        button.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
-
-        button.setEffect(innerShadow);
-
-        button0.setLayoutX(349.0);
-        button0.setLayoutY(323.0);
-        button0.setMnemonicParsing(false);
-        button0.setPrefHeight(26.0);
-        button0.setPrefWidth(114.0);
-        button0.setStyle("-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;");
-        button0.getStyleClass().add("mainFxmlClass");
-        button0.setText("Play Offline");
-        button0.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
-
-        button0.setEffect(innerShadow0);
-
-        textField.setLayoutX(48.0);
-        textField.setLayoutY(280.0);
-        textField.setPrefHeight(26.0);
-        textField.setPrefWidth(114.0);
-        textField.setStyle("-fx-border-radius: 10;");
-
-        setEffect(dropShadow3);
+        backButton.setEffect(backButtonInnerShadow);
+        
+        setEffect(anchorDropShadow);
 
         getChildren().add(line);
         getChildren().add(logoImageView);
-        getChildren().add(text);
-        stackPane.getChildren().add(imageView0);
+        getChildren().add(gametext);
+        getChildren().add(offlineImageView);
+        getChildren().add(offlineButton);
+        getChildren().add(vsImageView);
+        onlinePane.getChildren().add(roomTextField);
+        onlinePane.getChildren().add(enterOnlineRoomTextField);
+        onlinePane.getChildren().add(onlineButton);
+        getChildren().add(onlinePane);
+        stackPane.getChildren().add(onlineImageView);
         getChildren().add(stackPane);
-        getChildren().add(imageView1);
-        getChildren().add(button);
-        getChildren().add(button0);
-        getChildren().add(textField);
-
+        getChildren().add(backButton);
     }
+    
+    public void setActions(Stage primary) {
+       
+        offlineButton.setOnAction(e
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected)))
+        );
+
+        onlineButton.setOnAction(e
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary,playerId,xSelected)))
+        );
+
+        backButton.setOnAction(e
+                -> primary.setScene(new Scene(new OptionPage(primary, playerId)))
+            
+        );
+    }
+
 }

@@ -236,13 +236,17 @@ public class OptionPage extends AnchorPane {
             public void handle(ActionEvent ev) {
                 boolean xSelected=false;
                 if ((xRadioButton.isSelected() || oRadioButton.isSelected()) && (frindRadioButton.isSelected() || computerRadioButton.isSelected())) {
-                    if((xRadioButton.isSelected()) && (computerRadioButton.isSelected())){
+                    if((xRadioButton.isSelected()) && (computerRadioButton.isSelected() || frindRadioButton.isSelected())){
                         xSelected=true;                       
                     }
-                    else if((oRadioButton.isSelected()) && (computerRadioButton.isSelected())){
+                    else if((oRadioButton.isSelected()) && (computerRadioButton.isSelected() || frindRadioButton.isSelected())){
                         xSelected=false;
                     }
-                    primary.setScene(new Scene(new GamePage(primary, id, xSelected)));
+                    
+                    if(computerRadioButton.isSelected())
+                        primary.setScene(new Scene(new GamePage(primary, id, xSelected)));
+                    else if(frindRadioButton.isSelected())
+                        primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected)));
                 } else {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText(null);
