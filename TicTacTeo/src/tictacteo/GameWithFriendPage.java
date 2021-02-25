@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.database.Player;
 import static tictacteo.RecordPage.thread2;
 
 public class GameWithFriendPage extends AnchorPane {
@@ -89,8 +90,9 @@ public class GameWithFriendPage extends AnchorPane {
     boolean xSelected;
     Thread thread;
     static boolean stopThread = true;
-    
-    public GameWithFriendPage(Stage primary, int id, boolean xSelected, Thread thread) {
+    Player currentPlayer;
+    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+        this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
         this.xSelected = xSelected;
@@ -484,7 +486,8 @@ public class GameWithFriendPage extends AnchorPane {
         playerCharacter.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         playerCharacter.setFont(new Font(15.0));
 
-        playerNameEndGameLabel.setLayoutX(123.0);
+        playerNameEndGameLabel.setLayoutX(100.0);
+        playerNameEndGameLabel.setText(currentPlayer.getUserName());
         playerNameEndGameLabel.setLayoutY(150.0);
         playerNameEndGameLabel.setPrefHeight(21.0);
         playerNameEndGameLabel.setPrefWidth(50.0);
@@ -492,10 +495,11 @@ public class GameWithFriendPage extends AnchorPane {
         playerNameEndGameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         playerNameEndGameLabel.setFont(new Font(15.0));
 
-        characterEndGameLable.setLayoutX(290.0);
+        characterEndGameLable.setLayoutX(275.0);
         characterEndGameLable.setLayoutY(150.0);
         characterEndGameLable.setPrefHeight(21.0);
         characterEndGameLable.setPrefWidth(50.0);
+        characterEndGameLable.setText(userChar);
         characterEndGameLable.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         characterEndGameLable.setFont(new Font(15.0));
@@ -518,7 +522,7 @@ public class GameWithFriendPage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
 
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, id, xSelected, thread))));
+        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
 
         playAgainEnd.setOnAction(e
                 -> {
@@ -527,7 +531,7 @@ public class GameWithFriendPage extends AnchorPane {
             endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
         });
 
-        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, id, record, position, thread, "localFriend"))));
+        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
     }
 
     public void setButtonsAction() {
@@ -553,11 +557,6 @@ public class GameWithFriendPage extends AnchorPane {
         String b7 = button20.getText();
         String b8 = button21.getText();
         String b9 = button22.getText();
-
-        if (drawCounter >= 9) {
-            status = "Equal";
-            displayEndGame("../view/images/gameMessages/drawc.jpg");
-        }
 
         if (b1 == "X" && b2 == "X" && b3 == "X") {
             changeButtonsColor(button00, button01, button02);
@@ -607,8 +606,12 @@ public class GameWithFriendPage extends AnchorPane {
         } else if (b3 == "O" && b5 == "O" && b7 == "O") {
             changeButtonsColor(button02, button11, button20);
             userOWin(status);
-        }
-
+        }else 
+            if (drawCounter >= 9) {
+                status = "Equal";
+                displayEndGame("../view/images/gameMessages/drawc.jpg");
+            }
+        
     }
 
     public String userChar(boolean xSelected) {
