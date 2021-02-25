@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -19,6 +21,8 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -26,7 +30,7 @@ import model.database.Player;
 import model.database.PlayerModel;
 
 public class LogInPage extends Pane {
-
+    public static String newS = "New"; 
     protected final Rectangle recrangleSeparator;
     protected final Label lableGame;
     protected final Rectangle logInFormContainer;
@@ -52,7 +56,7 @@ public class LogInPage extends Pane {
     protected final DropShadow dropShadow5;
 
     public LogInPage(Stage primary , Thread thread) {
-
+        AudioClip plonkSound = new AudioClip(this.getClass().getResource("../view/audio/start-click.mp3").toString());
         recrangleSeparator = new Rectangle();
         lableGame = new Label();
         logInFormContainer = new Rectangle();
@@ -74,7 +78,9 @@ public class LogInPage extends Pane {
                     int playerId = PlayerModel.loginPlayer(name, password);
                     if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
-                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId , thread)));
+                        plonkSound.play();
+                        primary.setScene(new Scene(new MyDashboardPage(primary, playerId)));
+
                     } else if (playerId == -1) {
                         //System.out.println("Please Enter Valid Password or Unique User Name");
                         playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
@@ -250,6 +256,7 @@ public class LogInPage extends Pane {
         getChildren().add(joisticImage);
         getChildren().add(lockImage);
         getChildren().add(logoImage);
+       
 
     }
 }

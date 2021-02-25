@@ -241,6 +241,7 @@ public class GamePage extends AnchorPane {
         Button20 = new Button();
         Button21 = new Button();
         Button22 = new Button();
+        
         anchorPaneShadow = new DropShadow();
 
         setId("AnchorPane");
@@ -1094,11 +1095,11 @@ public class GamePage extends AnchorPane {
 
 
     public void moveActions(){
-//        playAgainButton.setOnAction(e 
-//            -> {
-//                System.out.println("Her I am");
-//                curruntClient.playerPrintStream.println("My Id="+id);
-//        });
+        exitButton.setOnAction(e 
+            -> {
+                System.out.println("Her I am");
+                curruntClient.playerPrintStream.println("My Id="+id);
+        });
         
     }
 

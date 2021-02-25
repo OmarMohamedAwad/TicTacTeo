@@ -88,7 +88,8 @@
                   <Font size="15.0" />
                </font>
             </Label>
-
+            </children>
+      </Pane>
       <Label layoutX="85.0" layoutY="23.0" prefHeight="25.0" prefWidth="84.0" text="Tic Tac Teo" textFill="WHITE">
          <font>
             <Font name="SansSerif Bold" size="15.0" />
