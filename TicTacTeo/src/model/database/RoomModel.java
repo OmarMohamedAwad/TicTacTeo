@@ -32,10 +32,11 @@ public class RoomModel {
     public static Room addRoom(Room room) {
         try {
             Connection con = connect();
-            PreparedStatement pst = con.prepareStatement("INSERT INTO roomsCrearion ( Room_Name , Player_1_Id ) values( ? , ? )");
+            PreparedStatement pst = con.prepareStatement("INSERT INTO roomsCrearion ( Room_Name , Player_1_Id, Player_1_char) values( ? , ? , ? )");
             Statement statement = (Statement) con.createStatement();
             pst.setString(1, room.get_roomName());
             pst.setInt(2, room.get_player1_Id());
+            pst.setString(3, room.get_player1_Char());
             int res = pst.executeUpdate();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM roomsCrearion where Room_Name='"+ room.get_roomName() +"'");
 
@@ -43,6 +44,7 @@ public class RoomModel {
                room.set_roomId(resultSet.getInt("Room_ID"));
                room.set_roomName(resultSet.getString("Room_Name"));
                room.setplayer1_Id(resultSet.getInt("Player_1_Id"));
+               room.setplayer1_Char(resultSet.getString("Player_1_char"));
             }
             pst.close();
             con.close();
@@ -64,7 +66,9 @@ public class RoomModel {
             while (res.next()) {
                 if (res.getString("Room_Name").equals(room_Name)) {
                     roomId = res.getInt("Room_ID");
-                    room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"));
+                    room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"), res.getString("Player_1_char"));
+                    System.out.println(room.get_roomName());
+
                     break;
                 }
             }
@@ -93,7 +97,7 @@ public class RoomModel {
             
             int id = -1;
             while (res.next()) {
-                Room room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"), res.getInt("Player_2_Id"));
+                Room room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"), res.getInt("Player_2_Id"), res.getString("Player_1_char"));
                 if(res.getInt("Player_2_Id") != 0)
                     id = res.getInt("Player_2_Id");
             }

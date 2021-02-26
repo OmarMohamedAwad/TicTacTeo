@@ -15,16 +15,25 @@ public class Room {
     private String roomName;
     private int player1_Id;
     private int player2_Id;
+    private String player1_char;
 
     public Room() {
 
     }
 
-    public Room(int roomId, String roomName, int player1_Id, int player2_id) {
+    public Room(int roomId, String roomName, int player1_Id, int player2_id, String player1_char) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.player1_Id = player1_Id;
         this.player2_Id = player2_Id;
+        this.player1_char = player1_char;
+    }
+    
+    public Room(int roomId, String roomName, int player1_Id, String player1_char) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.player1_Id = player1_Id;
+        this.player1_char = player1_char;
     }
     
     public Room(int roomId, String roomName, int player1_Id) {
@@ -62,13 +71,19 @@ public class Room {
     }
 
     public void setplayer2_Id(int player2_Id) {
-
         this.player2_Id = player2_Id;
-
     }
 
     public int get_player2_Id() {
         return player2_Id;
+    }
+    
+    public void setplayer1_Char(String player1_char) {
+        this.player1_char = player1_char;
+    }
+
+    public String get_player1_Char() {
+        return player1_char;
     }
 
 }

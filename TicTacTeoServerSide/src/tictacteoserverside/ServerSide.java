@@ -25,7 +25,8 @@ public class ServerSide {
                 new GameHandler(socket);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No Thread");
+
         }
 
     }

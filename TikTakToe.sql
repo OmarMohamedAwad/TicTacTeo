@@ -96,3 +96,5 @@ Room_ID int AUTO_INCREMENT,
 
 
 alter table roomsCrearion ADD CONSTRAINT uniqueName UNIQUE (Room_Name);
+
+ALTER TABLE roomsCrearion Add Player_1_char char;

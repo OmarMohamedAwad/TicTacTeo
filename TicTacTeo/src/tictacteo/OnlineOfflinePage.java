@@ -238,6 +238,11 @@ public class OnlineOfflinePage extends AnchorPane {
             int roomId;
             Room room = new Room();
             room.set_roomName(newRoom);
+            if (xSelected)
+                room.setplayer1_Char("X");
+            else 
+                room.setplayer1_Char("O");
+            
             room.setplayer1_Id(player1ID);
             Room createdRoom = RoomModel.addRoom(room);
             createdRoom.get_roomId();
