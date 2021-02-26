@@ -3,6 +3,7 @@ package tictacteo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -18,10 +19,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.database.Player;
 import model.database.PlayerModel;
+import model.database.Room;
+import model.database.RoomModel;
 import static tictacteo.MyDashboardPage.currentPlayer;
 
 public class OnlineOfflinePage extends AnchorPane {
-
     protected final Line line;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
@@ -46,11 +48,14 @@ public class OnlineOfflinePage extends AnchorPane {
     boolean xSelected;
     public static Player currentPlayer;
     Thread thread;
-    
+    int player1ID;
+    int roomid;
+
     public OnlineOfflinePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
         this.thread = thread;
         this.xSelected = xSelected;
         this.currentPlayer = currentPlayer;
+        player1ID = currentPlayer.getUserID();
 
         line = new Line();
         logoImageView = new ImageView();
@@ -74,12 +79,12 @@ public class OnlineOfflinePage extends AnchorPane {
         backButtonInnerShadow = new InnerShadow();
         anchorDropShadow = new DropShadow();
 
-        setDesignProperty();        
+        setDesignProperty();
         setActions(primary);
-        
+
     }
-    
-    public void setDesignProperty(){
+
+    public void setDesignProperty() {
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
@@ -196,7 +201,7 @@ public class OnlineOfflinePage extends AnchorPane {
         backButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
 
         backButton.setEffect(backButtonInnerShadow);
-        
+
         setEffect(anchorDropShadow);
 
         getChildren().add(line);
@@ -213,21 +218,59 @@ public class OnlineOfflinePage extends AnchorPane {
         getChildren().add(stackPane);
         getChildren().add(backButton);
     }
-    
+
     public void setActions(Stage primary) {
-       
+
         offlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,currentPlayer,xSelected, thread)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomid)))
         );
 
         onlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,currentPlayer,xSelected, thread)))
+                -> onlinePlayDatabaseHandler(primary)
         );
 
         backButton.setOnAction(e
-                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer,thread)))
-            
+                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)))
         );
+    }
+
+    public void onlinePlayDatabaseHandler(Stage primary) {
+        if (!roomTextField.getText().isEmpty() && enterOnlineRoomTextField.getText().isEmpty()) {
+            String newRoom = roomTextField.getText();
+            int roomId;
+            Room room = new Room();
+            room.set_roomName(newRoom);
+            room.setplayer1_Id(player1ID);
+            roomId = RoomModel.addRoom(room);
+            primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomId)));
+        } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
+            String enterExistRoom = enterOnlineRoomTextField.getText();
+            int roomId = RoomModel.UpdateRoom(enterExistRoom, player1ID);
+            if (roomId <= 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle(" Not Found Room!");
+                alert.setContentText("Room Not Exist ,Please Create One");
+                alert.showAndWait();
+            } else {
+                primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomId)));
+
+            }
+
+        } else if (roomTextField.getText().isEmpty() && enterOnlineRoomTextField.getText().isEmpty()) {
+            roomTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+            roomTextField.setPromptText("PLEASE ENTER PASSWORD!");
+            enterOnlineRoomTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
+            enterOnlineRoomTextField.setPromptText("PLEASE ENTER PASSWORD!");
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Room Validation");
+            alert.setContentText("Pleas Create New Room Or Enter Exist Room To Play");
+            alert.showAndWait();
+        }
+
     }
 
 }

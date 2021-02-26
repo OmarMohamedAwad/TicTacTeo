@@ -90,7 +90,7 @@ Room_ID int AUTO_INCREMENT,
  Room_Name VARCHAR(50),
  Player_1_Id int ,
  Player_2_Id int NULL ,
-PRIMARY KEY (Room_ID),
+ PRIMARY KEY (Room_ID),
  FOREIGN KEY(player_1_Id) references users(User_ID)
 );
 

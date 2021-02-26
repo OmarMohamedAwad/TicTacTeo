@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
+import model.database.RoomModel;
 
 
 public class GameWithFriendPage extends AnchorPane {
@@ -64,26 +65,25 @@ public class GameWithFriendPage extends AnchorPane {
     protected final ImageView xImageView;
     protected final ImageView oImageView;
     protected final Label xTurnLabel;
+    protected final Label oTurnLabel;
     protected final DropShadow looserDropShadow;
     protected final ImageView vsImageView;
-    protected final Label oTurnLabel;
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
     protected final Pane backPane;
-
     protected final Pane endGamePane;
     protected final ImageView endGameImageView;
     protected final ImageView xIcone;
     protected final ImageView yIcone;
     protected final ImageView vsIcon;
     protected final Button playAgainEnd;
-    protected final InnerShadow innerShadow;
     protected final Button watchVideoEndGame;
     protected final InnerShadow innerShadow0;
     protected final Label playerNameLabel;
     protected final Label playerCharacter;
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
+    protected final InnerShadow innerShadow;
 
     int drawCounter = 0;
     int id;
@@ -91,8 +91,10 @@ public class GameWithFriendPage extends AnchorPane {
     Thread thread;
     static boolean stopThread = true;
     Player currentPlayer;
-    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+    int roomID;
+    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, int roomID) {
         stopThread = true;
+        this.roomID=roomID;
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -148,9 +150,7 @@ public class GameWithFriendPage extends AnchorPane {
         playerCharacter = new Label();
         playerNameEndGameLabel = new Label();
         characterEndGameLable = new Label();
-
         userChar = userChar(xSelected);
-
         setDesignProperty();
         endGameDesign();
         first = firstTurn(xSelected);
@@ -220,6 +220,11 @@ public class GameWithFriendPage extends AnchorPane {
         playAginButton.setFont(new Font(16.0));
 
         playAginButton.setEffect(playAgininnerShadow);
+        gridPane.setLayoutX(5.0);
+        gridPane.setLayoutY(-8.0);
+        gridPane.setPrefHeight(178.0);
+        gridPane.setPrefWidth(221.0);
+        gridPane.setStyle("-fx-background-color: #343F4B;");
 
         containerPane.setLayoutX(141.0);
         containerPane.setLayoutY(158.0);
@@ -227,11 +232,7 @@ public class GameWithFriendPage extends AnchorPane {
         containerPane.setPrefWidth(218.0);
         containerPane.setStyle("-fx-background-color: #343F4B;");
 
-        gridPane.setLayoutX(5.0);
-        gridPane.setLayoutY(-8.0);
-        gridPane.setPrefHeight(178.0);
-        gridPane.setPrefWidth(221.0);
-        gridPane.setStyle("-fx-background-color: #343F4B;");
+       
 
         firstColumnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         firstColumnConstraints.setMinWidth(10.0);
@@ -523,7 +524,7 @@ public class GameWithFriendPage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
 
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
+        exitButton.setOnAction(e -> deleteRoom(primary));
 
         playAgainEnd.setOnAction(e
                 -> {
@@ -533,6 +534,10 @@ public class GameWithFriendPage extends AnchorPane {
         });
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
+    }
+    public void deleteRoom(Stage primary){
+        RoomModel.DeleteRoom(roomID);
+        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }
 
     public void setButtonsAction() {
