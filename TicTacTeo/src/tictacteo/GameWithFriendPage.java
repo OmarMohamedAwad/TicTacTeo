@@ -620,7 +620,6 @@ public class GameWithFriendPage extends AnchorPane {
     }
     
     public String firstTurn(boolean xSelected) {
-        String first = "";
         if (random.nextInt(2) == 0) {
             friendTurn = true;
             if (xSelected) {

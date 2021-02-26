@@ -42,6 +42,7 @@ import model.database.PlayerModel;
 public class GamePage extends AnchorPane {
 
     Button[][] board;
+    Thread thread;
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean computerTurn = false;
@@ -52,6 +53,7 @@ public class GamePage extends AnchorPane {
     String userChar;
     String computerChar;
     int num = 0;
+    boolean xSelected;
 
     protected final Pane backPane;
     protected final ImageView logoImage;
@@ -157,6 +159,8 @@ public class GamePage extends AnchorPane {
     boolean gameOver;
 
     public GamePage(Stage primary, int id, boolean xSelected, Thread thread) {
+        this.thread = thread;
+        this.xSelected = xSelected;
         Player user = new Player();
         user = PlayerModel.playerInfo(id);
         String userName = user.getUserName();
@@ -437,12 +441,10 @@ public class GamePage extends AnchorPane {
         playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-
-                gameReset(xSelected);
-
+                gameReset();
+                startGame();
             }
         });
-
         xOPane.setLayoutX(115.0);
         xOPane.setLayoutY(166.0);
         xOPane.setPrefHeight(160.0);
@@ -475,25 +477,10 @@ public class GamePage extends AnchorPane {
                 if (Button00.getText() == "") {
                     Button00.setText(first);
                     Button00.setFont(new Font("SansSerif Bold", 15.0));
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
-            }
-        });
-
-        Button00.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button00.getText() == "") {
-                    Button00.setText(first);
-                    Button00.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("00");
-                    first = switchTurns(first);
-                    check(userName);
-
-                }
-
             }
         });
         GridPane.setRowIndex(Button01, 1);
@@ -510,8 +497,8 @@ public class GamePage extends AnchorPane {
                     Button01.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("01");
-                    first = switchTurns(first);
-
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
 
                 }
@@ -520,18 +507,12 @@ public class GamePage extends AnchorPane {
 
         });
 
-        GridPane.setRowIndex(Button02,
-                2);
-        Button02.setLayoutX(
-                10.0);
-        Button02.setLayoutY(
-                11.0);
-        Button02.setMnemonicParsing(
-                false);
-        Button02.setPrefHeight(
-                48.0);
-        Button02.setPrefWidth(
-                60.0);
+        GridPane.setRowIndex(Button02, 2);
+        Button02.setLayoutX(10.0);
+        Button02.setLayoutY(11.0);
+        Button02.setMnemonicParsing(false);
+        Button02.setPrefHeight(48.0);
+        Button02.setPrefWidth(60.0);
         Button02.setOnAction(
                 new EventHandler<ActionEvent>() {
             @Override
@@ -543,7 +524,8 @@ public class GamePage extends AnchorPane {
                     Button02.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("02");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -551,18 +533,12 @@ public class GamePage extends AnchorPane {
         }
         );
 
-        GridPane.setColumnIndex(Button10,
-                1);
-        Button10.setLayoutX(
-                10.0);
-        Button10.setLayoutY(
-                63.0);
-        Button10.setMnemonicParsing(
-                false);
-        Button10.setPrefHeight(
-                48.0);
-        Button10.setPrefWidth(
-                60.0);
+        GridPane.setColumnIndex(Button10, 1);
+        Button10.setLayoutX(10.0);
+        Button10.setLayoutY(63.0);
+        Button10.setMnemonicParsing(false);
+        Button10.setPrefHeight(48.0);
+        Button10.setPrefWidth(60.0);
         Button10.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -572,7 +548,8 @@ public class GamePage extends AnchorPane {
                     Button10.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("10");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -595,7 +572,8 @@ public class GamePage extends AnchorPane {
                     Button11.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("11");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -618,7 +596,8 @@ public class GamePage extends AnchorPane {
                     Button12.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("12");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -639,7 +618,8 @@ public class GamePage extends AnchorPane {
                     Button20.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("20");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -662,7 +642,8 @@ public class GamePage extends AnchorPane {
                     Button21.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("21");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -684,7 +665,8 @@ public class GamePage extends AnchorPane {
                     Button22.setFont(new Font("SansSerif Bold", 15.0));
                     record.add(first);
                     position.add("22");
-                    first = switchTurns(first);
+                    switchTurns();
+                    computerAlgorithm();
                     check(userName);
                 }
 
@@ -797,7 +779,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
                 winner.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
                 backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
-                gameReset(xSelected);
+                gameReset();
 
             }
         });
@@ -898,7 +880,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
                 draw.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
                 backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
-                gameReset(xSelected);
+                gameReset();
 
             }
         });
@@ -1002,7 +984,7 @@ public class GamePage extends AnchorPane {
             public void handle(ActionEvent ev) {
                 looser.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
                 backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
-                gameReset(xSelected);
+                gameReset();
 
             }
         });
@@ -1101,13 +1083,7 @@ public class GamePage extends AnchorPane {
         looser.getChildren().add(labelLooserPlayerCharacter);
         looser.getChildren().add(looseLabel);
         getChildren().add(looser);
-        userChar = userChar(xSelected);
-        initialize();
-
-        first = firstTurn(xSelected);
-        System.out.println(rand.nextInt((9 - 1) + 1) + 1); 
-        computerAlgorithm();
-
+        startGame();
     }
 
     public void initialize() {
@@ -1129,42 +1105,56 @@ public class GamePage extends AnchorPane {
     public void computerAlgorithm() {
         boolean empty = false;
         int row, column;
+        String num1, num2,num3;
         if (first == computerChar) {
             while (!empty) {
                 row = rand.nextInt((2 - 0) + 1) + 0;
                 column = rand.nextInt((2 - 0) + 1) + 0;
                 if (board[row][column].getText() == "") {
                     board[row][column].setText(computerChar);
+                    num1 = Integer.toString(row);
+                    num2 = Integer.toString(column);
+                    num3=num1+num2;
+                    System.out.println(num1);
+                    System.out.println(num2);
+                    System.out.println(num3);
+                    record.add(first);
+                    position.add(num3);
                     empty = true;
                 }
             }
+            switchTurns();
         }
     }
 
-    public String firstTurn(boolean xSelected) {
+    public String firstTurn() {
         if (random.nextInt(2) == 0) {
             computerTurn = true;
-            if (xSelected) {
+            if (computerChar == "O") {
                 oImage.setEffect(ds);
-                first = "O";
+                first = computerChar;
                 return first;
-            } else {
+            } else if (computerChar == "X") {
                 xImage.setEffect(ds);
-                first = "X";
+                first = computerChar;
                 return first;
             }
+            return null;
         } else {
             computerTurn = false;
-            System.out.println(computerTurn + "your turn");
-            if (xSelected) {
-                xImage.setEffect(ds);
-                first = "X";
-                return first;
-            } else {
-                oImage.setEffect(ds);
-                first = "O";
-                return first;
+            switch (userChar) {
+                case "X":
+                    xImage.setEffect(ds);
+                    first = userChar;
+                    return first;
+                case "O":
+                    oImage.setEffect(ds);
+                    first = userChar;
+                    return first;
+                default:
+                    return null;
             }
+
         }
 
     }
@@ -1306,12 +1296,13 @@ public class GamePage extends AnchorPane {
             oImage.setEffect(null);
             xImage.setEffect(null);
             scoreLabel.setText("Score :" + score);
+            newUserHistory.setStatus(status);
+            HistoryModel.addHistory(newUserHistory);
+
             winner.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: true;");
             backPane.setStyle("-fx-background-color: #0c0721;visibility: true;");
             labelWinnerPlayerName.setText(userName);
             labelWinnerCharacter.setText(userChar);
-            newUserHistory.setStatus(status);
-            System.out.println(HistoryModel.addHistory(newUserHistory));
 
         } else {
             status = "looser";
@@ -1322,7 +1313,7 @@ public class GamePage extends AnchorPane {
             labelLooserPlayerCharacter.setText(userChar);
             labelLooserPlayerName.setText(userName);
             newUserHistory.setStatus(status);
-            System.out.println(HistoryModel.addHistory(newUserHistory));
+            HistoryModel.addHistory(newUserHistory);
 
         }
     }
@@ -1339,7 +1330,7 @@ public class GamePage extends AnchorPane {
             labelWinnerPlayerName.setText(userName);
             labelWinnerCharacter.setText(userChar);
             newUserHistory.setStatus(status);
-            System.out.println(HistoryModel.addHistory(newUserHistory));
+            HistoryModel.addHistory(newUserHistory);
 
         } else {
             status = "loose";
@@ -1350,7 +1341,7 @@ public class GamePage extends AnchorPane {
             labelLooserPlayerCharacter.setText(userChar);
             labelLooserPlayerName.setText(userName);
             newUserHistory.setStatus(status);
-            System.out.println(HistoryModel.addHistory(newUserHistory));
+            HistoryModel.addHistory(newUserHistory);
 
         }
     }
@@ -1362,19 +1353,19 @@ public class GamePage extends AnchorPane {
         labelDrawPlayerCharater.setText(userChar);
         labelDrawPlayerName.setText(userName);
         newUserHistory.setStatus(status);
-        System.out.println(HistoryModel.addHistory(newUserHistory));
+        HistoryModel.addHistory(newUserHistory);
 
     }
 
-    public void gameReset(boolean xSelected) {
+    public void gameReset() {
         record.clear();
         position.clear();
         xImage.setEffect(null);
         oImage.setEffect(null);
-        first = firstTurn(xSelected);
+        first = firstTurn();
         xImage.setEffect(null);
         oImage.setEffect(null);
-        first = firstTurn(xSelected);
+        first = firstTurn();
         Button00.setText("");
         Button01.setText("");
         Button02.setText("");
@@ -1397,7 +1388,7 @@ public class GamePage extends AnchorPane {
 
     }
 
-    public String userChar(boolean xSelected) {
+    public String userChar() {
         String userChar;
         if (xSelected) {
             userChar = "X";
@@ -1411,19 +1402,26 @@ public class GamePage extends AnchorPane {
 
     }
 
-    public String switchTurns(String first) {
-        if (xImage.getEffect() == null) {
+    public void switchTurns() {
+        if (oImage.getEffect() == ds) {
             oImage.setEffect(null);
             xImage.setEffect(ds);
             first = "X";
-            return first;
-        } else if (oImage.getEffect() == null) {
+
+        } else if (xImage.getEffect() == ds) {
             xImage.setEffect(null);
             oImage.setEffect(ds);
             first = "O";
-            return first;
+
         }
-        return null;
+
+    }
+
+    public void startGame() {
+        userChar = userChar();
+        initialize();
+        first = firstTurn();
+        computerAlgorithm();
     }
 
 //    public int evaluate(Button board[][]) {
