@@ -205,7 +205,7 @@ public class RecordPage extends AnchorPane {
                 if (page == "computer")
                     primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
                 else if (page == "localFriend")
-                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
+                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2, -1)));
             }
         });
 

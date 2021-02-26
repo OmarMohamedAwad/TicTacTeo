@@ -86,9 +86,7 @@ public class PlayerModel {
                 }
             }
             lastScore += score;
-
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET Score = ? where User_ID=? ");
-
             preparedStatement.setInt(1, lastScore);
             preparedStatement.setInt(2, userid);
             int res = preparedStatement.executeUpdate();
