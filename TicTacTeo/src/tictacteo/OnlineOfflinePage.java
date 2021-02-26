@@ -239,19 +239,22 @@ public class OnlineOfflinePage extends AnchorPane {
             Room room = new Room();
             room.set_roomName(newRoom);
             room.setplayer1_Id(player1ID);
-            roomId = RoomModel.addRoom(room);
-            primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,roomId)));
+            Room createdRoom = RoomModel.addRoom(room);
+            createdRoom.get_roomId();
+            primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,createdRoom)));
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
-            int roomId = RoomModel.UpdateRoom(enterExistRoom, player1ID);
-            if (roomId <= 0) {
+            Room room = RoomModel.UpdateRoom(enterExistRoom, player1ID);
+            System.out.println(room.get_roomId());
+            room.get_player2_Id();
+            if (room == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle(" Not Found Room!");
                 alert.setContentText("Room Not Exist ,Please Create One");
                 alert.showAndWait();
             } else {
-                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,roomId)));
+                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,room)));
 
             }
 

@@ -26,6 +26,12 @@ public class Room {
         this.player1_Id = player1_Id;
         this.player2_Id = player2_Id;
     }
+    
+    public Room(int roomId, String roomName, int player1_Id) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.player1_Id = player1_Id;
+    }
 
     public void set_roomId(int roomId) {
         this.roomId = roomId;

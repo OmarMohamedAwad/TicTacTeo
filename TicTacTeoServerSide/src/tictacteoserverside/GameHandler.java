@@ -24,6 +24,7 @@ public class GameHandler extends Thread {
             serverDataInput = new DataInputStream(clientSocket.getInputStream());
             serverPrintStreem = new PrintStream(clientSocket.getOutputStream());
         } catch (IOException e) {
+            clientsList.remove(this);
             e.printStackTrace();
         }
         clientsList.add(this);

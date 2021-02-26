@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
+import model.database.Room;
 import model.database.RoomModel;
 
 
@@ -85,17 +86,22 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerCharacter;
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
-
+    volatile static int player2 = -1;
+    
+    ClientSide curruntClient;
     int drawCounter = 0;
     int id;
     boolean xSelected;
     Thread thread;
     static boolean stopThread = true;
     Player currentPlayer;
-    int roomID;
-    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, int roomID) {
+    Room room;
+    
+    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
+        curruntClient = new ClientSide();
         stopThread = true;
-        this.roomID=roomID;
+        this.room=room;
+        System.out.println(this.room.get_roomId());
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -155,6 +161,7 @@ public class OnLineGamePage extends AnchorPane {
         userChar = userChar(xSelected);
 
         setDesignProperty();
+        checkIfPlayersEnter();
         endGameDesign();
         first = firstTurn(xSelected);
         setActionsPage(primary);
@@ -633,42 +640,21 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public String firstTurn(boolean xSelected) {
-        if (random.nextInt(2) == 0) {
-            friendTurn = true;
-            if (xSelected) {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: true;");
-                xTurnLabel.setStyle("visibility: false;");
-                first = "O";
-                return first;
-            } else {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: true;");
-                oTurnLabel.setStyle("visibility: false;");
-                first = "X";
-                return first;
-            }
+        if (xSelected) {
+            oImageView.setEffect(ds);
+            xImageView.setEffect(null);
+            oTurnLabel.setStyle("visibility: true;");
+            xTurnLabel.setStyle("visibility: false;");
+            first = "X";
+            return first;
         } else {
-            friendTurn = false;
-            if (xSelected) {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: false;");
-                xTurnLabel.setStyle("visibility: true;");
-                first = "X";
-                return first;
-            } else {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: false;");
-                oTurnLabel.setStyle("visibility: true;");
-                first = "O";
-                return first;
-            }
+            xImageView.setEffect(ds);
+            oImageView.setEffect(null);
+            xTurnLabel.setStyle("visibility: true;");
+            oTurnLabel.setStyle("visibility: false;");
+            first = "O";
+            return first;
         }
-
     }
 
     public String switchTurns(String first) {
@@ -757,10 +743,15 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void changeButtonStatus(Button button, String symbol) {
-        if (button.getText() == "") {
+        if (button.getText() == "" && player2 != -1) {
             drawCounter += 1;
             button.setText(first);
             button.setFont(new Font("SansSerif Bold", 15.0));
+            System.out.println(player2+","+ room.get_player1_Id());
+            if(player2 == currentPlayer.getUserID())
+                curruntClient.playerPrintStream.println(first+","+symbol+","+room.get_player1_Id());
+            else
+                curruntClient.playerPrintStream.println(first+","+symbol+","+player2);
             record.add(first);
             position.add(symbol);
             first = switchTurns(first);
@@ -799,7 +790,37 @@ public class OnLineGamePage extends AnchorPane {
     }
     
     public void deleteRoom(Stage primary){
-        RoomModel.DeleteRoom(roomID);
+        RoomModel.DeleteRoom(room.get_roomId());
         primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+    }
+    
+    public void checkIfPlayersEnter(){
+        thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (player2 == -1) {
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                    }
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            int curruntRoom = RoomModel.showRoom(room.get_roomId());
+                            System.out.println(curruntRoom);
+                            if(curruntRoom != -1)
+                                player2 = curruntRoom;
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+        thread.start();
     }
 }
