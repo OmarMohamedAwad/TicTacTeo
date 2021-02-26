@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
+import model.database.RoomModel;
 
 
 public class OnLineGamePage extends AnchorPane {
@@ -91,8 +92,10 @@ public class OnLineGamePage extends AnchorPane {
     Thread thread;
     static boolean stopThread = true;
     Player currentPlayer;
-    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+    int roomID;
+    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, int roomID) {
         stopThread = true;
+        this.roomID=roomID;
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -523,10 +526,12 @@ public class OnLineGamePage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
 
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
-
-        playAgainEnd.setOnAction(e
-                -> {
+        exitButton.setOnAction(e -> {
+            deleteRoom(primary);
+            primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+        });
+        
+        playAgainEnd.setOnAction(e -> {
             resetAll();
             backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
             endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
@@ -791,5 +796,10 @@ public class OnLineGamePage extends AnchorPane {
         button20.setStyle("-fx-background-color: #ececec;");
         button21.setStyle("-fx-background-color: #ececec;");
         button22.setStyle("-fx-background-color: #ececec;");
+    }
+    
+    public void deleteRoom(Stage primary){
+        RoomModel.DeleteRoom(roomID);
+        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }
 }

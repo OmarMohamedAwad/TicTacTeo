@@ -91,10 +91,9 @@ public class GameWithFriendPage extends AnchorPane {
     Thread thread;
     static boolean stopThread = true;
     Player currentPlayer;
-    int roomID;
-    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, int roomID) {
+
+    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
         stopThread = true;
-        this.roomID=roomID;
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -524,7 +523,7 @@ public class GameWithFriendPage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
 
-        exitButton.setOnAction(e -> deleteRoom(primary));
+        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
 
         playAgainEnd.setOnAction(e
                 -> {
@@ -534,10 +533,6 @@ public class GameWithFriendPage extends AnchorPane {
         });
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
-    }
-    public void deleteRoom(Stage primary){
-        RoomModel.DeleteRoom(roomID);
-        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }
 
     public void setButtonsAction() {
