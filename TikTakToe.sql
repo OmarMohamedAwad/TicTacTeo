@@ -81,3 +81,18 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2021-02-19 21:10:42
+
+--
+-- Dumping data for table `room`
+--
+cREATE tABLE roomsCrearion(
+Room_ID int AUTO_INCREMENT,
+ Room_Name VARCHAR(50),
+ Player_1_Id int ,
+ Player_2_Id int NULL ,
+ PRIMARY KEY (Room_ID),
+ FOREIGN KEY(player_1_Id) references users(User_ID)
+);
+
+
+alter table roomsCrearion ADD CONSTRAINT uniqueName UNIQUE (Room_Name);

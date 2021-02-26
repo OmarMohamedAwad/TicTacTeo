@@ -82,7 +82,6 @@ public class LogInPage extends Pane {
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId, thread)));
 
                     } else if (playerId == -1) {
-                        //System.out.println("Please Enter Valid Password or Unique User Name");
                         playerNameTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
                         playerNameTextField.setPromptText("ALREADY EXIST!");
                         playerPasswordTextPassword.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
