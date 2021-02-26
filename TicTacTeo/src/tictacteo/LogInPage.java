@@ -56,7 +56,7 @@ public class LogInPage extends Pane {
     protected final DropShadow dropShadow5;
 
     public LogInPage(Stage primary , Thread thread) {
-        AudioClip plonkSound = new AudioClip(this.getClass().getResource("../view/audio/start-click.mp3").toString());
+//        AudioClip plonkSound = new AudioClip(this.getClass().getResource("../view/audio/start-click.mp3").toString());
         recrangleSeparator = new Rectangle();
         lableGame = new Label();
         logInFormContainer = new Rectangle();
@@ -78,7 +78,7 @@ public class LogInPage extends Pane {
                     int playerId = PlayerModel.loginPlayer(name, password);
                     if (playerId > 0) {
                         System.out.println("THIS IS positive case CASE ");
-                        plonkSound.play();
+                      //  plonkSound.play();
                         primary.setScene(new Scene(new MyDashboardPage(primary, playerId, thread)));
 
                     } else if (playerId == -1) {
@@ -206,7 +206,7 @@ public class LogInPage extends Pane {
         welcomImage.setFitWidth(206.0);
         welcomImage.setLayoutX(160.0);
         welcomImage.setLayoutY(13.0);
-        welcomImage.setImage(new Image(getClass().getResource("../view/images/login/ClipartKey_97962.png").toExternalForm()));
+//        welcomImage.setImage(new Image(getClass().getResource("../view/images/login/ClipartKey_97962.png").toExternalForm()));
 
         welcomImage.setEffect(dropShadow1);
 
@@ -219,7 +219,7 @@ public class LogInPage extends Pane {
         joisticImage.setFitWidth(29.0);
         joisticImage.setLayoutX(146.0);
         joisticImage.setLayoutY(180.0);
-        joisticImage.setImage(new Image(getClass().getResource("../view/images/login/joistic.png").toExternalForm()));
+//        joisticImage.setImage(new Image(getClass().getResource("../view/images/login/joistic.png").toExternalForm()));
 
         joisticImage.setEffect(dropShadow2);
 
@@ -227,7 +227,7 @@ public class LogInPage extends Pane {
         lockImage.setFitWidth(22.0);
         lockImage.setLayoutX(150.0);
         lockImage.setLayoutY(245.0);
-        lockImage.setImage(new Image(getClass().getResource("../view/images/login/lock.png").toExternalForm()));
+//        lockImage.setImage(new Image(getClass().getResource("../view/images/login/lock.png").toExternalForm()));
 
         lockImage.setEffect(dropShadow3);
 
@@ -235,7 +235,7 @@ public class LogInPage extends Pane {
         logoImage.setFitWidth(45.0);
         logoImage.setLayoutX(14.0);
         logoImage.setLayoutY(11.0);
-        logoImage.setImage(new Image(getClass().getResource("../view/images/logo.jpg").toExternalForm()));
+//        logoImage.setImage(new Image(getClass().getResource("../view/images/logo.jpg").toExternalForm()));
 
         logoImage.setEffect(dropShadow4);
 
