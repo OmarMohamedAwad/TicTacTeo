@@ -19,6 +19,7 @@ public class ServerSide {
     public ServerSide() {
         try {
             serverSocket = new ServerSocket(10000);
+          //  System.out.println("server is listnening");
             while (true) {
                 Socket socket = serverSocket.accept();
                 new GameHandler(socket);
