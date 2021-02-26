@@ -148,17 +148,17 @@ public class OnlineOfflinePage extends AnchorPane {
         onlinePane.setPrefWidth(200.0);
         onlinePane.setStyle("-fx-border-color: #ffffff; -fx-border-radius: 5;");
 
-        roomTextField.setLayoutX(35.0);
-        roomTextField.setLayoutY(74.0);
+        roomTextField.setLayoutX(20.0);
+        roomTextField.setLayoutY(75.0);
         roomTextField.setPrefHeight(26.0);
-        roomTextField.setPrefWidth(132.0);
+        roomTextField.setPrefWidth(160.0);
         roomTextField.setPromptText("Create New Rome");
         roomTextField.setStyle("-fx-border-radius: 10;");
 
-        enterOnlineRoomTextField.setLayoutX(35.0);
+        enterOnlineRoomTextField.setLayoutX(20.0);
         enterOnlineRoomTextField.setLayoutY(115.0);
         enterOnlineRoomTextField.setPrefHeight(26.0);
-        enterOnlineRoomTextField.setPrefWidth(132.0);
+        enterOnlineRoomTextField.setPrefWidth(160.0);
         enterOnlineRoomTextField.setPromptText("Or Enter Room Name");
         enterOnlineRoomTextField.setStyle("-fx-border-radius: 10;");
 
@@ -221,7 +221,7 @@ public class OnlineOfflinePage extends AnchorPane {
         );
 
         onlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary,currentPlayer,xSelected, thread)))
+                -> primary.setScene(new Scene(new OnLineGamePage(primary,currentPlayer,xSelected, thread)))
         );
 
         backButton.setOnAction(e
