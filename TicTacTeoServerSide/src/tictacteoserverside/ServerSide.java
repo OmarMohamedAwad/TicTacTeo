@@ -18,13 +18,15 @@ public class ServerSide {
 
     public ServerSide() {
         try {
-            serverSocket = new ServerSocket(10000);
+            serverSocket = new ServerSocket(5000);
+          //  System.out.println("server is listnening");
             while (true) {
                 Socket socket = serverSocket.accept();
                 new GameHandler(socket);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No Thread");
+
         }
 
     }

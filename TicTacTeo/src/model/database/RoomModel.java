@@ -21,33 +21,44 @@ import static model.database.PlayerModel.connect;
  */
 public class RoomModel {
 
-    static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
+
+    static final String DB_URL = "jdbc:mysql://127.0.0.1/tiktaktoe";
     static final String DB_USER = "root";
-    static final String DB_PASSWD = "root@#123";
+    static final String DB_PASSWD = "root@123";
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
     }
 
-    public static int addRoom(Room room) {
+    public static Room addRoom(Room room) {
         try {
             Connection con = connect();
-            PreparedStatement pst = con.prepareStatement("INSERT INTO roomsCrearion ( Room_Name , Player_1_Id ) values( ? , ? )");
+            PreparedStatement pst = con.prepareStatement("INSERT INTO roomsCrearion ( Room_Name , Player_1_Id, Player_1_char) values( ? , ? , ? )");
+            Statement statement = (Statement) con.createStatement();
             pst.setString(1, room.get_roomName());
             pst.setInt(2, room.get_player1_Id());
+            pst.setString(3, room.get_player1_Char());
             int res = pst.executeUpdate();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM roomsCrearion where Room_Name='"+ room.get_roomName() +"'");
+
+            while (resultSet.next()) {
+               room.set_roomId(resultSet.getInt("Room_ID"));
+               room.set_roomName(resultSet.getString("Room_Name"));
+               room.setplayer1_Id(resultSet.getInt("Player_1_Id"));
+               room.setplayer1_Char(resultSet.getString("Player_1_char"));
+            }
             pst.close();
             con.close();
-            if (res > 0);
-            return room.get_roomId();
+            return room;
         } catch (SQLException ex) {
-            Logger.getLogger(RoomModel.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("You Should Enter Unique Name");
         }
-        return -1;
+        return null;
     }
 
-    public static int UpdateRoom(String room_Name, int player2_Id) {
+    public static Room UpdateRoom(String room_Name, int player2_Id) {
         int roomId = 0;
+        Room room = null;
         try {
 
             Connection con = connect();
@@ -56,6 +67,9 @@ public class RoomModel {
             while (res.next()) {
                 if (res.getString("Room_Name").equals(room_Name)) {
                     roomId = res.getInt("Room_ID");
+                    room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"), res.getString("Player_1_char"));
+                    System.out.println(room.get_roomName());
+
                     break;
                 }
             }
@@ -66,14 +80,39 @@ public class RoomModel {
             res.close();
             pst.close();
             con.close();
-            return roomId;
+            return room;
         } catch (SQLException ex) {
             Logger.getLogger(RoomModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return roomId;
+        return room;
 
     }
 
+    public static int showRoom(int roomId) {
+        //Room room = null;
+        try {
+
+            Connection con = connect();
+            Statement statement = (Statement) con.createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM roomsCrearion where Room_ID ="+roomId);
+            
+            int id = -1;
+            while (res.next()) {
+                Room room = new Room(roomId, res.getString("Room_Name"), res.getInt("Player_1_Id"), res.getInt("Player_2_Id"), res.getString("Player_1_char"));
+                if(res.getInt("Player_2_Id") != 0)
+                    id = res.getInt("Player_2_Id");
+            }
+            res.close();
+            con.close();
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+
+    }
+
+    
     public static boolean DeleteRoom(int room_Id) {
         boolean checkDeleted = false;
         try {

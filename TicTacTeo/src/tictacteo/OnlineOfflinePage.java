@@ -153,17 +153,17 @@ public class OnlineOfflinePage extends AnchorPane {
         onlinePane.setPrefWidth(200.0);
         onlinePane.setStyle("-fx-border-color: #ffffff; -fx-border-radius: 5;");
 
-        roomTextField.setLayoutX(35.0);
-        roomTextField.setLayoutY(74.0);
+        roomTextField.setLayoutX(20.0);
+        roomTextField.setLayoutY(75.0);
         roomTextField.setPrefHeight(26.0);
-        roomTextField.setPrefWidth(132.0);
+        roomTextField.setPrefWidth(160.0);
         roomTextField.setPromptText("Create New Rome");
         roomTextField.setStyle("-fx-border-radius: 10;");
 
-        enterOnlineRoomTextField.setLayoutX(35.0);
+        enterOnlineRoomTextField.setLayoutX(20.0);
         enterOnlineRoomTextField.setLayoutY(115.0);
         enterOnlineRoomTextField.setPrefHeight(26.0);
-        enterOnlineRoomTextField.setPrefWidth(132.0);
+        enterOnlineRoomTextField.setPrefWidth(160.0);
         enterOnlineRoomTextField.setPromptText("Or Enter Room Name");
         enterOnlineRoomTextField.setStyle("-fx-border-radius: 10;");
 
@@ -222,12 +222,10 @@ public class OnlineOfflinePage extends AnchorPane {
     public void setActions(Stage primary) {
 
         offlineButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomid)))
+                -> primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread)))
         );
 
-        onlineButton.setOnAction(e
-                -> onlinePlayDatabaseHandler(primary)
-        );
+        onlineButton.setOnAction(e -> onlinePlayDatabaseHandler(primary));
 
         backButton.setOnAction(e
                 -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)))
@@ -240,28 +238,44 @@ public class OnlineOfflinePage extends AnchorPane {
             int roomId;
             Room room = new Room();
             room.set_roomName(newRoom);
+            if (xSelected)
+                room.setplayer1_Char("X");
+            else 
+                room.setplayer1_Char("O");
+            
             room.setplayer1_Id(player1ID);
-            roomId = RoomModel.addRoom(room);
-            primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomId)));
+            Room createdRoom = RoomModel.addRoom(room);
+            if(createdRoom != null){
+                createdRoom.get_roomId();
+                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,createdRoom)));
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Room Validation");
+                alert.setContentText("Pleas Enter valid name, or unique name");
+                alert.showAndWait();
+            }
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
-            int roomId = RoomModel.UpdateRoom(enterExistRoom, player1ID);
-            if (roomId <= 0) {
+            Room room = RoomModel.UpdateRoom(enterExistRoom, player1ID);
+            System.out.println(room.get_roomId());
+            room.get_player2_Id();
+            if (room == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle(" Not Found Room!");
                 alert.setContentText("Room Not Exist ,Please Create One");
                 alert.showAndWait();
             } else {
-                primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread,roomId)));
+                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,room)));
 
             }
 
         } else if (roomTextField.getText().isEmpty() && enterOnlineRoomTextField.getText().isEmpty()) {
             roomTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
-            roomTextField.setPromptText("PLEASE ENTER PASSWORD!");
+            roomTextField.setPromptText("Please enter room");
             enterOnlineRoomTextField.setStyle("-fx-text-box-border: red ; -fx-background-color: #ffe2f5;");
-            enterOnlineRoomTextField.setPromptText("PLEASE ENTER PASSWORD!");
+            enterOnlineRoomTextField.setPromptText("Or please enter name");
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

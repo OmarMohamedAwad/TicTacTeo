@@ -13,14 +13,13 @@ import java.net.Socket;
  * @author Omar Awad
  */
 public class ClientSide extends Thread {
-
     Socket playerSocket;
     DataInputStream playerDataInput;
     PrintStream playerPrintStream;
 
     public ClientSide() {
         try {
-            playerSocket = new Socket("127.0.0.1", 10000);
+            playerSocket = new Socket("127.0.0.1", 5000);
             playerDataInput = new DataInputStream(playerSocket.getInputStream());
             playerPrintStream = new PrintStream(playerSocket.getOutputStream());
             start();
@@ -29,12 +28,13 @@ public class ClientSide extends Thread {
         }
     }
 
+    @Override
     public void run() {
         while (true) {
             try {
                 String dataListened = playerDataInput.readLine();
-                //Game.drowInScreen(dataListened);
-                System.out.println(dataListened);
+                OnLineGamePage.messageFromeServer(dataListened);
+//                System.out.println(message);
             } catch (IOException exc) {
                 exc.printStackTrace();
             }

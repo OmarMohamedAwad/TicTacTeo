@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -49,26 +50,30 @@ import javafx.stage.Window;
 import model.database.Player;
 import static oracle.jrockit.jfr.events.Bits.byteValue;
 
-public class RecordPage extends AnchorPane {
+public class RecordSavedVideo extends AnchorPane {
 
+  static List<String> recordFromFile = new ArrayList<String>();
+   static List<String> positionFromFile = new ArrayList<String>();
     static String name = "omar";
-    static List<String> record2 = new ArrayList<String>();
-    static List<String> position2 = new ArrayList<String>();
+  
     boolean xSelected = true;
     protected final ImageView LogoImage;
     protected final DropShadow LogoImageShadow;
     protected final Label TicTacTeo;
     protected final DropShadow TicTacTeoShadow;
     protected final Line line;
-  
+    protected final Label ScoreName;
+    protected final DropShadow ScoreNameShadow;
+    protected final Label ScoreNumber;
+    protected final DropShadow ScoreNumberShadow;
+    protected final ImageView Star;
     protected final ImageView XImage;
     protected final ImageView OImage;
     protected final Button ExitButton;
     protected final InnerShadow ExitButtonInnerShadow;
     protected final Button WatchButton;
     protected final InnerShadow WatchButtonShadow;
-    protected final Button SaveButton;
-    protected final InnerShadow SaveButtonShadow;
+
     protected final Pane pane;
     protected final GridPane gridPane;
     protected final ColumnConstraints Coulmn0;
@@ -88,30 +93,33 @@ public class RecordPage extends AnchorPane {
     protected final Button Button22;
     protected final DropShadow dropShadow3;
     static int index = 0;
-    
     static Thread thread2 = new Thread();
     Player currentPlayer;
 
-    public RecordPage(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
+    public RecordSavedVideo(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
+        recordFromFile = new ArrayList<String>();
+        positionFromFile = new ArrayList<String>();
         this.currentPlayer = currentPlayer;
         index = 0;
         System.out.println(index);
         thread2 = thread;
-        record2 = record;
-        position2 = position;
         LogoImage = new ImageView();
         LogoImageShadow = new DropShadow();
         TicTacTeo = new Label();
         TicTacTeoShadow = new DropShadow();
         line = new Line();
+        ScoreName = new Label();
+        ScoreNameShadow = new DropShadow();
+        ScoreNumber = new Label();
+        ScoreNumberShadow = new DropShadow();
+        Star = new ImageView();
         XImage = new ImageView();
         OImage = new ImageView();
         ExitButton = new Button();
         ExitButtonInnerShadow = new InnerShadow();
         WatchButton = new Button();
         WatchButtonShadow = new InnerShadow();
-        SaveButton = new Button();
-        SaveButtonShadow = new InnerShadow();
+
         pane = new Pane();
         gridPane = new GridPane();
         Coulmn0 = new ColumnConstraints();
@@ -164,6 +172,35 @@ public class RecordPage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
+        ScoreName.setLayoutX(423.0);
+        ScoreName.setLayoutY(21.0);
+        ScoreName.setPrefHeight(25.0);
+        ScoreName.setPrefWidth(45.0);
+        ScoreName.setText("Score : ");
+        ScoreName.setTextFill(javafx.scene.paint.Color.WHITE);
+        ScoreName.setFont(new Font("SansSerif Regular", 12.0));
+
+        ScoreNameShadow.setColor(javafx.scene.paint.Color.BLACK);
+        ScoreName.setEffect(ScoreNameShadow);
+
+        ScoreNumber.setLayoutX(468.0);
+        ScoreNumber.setLayoutY(23.0);
+        ScoreNumber.setPrefHeight(25.0);
+        ScoreNumber.setPrefWidth(25.0);
+        ScoreNumber.setText("0");
+        ScoreNumber.setTextFill(javafx.scene.paint.Color.WHITE);
+        ScoreNumber.setFont(new Font("SansSerif Regular", 12.0));
+
+        ScoreNumberShadow.setColor(javafx.scene.paint.Color.BLACK);
+        ScoreNumber.setEffect(ScoreNumberShadow);
+
+        Star.setFitHeight(25.0);
+        Star.setFitWidth(25.0);
+        Star.setLayoutX(388.0);
+        Star.setLayoutY(21.0);
+        Star.setPickOnBounds(true);
+        Star.setPreserveRatio(true);
+        Star.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
 
         XImage.setFitHeight(55.0);
         XImage.setFitWidth(55.0);
@@ -181,7 +218,7 @@ public class RecordPage extends AnchorPane {
         OImage.setPreserveRatio(true);
         OImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
-        ExitButton.setLayoutX(40.0);
+        ExitButton.setLayoutX(115.0);
         ExitButton.setLayoutY(353.0);
         ExitButton.setMaxHeight(37.0);
         ExitButton.setMaxWidth(129.0);
@@ -197,18 +234,12 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
-                if (page == "computer")
-                    primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
-                else if (page == "localFriend")
-                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
-
-
+                primary.setScene(new Scene(new MyDashboardPage(primary, currentPlayer.getUserID(), thread)));
             }
         });
-
         ExitButton.setEffect(ExitButtonInnerShadow);
 
-        WatchButton.setLayoutX(200.0);
+        WatchButton.setLayoutX(230.0);
         WatchButton.setLayoutY(353.0);
         WatchButton.setMaxHeight(37.0);
         WatchButton.setMaxWidth(129.0);
@@ -221,49 +252,6 @@ public class RecordPage extends AnchorPane {
         WatchButton.setFont(new Font(16.0));
 
         WatchButton.setEffect(WatchButtonShadow);
-        SaveButton.setLayoutX(362.0);
-        SaveButton.setLayoutY(353.0);
-        SaveButton.setMaxHeight(37.0);
-        SaveButton.setMaxWidth(129.0);
-        SaveButton.setMnemonicParsing(false);
-        SaveButton.setPrefHeight(25.0);
-        SaveButton.setPrefWidth(103.0);
-        SaveButton.setStyle("-fx-background-color: #3065b5; -fx-background-radius: 15px;  visibility: true;");
-        SaveButton.setText("Save");
-        SaveButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
-        SaveButton.setFont(new Font(16.0));
-        SaveButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent ev) {
-
-//                FileChooser fc = new FileChooser();
-  //              Window stage = null;
-    //            File file = fc.showSaveDialog(stage);
-           //     if (file != null) {
-
-      //              String filePath = file.getPath();
-                    try {
-
-                        PrintWriter pw = new PrintWriter(new FileOutputStream("AYA.txt"));
-                        for (int i = 0; i < record.size(); i++) {
-                             // pw.println(record.get(i)+","+position.get(i));
-                              
-                            pw.print(record.get(i)+" ");
-                            pw.print(position.get(i)+" ");
-
-                        }
-
-                        pw.close();
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(RecordPage.class.getName()).log(Level.SEVERE, null, ex);
-
-                    }
-               
-            }
-        });
-        
-        SaveButton.setEffect(SaveButtonShadow);
 
         pane.setLayoutX(
                 114.0);
@@ -458,6 +446,12 @@ public class RecordPage extends AnchorPane {
         getChildren()
                 .add(line);
         getChildren()
+                .add(ScoreName);
+        getChildren()
+                .add(ScoreNumber);
+        getChildren()
+                .add(Star);
+        getChildren()
                 .add(XImage);
         getChildren()
                 .add(OImage);
@@ -465,8 +459,7 @@ public class RecordPage extends AnchorPane {
                 .add(ExitButton);
         getChildren()
                 .add(WatchButton);
-        getChildren()
-                .add(SaveButton);
+
         gridPane.getColumnConstraints()
                 .add(Coulmn0);
         gridPane.getColumnConstraints()
@@ -501,6 +494,40 @@ public class RecordPage extends AnchorPane {
                 .add(gridPane);
         getChildren()
                 .add(pane);
+        
+        try {
+
+            BufferedReader reader = new BufferedReader(new FileReader("AYA.txt"));
+            StringBuilder stringBuilder = new StringBuilder();
+            char[] buffer = new char[10];
+            while (reader.read(buffer) != -1) {
+                stringBuilder.append(new String(buffer));
+                buffer = new char[10];
+            }
+            reader.close();
+            String content = stringBuilder.toString();
+            System.out.println(content);
+            String[] str = content.split(" ");
+            System.out.println(str.length);
+            System.out.println(str);
+            for (int i = 0; i < str.length; i++) {
+                if (str[i].equalsIgnoreCase("X") || str[i].equalsIgnoreCase("O")) {
+
+                    recordFromFile.add(str[i]);
+
+                } else {
+                    positionFromFile.add(str[i]);
+                }
+                System.out.println(str[i]);
+            }
+            for (int i = 0; i < recordFromFile.size(); i++) {
+                System.out.println(recordFromFile.get(i));
+                 System.out.println(positionFromFile.get(i));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(RecordSavedVideo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         WatchButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -513,7 +540,6 @@ public class RecordPage extends AnchorPane {
                     @Override
                     public void run() {
 
-                        System.out.println("hi45");
                         boolean pf = true;
 
                         while (pf) {
@@ -524,7 +550,7 @@ public class RecordPage extends AnchorPane {
 
                             } catch (InterruptedException e) {
                             }
-                            if (index >= record.size() - 1) {
+                            if (index >= recordFromFile.size() - 1) {
                                 pf = false;
 
                             }
@@ -533,38 +559,37 @@ public class RecordPage extends AnchorPane {
                                 @Override
                                 public void run() {
                                     System.out.println("hi  " + index);
-                                    System.out.println(record.size());
-                                    if ("00".equals(position2.get(index))) {
-                                        Button00.setText(record2.get(index));
+                                    System.out.println(recordFromFile.size());
+                                    if (positionFromFile.get(index).equals("00")) {
+                                        Button00.setText(recordFromFile.get(index));
                                         Button00.setFont(new Font("SansSerif Bold", 15.0));
-                                        gridPane.getChildren().remove(Button00);
-                                        gridPane.getChildren().add(Button00);
-                                    } else if ("01".equals(position2.get(index))) {
-                                        Button01.setText(record2.get(index));
+                               
+                                    } else if (positionFromFile.get(index).equals("01")) {
+                                        Button01.setText(recordFromFile.get(index));
                                         Button01.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("02".equals(position2.get(index))) {
-                                        Button02.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("02")) {
+                                        Button02.setText(recordFromFile.get(index));
                                         Button02.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("10".equals(position2.get(index))) {
-                                        Button10.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("10")) {
+                                        Button10.setText(recordFromFile.get(index));
                                         Button10.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("11".equals(position2.get(index))) {
-                                        Button11.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("11")) {
+                                        Button11.setText(recordFromFile.get(index));
                                         Button11.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("12".equals(position2.get(index))) {
-                                        Button12.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("12")) {
+                                        Button12.setText(recordFromFile.get(index));
                                         Button12.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("20".equals(position2.get(index))) {
-                                        Button20.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("20")) {
+                                        Button20.setText(recordFromFile.get(index));
                                         Button20.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("21".equals(position2.get(index))) {
-                                        Button21.setText(record2.get(index));
+                                    } else if (positionFromFile.get(index).equals("21")) {
+                                        Button21.setText(recordFromFile.get(index));
                                         Button21.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if ("22".equals(position2.get(index))) {
+                                    } else if (positionFromFile.get(index).equals("22")) {
 
-                                        Button22.setText(record2.get(index));
+                                        Button22.setText(recordFromFile.get(index));
                                         Button22.setFont(new Font("SansSerif Bold", 15.0));
-                                        System.out.println(Button22.getText());
+
                                     }
 
                                     index++;

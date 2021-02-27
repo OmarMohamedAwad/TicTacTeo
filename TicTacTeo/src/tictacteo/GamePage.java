@@ -77,6 +77,8 @@ public class GamePage extends AnchorPane {
     protected final Label you;
     protected final Label computer;
 
+    protected final ImageView gif;
+    
     protected final DropShadow scoreLabelShadow;
     protected final ImageView scoreImage;
     protected final Button easyButton;
@@ -204,6 +206,8 @@ public class GamePage extends AnchorPane {
         dropShadow3 = new DropShadow();
         anchorPaneShadow = new DropShadow();
 
+        gif = new ImageView();
+
         Button00 = new Button();
         Button01 = new Button();
         Button02 = new Button();
@@ -289,7 +293,7 @@ public class GamePage extends AnchorPane {
         playAgainEnd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-
+                gif.setStyle("visibility: false;");
                 endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
                 backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
                 gameReset();
@@ -536,6 +540,9 @@ public class GamePage extends AnchorPane {
             newUserHistory.setStatus(status);
             HistoryModel.addHistory(newUserHistory);
 
+            gif.setStyle("visibility: true;");
+
+
         } else {
             status = "looser";
             oImage.setEffect(null);
@@ -642,6 +649,7 @@ public class GamePage extends AnchorPane {
             characterEndGameLable.setText(userChar);
             newUserHistory.setStatus(status);
             HistoryModel.addHistory(newUserHistory);
+            gif.setStyle("visibility: true;");
 
         } else {
             status = "loose";
@@ -817,6 +825,14 @@ public class GamePage extends AnchorPane {
         gameNameShadow.setColor(javafx.scene.paint.Color.BLACK);
         gameName.setEffect(gameNameShadow);
 
+        
+        gif.setFitHeight(360.0);
+        gif.setFitWidth(489.0);
+        gif.setLayoutY(69.0);
+        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
+        gif.setStyle("visibility: false;");
+        
+        
         line.setEndX(400.0);
         line.setLayoutX(101.0);
         line.setLayoutY(68.0);
@@ -1150,12 +1166,19 @@ public class GamePage extends AnchorPane {
         characterEndGameLable.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         characterEndGameLable.setFont(new Font(13.0));
-
+        
         getChildren().add(backPane);
+                
+        
+                
         endGamePane.getChildren().add(endGameImageView);
+        
         endGamePane.getChildren().add(xIcone);
         endGamePane.getChildren().add(yIcone);
         endGamePane.getChildren().add(vsIcon);
+        
+         
+         
         endGamePane.getChildren().add(playAgainEnd);
         endGamePane.getChildren().add(watchVideoEndGame);
         endGamePane.getChildren().add(playerNameLabel);
@@ -1163,6 +1186,8 @@ public class GamePage extends AnchorPane {
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
+        getChildren().add(gif);
+       
 
     }
 
