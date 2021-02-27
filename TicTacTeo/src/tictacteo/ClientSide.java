@@ -13,7 +13,6 @@ import java.net.Socket;
  * @author Omar Awad
  */
 public class ClientSide extends Thread {
-
     Socket playerSocket;
     DataInputStream playerDataInput;
     PrintStream playerPrintStream;
@@ -34,8 +33,8 @@ public class ClientSide extends Thread {
         while (true) {
             try {
                 String dataListened = playerDataInput.readLine();
-                //Game.drowInScreen(dataListened);
-                System.out.println(dataListened);
+                OnLineGamePage.messageFromeServer(dataListened);
+//                System.out.println(message);
             } catch (IOException exc) {
                 exc.printStackTrace();
             }

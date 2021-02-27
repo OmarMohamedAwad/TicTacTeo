@@ -1,8 +1,11 @@
 package tictacteo;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,10 +24,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
+import model.database.Room;
 import model.database.RoomModel;
 
 
-public class GameWithFriendPage extends AnchorPane {
+public class OnLineGamePage extends AnchorPane {
 
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
@@ -33,6 +37,7 @@ public class GameWithFriendPage extends AnchorPane {
     Random rand = new Random();
     String first;
     String userChar;
+    static String commingData = "";
     int num = 0;
     int score = 0;
     protected final DropShadow ds;
@@ -65,35 +70,42 @@ public class GameWithFriendPage extends AnchorPane {
     protected final ImageView xImageView;
     protected final ImageView oImageView;
     protected final Label xTurnLabel;
-    protected final Label oTurnLabel;
     protected final DropShadow looserDropShadow;
     protected final ImageView vsImageView;
+    protected final Label oTurnLabel;
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
     protected final Pane backPane;
+
     protected final Pane endGamePane;
     protected final ImageView endGameImageView;
     protected final ImageView xIcone;
     protected final ImageView yIcone;
     protected final ImageView vsIcon;
     protected final Button playAgainEnd;
+    protected final InnerShadow innerShadow;
     protected final Button watchVideoEndGame;
     protected final InnerShadow innerShadow0;
     protected final Label playerNameLabel;
     protected final Label playerCharacter;
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
-    protected final InnerShadow innerShadow;
-
+    volatile static int player2 = -1;
+    
+    ClientSide curruntClient;
     int drawCounter = 0;
     int id;
     boolean xSelected;
     Thread thread;
     static boolean stopThread = true;
     Player currentPlayer;
-
-    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+    Room room;
+    boolean firstTurn;
+    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
+        curruntClient = new ClientSide();
         stopThread = true;
+        this.room=room;
+        System.out.println(this.room.get_roomId());
         this.currentPlayer = currentPlayer;
         this.thread = thread;
         this.id = id;
@@ -149,10 +161,13 @@ public class GameWithFriendPage extends AnchorPane {
         playerCharacter = new Label();
         playerNameEndGameLabel = new Label();
         characterEndGameLable = new Label();
+
         userChar = userChar(xSelected);
+
         setDesignProperty();
+        checkIfPlayersEnter();
         endGameDesign();
-        first = firstTurn(xSelected);
+        first = firstTurn();
         setActionsPage(primary);
         setButtonsAction();
 
@@ -219,11 +234,6 @@ public class GameWithFriendPage extends AnchorPane {
         playAginButton.setFont(new Font(16.0));
 
         playAginButton.setEffect(playAgininnerShadow);
-        gridPane.setLayoutX(5.0);
-        gridPane.setLayoutY(-8.0);
-        gridPane.setPrefHeight(178.0);
-        gridPane.setPrefWidth(221.0);
-        gridPane.setStyle("-fx-background-color: #343F4B;");
 
         containerPane.setLayoutX(141.0);
         containerPane.setLayoutY(158.0);
@@ -231,7 +241,11 @@ public class GameWithFriendPage extends AnchorPane {
         containerPane.setPrefWidth(218.0);
         containerPane.setStyle("-fx-background-color: #343F4B;");
 
-       
+        gridPane.setLayoutX(5.0);
+        gridPane.setLayoutY(-8.0);
+        gridPane.setPrefHeight(178.0);
+        gridPane.setPrefWidth(221.0);
+        gridPane.setStyle("-fx-background-color: #343F4B;");
 
         firstColumnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         firstColumnConstraints.setMinWidth(10.0);
@@ -429,7 +443,6 @@ public class GameWithFriendPage extends AnchorPane {
         endGameImageView.setFitWidth(335.0);
         endGameImageView.setLayoutX(5.0);
         endGameImageView.setLayoutY(4.0);
-        //endGameImageView.setImage(new Image(getClass().getResource("../view/images/gameMessages/win.jpg").toExternalForm()));
 
         xIcone.setFitHeight(45.0);
         xIcone.setFitWidth(72.0);
@@ -523,10 +536,12 @@ public class GameWithFriendPage extends AnchorPane {
     public void setActionsPage(Stage primary) {
         playAginButton.setOnAction(e -> resetAll());
 
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
-
-        playAgainEnd.setOnAction(e
-                -> {
+        exitButton.setOnAction(e -> {
+            deleteRoom(primary);
+            primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+        });
+        
+        playAgainEnd.setOnAction(e -> {
             resetAll();
             backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
             endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
@@ -627,43 +642,23 @@ public class GameWithFriendPage extends AnchorPane {
 
     }
 
-    public String firstTurn(boolean xSelected) {
-        if (random.nextInt(2) == 0) {
-            friendTurn = true;
-            if (xSelected) {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: true;");
-                xTurnLabel.setStyle("visibility: false;");
-                first = "O";
-                return first;
-            } else {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: true;");
-                oTurnLabel.setStyle("visibility: false;");
-                first = "X";
-                return first;
-            }
-        } else {
-            friendTurn = false;
-            if (xSelected) {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: false;");
-                xTurnLabel.setStyle("visibility: true;");
-                first = "X";
-                return first;
-            } else {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: false;");
-                oTurnLabel.setStyle("visibility: true;");
-                first = "O";
-                return first;
-            }
+    public String firstTurn() {
+        firstTurn = false;
+        if(room.get_player1_Char() == "X"){
+            first = "X";
+            xImageView.setEffect(ds);
+            oImageView.setEffect(null);
+            xTurnLabel.setStyle("visibility: true;");
+            oTurnLabel.setStyle("visibility: false;");
+        }else {
+            first = "O";
+            oImageView.setEffect(ds);
+            xImageView.setEffect(null);
+            oTurnLabel.setStyle("visibility: true;");
+            xTurnLabel.setStyle("visibility: false;");
         }
-
+        return first;
+        
     }
 
     public String switchTurns(String first) {
@@ -752,10 +747,19 @@ public class GameWithFriendPage extends AnchorPane {
     }
 
     public void changeButtonStatus(Button button, String symbol) {
-        if (button.getText() == "") {
+        if (button.getText() == "" && player2 != -1) {
             drawCounter += 1;
             button.setText(first);
             button.setFont(new Font("SansSerif Bold", 15.0));
+            if(player2 == currentPlayer.getUserID())
+                curruntClient.playerPrintStream.println(first+","+symbol+","+room.get_player1_Id());
+            else
+                curruntClient.playerPrintStream.println(first+","+symbol+","+player2);
+            
+            String[] splitMessage = commingData.split(",");
+            for (int i = 0; i < splitMessage.length; i++) {
+                System.out.println(splitMessage[i]);
+            }
             record.add(first);
             position.add(symbol);
             first = switchTurns(first);
@@ -772,7 +776,7 @@ public class GameWithFriendPage extends AnchorPane {
         stopThread = true;
         oTurnLabel.setStyle("visibility: false;");
         xTurnLabel.setStyle("visibility: false;");
-        first = firstTurn(xSelected);
+        first = firstTurn();
         button00.setText("");
         button01.setText("");
         button02.setText("");
@@ -791,5 +795,43 @@ public class GameWithFriendPage extends AnchorPane {
         button20.setStyle("-fx-background-color: #ececec;");
         button21.setStyle("-fx-background-color: #ececec;");
         button22.setStyle("-fx-background-color: #ececec;");
+    }
+    
+    public void deleteRoom(Stage primary){
+        RoomModel.DeleteRoom(room.get_roomId());
+        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+    }
+    
+    public void checkIfPlayersEnter(){
+        thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (player2 == -1) {
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                    }
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            int curruntRoom = RoomModel.showRoom(room.get_roomId());
+                            if(curruntRoom != -1)
+                                player2 = curruntRoom;
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+        thread.start();
+    }
+    
+    public static void messageFromeServer(String msg){
+        commingData = msg;
     }
 }

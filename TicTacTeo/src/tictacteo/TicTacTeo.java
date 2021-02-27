@@ -7,7 +7,6 @@ package tictacteo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import static tictacteo.MyDashboardPage.currentPlayer;
 
 public class TicTacTeo extends Application{
 
@@ -16,8 +15,6 @@ public class TicTacTeo extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        
         launch(args);
     }
 
