@@ -63,6 +63,7 @@ public class RecordPage extends AnchorPane {
     protected final Button Button22;
     protected final DropShadow dropShadow3;
     static int index = 0;
+    
     static Thread thread2 = new Thread();
     Player currentPlayer;
     public RecordPage(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
@@ -205,7 +206,7 @@ public class RecordPage extends AnchorPane {
                 if (page == "computer")
                     primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
                 else if (page == "localFriend")
-                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
+                    primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2,1)));
             }
         });
 
@@ -498,33 +499,33 @@ public class RecordPage extends AnchorPane {
                                 public void run() {
                                     System.out.println("hi  " + index);
                                     System.out.println(record.size());
-                                    if (position2.get(index) == "00") {
+                                    if ("00".equals(position2.get(index))) {
                                         Button00.setText(record2.get(index));
                                         Button00.setFont(new Font("SansSerif Bold", 15.0));
                                         gridPane.getChildren().remove(Button00);
                                         gridPane.getChildren().add(Button00);
-                                    } else if (position2.get(index) == "01") {
+                                    } else if ("01".equals(position2.get(index))) {
                                         Button01.setText(record2.get(index));
                                         Button01.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "02") {
+                                    } else if ("02".equals(position2.get(index))) {
                                         Button02.setText(record2.get(index));
                                         Button02.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "10") {
+                                    } else if ("10".equals(position2.get(index))) {
                                         Button10.setText(record2.get(index));
                                         Button10.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "11") {
+                                    } else if ("11".equals(position2.get(index))) {
                                         Button11.setText(record2.get(index));
                                         Button11.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "12") {
+                                    } else if ("12".equals(position2.get(index))) {
                                         Button12.setText(record2.get(index));
                                         Button12.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "20") {
+                                    } else if ("20".equals(position2.get(index))) {
                                         Button20.setText(record2.get(index));
                                         Button20.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "21") {
+                                    } else if ("21".equals(position2.get(index))) {
                                         Button21.setText(record2.get(index));
                                         Button21.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "22") {
+                                    } else if ("22".equals(position2.get(index))) {
 
                                         Button22.setText(record2.get(index));
                                         Button22.setFont(new Font("SansSerif Bold", 15.0));

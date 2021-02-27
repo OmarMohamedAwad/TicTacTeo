@@ -43,29 +43,31 @@ import model.database.PlayerModel;
 
 public class GamePage extends AnchorPane {
 
-    Button[][] board;
+    int countPressedBtn = 0;
+
+    int num = 0;
+    int id;
+    int userCount;
+    int score = 0;
+    boolean xSelected;
+    boolean gameOver;
+    boolean computerTurn = false;
     Thread thread;
     static boolean stopThread = true;
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
-    boolean computerTurn = false;
     Random random = new Random();
     Random rand = new Random();
-    protected final DropShadow ds;
     String first;
     String userChar;
     String computerChar;
-    int num = 0;
-    boolean xSelected;
-    int id;
-    int userCount;
-    Player user;
-    int score = 0;
     String status = "";
-    History newUserHistory = new History();
     String gameLevel;
-    boolean gameOver;
-
+    String userName;
+    Player user;
+    History newUserHistory = new History();
+    Button[][] board;
+    protected final DropShadow ds;
     protected final ImageView logoImage;
     protected final DropShadow logoShadowImage;
     protected final Label gameName;
@@ -143,7 +145,6 @@ public class GamePage extends AnchorPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-   
 
     public GamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
         this.user = currentPlayer;
@@ -152,12 +153,10 @@ public class GamePage extends AnchorPane {
         this.xSelected = xSelected;
         ds = new DropShadow(20, Color.AQUA);
         backPane = new Pane();
-        this.id = id;
-        String userName = user.getUserName();
-        newUserHistory.setVsPlayer("Computer" + computerChar);
+        this.id = currentPlayer.getUserID();
+        this.userName = user.getUserName();
+        newUserHistory.setVsPlayer("Computer");
         newUserHistory.setPlayerId(id);
-        this.id = id;
-
         logoImage = new ImageView();
         logoShadowImage = new DropShadow();
         gameName = new Label();
@@ -235,9 +234,8 @@ public class GamePage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
                 if (gameLevel.equals("unknown")) {
-                    System.out.println("You choose Easy");
                     gameLevel = "easy";
-
+                    easyLevel();
                 }
 
             }
@@ -248,6 +246,7 @@ public class GamePage extends AnchorPane {
                 if (gameLevel.equals("unknown")) {
                     System.out.println("You choose Middle");
                     gameLevel = "Middle";
+                    middileLevel();
 
                 }
             }
@@ -258,6 +257,7 @@ public class GamePage extends AnchorPane {
                 if (gameLevel.equals("unknown")) {
                     System.out.println("You choose Hard");
                     gameLevel = "hard";
+                    hardLevel();
                 }
 
             }
@@ -273,7 +273,6 @@ public class GamePage extends AnchorPane {
             @Override
             public void handle(ActionEvent ev) {
                 gameReset();
-                startGame();
             }
         });
 
@@ -286,158 +285,16 @@ public class GamePage extends AnchorPane {
             computer.setTextFill(javafx.scene.paint.Color.WHITE);
             computer.setFont(new Font("SansSerif Bold", 15.0));
         }
-        Button00.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button00.getText() == "") {
-                    Button00.setText(first);
-                    Button00.setFont(new Font("SansSerif Bold", 15.0));
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-            }
-        });
-        Button01.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button01.getText() == "") {
-                    Button01.setText(first);
-                    Button01.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("01");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-
-                }
-
-            }
-
-        });
-        Button02.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev
-            ) {
-                if (Button02.getText() == "") {
-                    Button02.setText(first);
-                    Button02.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("02");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
-        Button10.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button10.getText() == "") {
-                    Button10.setText(first);
-                    Button10.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("10");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
-
-        Button11.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button11.getText() == "") {
-                    Button11.setText(first);
-                    Button11.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("11");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
-        Button12.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                if (Button12.getText() == "") {
-                    Button12.setText(first);
-                    Button12.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("12");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-
-        });
-        Button20.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                if (Button20.getText() == "") {
-                    Button20.setText(first);
-                    Button20.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("20");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
-        Button21.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-
-                if (Button21.getText() == "") {
-                    Button21.setText(first);
-                    Button21.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("21");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
-        Button22.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (Button22.getText() == "") {
-                    Button22.setText(first);
-                    Button22.setFont(new Font("SansSerif Bold", 15.0));
-                    record.add(first);
-                    position.add("22");
-                    switchTurns();
-                    computerAlgorithm();
-                    check(userName);
-                }
-
-            }
-        });
 
         playAgainEnd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
+
                 endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
-
+                backPane.setStyle("-fx-background-color: #0c0721;visibility: false;");
                 gameReset();
-
             }
         });
-
         watchVideoEndGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
@@ -462,30 +319,38 @@ public class GamePage extends AnchorPane {
         board[2][2] = Button22;
         gameLevel = "unknown";
         gameOver = false;
-        first="";
-
+        first = "";
+        status = "";
+        countPressedBtn = 0;
     }
 
     public void computerAlgorithm() {
         boolean empty = false;
         int row, column;
         String num1, num2, num3;
-        if (first == computerChar) {
+        if (first.equals(computerChar) && "".equals(status) && countPressedBtn < 9) {
+
             while (!empty) {
                 row = rand.nextInt((2 - 0) + 1) + 0;
                 column = rand.nextInt((2 - 0) + 1) + 0;
-                if (board[row][column].getText() == "") {
+                if ("".equals(board[row][column].getText())) {
                     board[row][column].setText(computerChar);
+                    countPressedBtn++;
                     num1 = Integer.toString(row);
                     num2 = Integer.toString(column);
                     num3 = num1 + num2;
-                    System.out.println(num1);
-                    System.out.println(num2);
-                    System.out.println(num3);
                     record.add(first);
                     position.add(num3);
                     empty = true;
                 }
+            }
+//            switchImage();
+            if (xImage.getEffect() == null) {
+                oImage.setEffect(null);
+                xImage.setEffect(ds);
+            } else if (oImage.getEffect() == null) {
+                xImage.setEffect(null);
+                oImage.setEffect(ds);
             }
             switchTurns();
         }
@@ -522,9 +387,11 @@ public class GamePage extends AnchorPane {
         }
 
     }
+
     public void decorateWin() {
     }
-    public void check(String userName) {
+
+    public void check() {
 
         String b1 = Button00.getText();
         String b2 = Button01.getText();
@@ -536,131 +403,138 @@ public class GamePage extends AnchorPane {
         String b8 = Button21.getText();
         String b9 = Button22.getText();
 
-        if (b1 == "X" && b2 == "X" && b3 == "X") {
+        if ("X".equals(b1) && "X".equals(b2) && "X".equals(b3)) {
             Button00.setStyle("-fx-background-color: yellow; ");
             Button01.setStyle("-fx-background-color: yellow; ");
             Button02.setStyle("-fx-background-color: yellow; ");
-            userXWin(status);
-        } else if (b4 == "X" && b5 == "X" && b6 == "X") {
+            userXWin();
+        } else if ("X".equals(b4) && "X".equals(b5) && "X".equals(b6)) {
 
             Button10.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
-            userXWin(userName);
+            userXWin();
 
-        } else if (b7 == "X" && b8 == "X" && b9 == "X") {
+        } else if ("X".equals(b7) && "X".equals(b8) && "X".equals(b9)) {
 
             Button20.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
-            userXWin(userName);
+            userXWin();
 
-        } else if (b1 == "X" && b4 == "X" && b7 == "X") {
+        } else if ("X".equals(b1) && "X".equals(b4) && "X".equals(b7)) {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button10.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
-            userXWin(userName);
+            userXWin();
 
-        } else if (b2 == "X" && b5 == "X" && b8 == "X") {
+        } else if ("X".equals(b2) && "X".equals(b5) && "X".equals(b8)) {
 
             Button01.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
-            userXWin(userName);
+            userXWin();
 
-        } else if (b3 == "X" && b6 == "X" && b9 == "X") {
+        } else if ("X".equals(b3) && "X".equals(b6) && "X".equals(b9)) {
 
             Button02.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
 
-            userXWin(userName);
-        } else if (b1 == "X" && b5 == "X" && b9 == "X") {
+            userXWin();
+        } else if ("X".equals(b1) && "X".equals(b5) && "X".equals(b9)) {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
 
-            userXWin(userName);
-        } else if (b3 == "X" && b5 == "X" && b7 == "X") {
+            userXWin();
+        } else if ("X".equals(b3) && "X".equals(b5) && "X".equals(b7)) {
 
             Button02.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
 
-            userXWin(userName);
-        } else if (b1 == "O" && b2 == "O" && b3 == "O") {
+            userXWin();
+        } else if ("O".equals(b1) && "O".equals(b2) && "O".equals(b3)) {
 
             Button00.setStyle("-fx-background-color: yellow; ");
             Button01.setStyle("-fx-background-color: yellow; ");
             Button02.setStyle("-fx-background-color: yellow; ");
-            userOWin(userName);
+            userOWin();
 
-        } else if (b4 == "O" && b5 == "O" && b6 == "O") {
+        } else if ("O".equals(b4) && "O".equals(b5) && "O".equals(b6)) {
 
             Button10.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
-            userOWin(userName);
+            userOWin();
 
-        } else if (b7 == "O" && b8 == "O" && b9 == "O") {
+        } else if ("O".equals(b7) && "O".equals(b8) && "O".equals(b9)) {
 
             Button20.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
-            userOWin(userName);
+            userOWin();
 
         } else if (b1 == "O" && b4 == "O" && b7 == "O") {
             Button00.setStyle("-fx-background-color: yellow; ");
             Button10.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
 
-            userOWin(userName);
-        } else if (b2 == "O" && b5 == "O" && b8 == "O") {
+            userOWin();
+        } else if ("O".equals(b2) && "O".equals(b5) && "O".equals(b8)) {
             Button01.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button21.setStyle("-fx-background-color: yellow; ");
 
-            userOWin(userName);
+            userOWin();
 
-        } else if (b3 == "O" && b6 == "O" && b9 == "O") {
+        } else if ("O".equals(b3) && "O".equals(b6) && "O".equals(b9)) {
             Button02.setStyle("-fx-background-color: yellow; ");
             Button12.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
 
-            userOWin(userName);
-        } else if (b1 == "O" && b5 == "O" && b9 == "O") {
+            userOWin();
+        } else if ("O".equals(b1) && "O".equals(b5) && "O".equals(b9)) {
             Button00.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button22.setStyle("-fx-background-color: yellow; ");
 
-            userOWin(userName);
-        } else if (b3 == "O" && b5 == "O" && b7 == "O") {
+            userOWin();
+        } else if ("O".equals(b3) && "O".equals(b5) && "O".equals(b7)) {
             Button02.setStyle("-fx-background-color: yellow; ");
             Button11.setStyle("-fx-background-color: yellow; ");
             Button20.setStyle("-fx-background-color: yellow; ");
 
-            userOWin(status);
+            userOWin();
 
-        } else if (b1 != "" && b2 != "" && b3 != "" && b4 != "" && b5 != "" && b6 != "" && b7 != "" && b8 != "" && b9 != "") {
-            userEqual(userName);
+        } else {
+            if (!"".equals(b1) && !"".equals(b2) && !"".equals(b3) && !"".equals(b4) && !"".equals(b5) && !"".equals(b6) && !"".equals(b7) && !"".equals(b8) && !"".equals(b9)) {
+//            userEqual();
+                status = "draw";
+                displayEndGame("../view/images/gameMessages/drawc.jpg");
+                playerNameEndGameLabel.setText(userName);
+                characterEndGameLable.setText(userChar);
+                newUserHistory.setStatus(status);
+                HistoryModel.addHistory(newUserHistory);
+            }
         }
-
     }
 
-    public void userXWin(String userName) {
+    public void userXWin() {
         if (userChar == "X") {
             score++;
             status = "winner";
             oImage.setEffect(null);
             xImage.setEffect(null);
             scoreLabel.setText("Score :" + score);
-            newUserHistory.setStatus(status);
-            HistoryModel.addHistory(newUserHistory);
             displayEndGame("../view/images/gameMessages/win.png");
             playerNameEndGameLabel.setText(userName);
             characterEndGameLable.setText(userChar);
+            newUserHistory.setStatus(status);
+            HistoryModel.addHistory(newUserHistory);
 
         } else {
             status = "looser";
@@ -675,7 +549,88 @@ public class GamePage extends AnchorPane {
         }
     }
 
-    public void userOWin(String userName) {
+    public void checkDiagonals() {
+        // Checking for Diagonals for X or O victory. 
+        if (board[0][0].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][2].getText())) {
+            for (int i = 0; i < 3; i++) {
+                board[i][i].setStyle("-fx-background-color: yellow; ");
+            }
+            if (board[0][0].getText().equals("X")) {
+                userXWin();
+            } else if (board[0][0].getText().equals("O")) {
+                userOWin();
+            }
+        }
+        if (board[0][2].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][0].getText())) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 2; j >= 0; j--) {
+                    board[i][j].setStyle("-fx-background-color: yellow; ");
+                    System.out.println(board[i][j]);
+                }
+            }
+            if (board[0][2].getText().equals("X")) {
+                userXWin();
+            } else if (board[0][2].getText().equals("O")) {
+                userOWin();
+            }
+        }
+
+    }
+
+    public void checkCols() {
+        int col;
+        // Checking for Columns for X or O victory. 
+        for (col = 0; col < 3; col++) {
+            if (board[0][col].getText().equals(board[1][col].getText())
+                    && board[1][col].getText().equals(board[2][col].getText())) {
+                if (board[0][col].getText().equals("X")) {
+//                    board[].setStyle("-fx-background-color: yellow; ");
+                    userXWin();
+
+                } else if (board[0][col].getText().equals("O")) {
+                    userOWin();
+
+                }
+            }
+        }
+
+    }
+
+    public void checkRows() {
+        int row;
+//           Checking for Rows for X or O victory. 
+        for (row = 0; row < 3; row++) {
+            if (board[row][0].getText().equals(board[row][1].getText())
+                    && board[row][1].getText().equals(board[row][2].getText())) {
+                if (board[row][0].getText().equals("X")) {
+                    userXWin();
+
+                } else if (board[row][0].getText().equals("O")) {
+                    userOWin();
+
+                }
+            }
+        }
+    }
+
+    public void checkEqual() {
+        int row, col, counterBtn = 0;
+        for (row = 0; row < 3; row++) {
+            for (col = 0; col < 3; col++) {
+                if ("".equals(board[row][col].getText())) {
+                    counterBtn++;
+                }
+            }
+
+        }
+        if (counterBtn == 9) {
+            userEqual();
+
+        }
+
+    }
+
+    public void userOWin() {
         if (userChar == "O") {
             score++;
             status = "winner";
@@ -701,7 +656,7 @@ public class GamePage extends AnchorPane {
         }
     }
 
-    public void userEqual(String userName) {
+    public void userEqual() {
         status = "draw";
         displayEndGame("../view/images/gameMessages/drawc.jpg");
         playerNameEndGameLabel.setText(userName);
@@ -741,39 +696,23 @@ public class GamePage extends AnchorPane {
     }
 
     public void gameReset() {
-        stopThread=true;
+        xImage.setEffect(null);
+        oImage.setEffect(null);
+        stopThread = true;
         record.clear();
         position.clear();
-        xImage.setEffect(null);
-        oImage.setEffect(null);
-        first = firstTurn();
-        xImage.setEffect(null);
-        oImage.setEffect(null);
-        first = firstTurn();
-        Button00.setText("");
-        Button01.setText("");
-        Button02.setText("");
-        Button10.setText("");
-        Button11.setText("");
-        Button12.setText("");
-        Button20.setText("");
-        Button21.setText("");
-        Button22.setText("");
-        Button00.setStyle("-fx-background-color: #ececec;");
-        Button01.setStyle("-fx-background-color: #ececec;");
-        Button02.setStyle("-fx-background-color: #ececec;");
-        Button10.setStyle("-fx-background-color: #ececec;");
-        Button11.setStyle("-fx-background-color: #ececec; ");
-        Button12.setStyle("-fx-background-color:  #ececec ;");
-        Button20.setStyle("-fx-background-color:  #ececec ;");
-        Button21.setStyle("-fx-background-color:  #ececec ;");
-        Button22.setStyle("-fx-background-color:  #ececec ;");
-        startGame();
-
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                board[row][col].setText("");
+                board[row][col].setStyle("-fx-background-color: #ececec;");
+            }
+        }
+        initialize();
+        System.out.println(status + "ff");
     }
 
     public String userChar() {
-        String userChar;
+
         if (xSelected) {
             userChar = "X";
             computerChar = "O";
@@ -787,29 +726,68 @@ public class GamePage extends AnchorPane {
     }
 
     public void switchTurns() {
-        if (oImage.getEffect() == ds) {
-            oImage.setEffect(null);
-            xImage.setEffect(ds);
-            first = "X";
-
-        } else if (xImage.getEffect() == ds) {
-            xImage.setEffect(null);
-            oImage.setEffect(ds);
+        if (first == "X") {
             first = "O";
 
+        } else if (first == "O") {
+            first = "X";
+        }
+    }
+
+    public void switchImage() {
+        if (xImage.getEffect() == null) {
+            oImage.setEffect(null);
+            xImage.setEffect(ds);
+        } else if (oImage.getEffect() == null) {
+            xImage.setEffect(null);
+            oImage.setEffect(ds);
         }
 
     }
 
     public void startGame() {
-        userChar = userChar();
+        userChar();
         initialize();
-        
+        setButtonsAction();
     }
-    public void easyLevel(){
+
+    public void easyLevel() {
         firstTurn();
         computerAlgorithm();
-        
+    }
+
+    public void middileLevel() {
+        firstTurn();
+
+    }
+
+    public void hardLevel() {
+        firstTurn();
+    }
+    public void changeButtonStatus(Button button, String symbol) {
+        if ("".equals(button.getText()) && "easy".equals(gameLevel)) {
+            button.setText(first);
+            countPressedBtn++;
+            button.setFont(new Font("SansSerif Bold", 15.0));
+            record.add(first);
+            position.add(symbol);
+            switchImage();
+            switchTurns();
+            computerAlgorithm();
+            check();
+        }
+    }
+
+    public void setButtonsAction() {
+        Button00.setOnAction(e -> changeButtonStatus(Button00, "00"));
+        Button01.setOnAction(e -> changeButtonStatus(Button01, "01"));
+        Button02.setOnAction(e -> changeButtonStatus(Button02, "02"));
+        Button10.setOnAction(e -> changeButtonStatus(Button10, "10"));
+        Button11.setOnAction(e -> changeButtonStatus(Button11, "11"));
+        Button12.setOnAction(e -> changeButtonStatus(Button12, "12"));
+        Button20.setOnAction(e -> changeButtonStatus(Button20, "20"));
+        Button21.setOnAction(e -> changeButtonStatus(Button21, "21"));
+        Button22.setOnAction(e -> changeButtonStatus(Button22, "22"));
     }
 
     public void setDesignProperty() {
@@ -902,7 +880,7 @@ public class GamePage extends AnchorPane {
         xImage.setFitWidth(55.0);
         xImage.setLayoutX(145.0);
         xImage.setLayoutY(89.0);
-        you.setLayoutX(115.0);
+        you.setLayoutX(105.0);
         you.setLayoutY(105.0);
         xImage.setPickOnBounds(true);
         xImage.setPreserveRatio(true);
@@ -942,7 +920,6 @@ public class GamePage extends AnchorPane {
         playAgainButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
         playAgainButton.setFont(new Font(16.0));
         playAgainButton.setEffect(playAgainButtonShadow);
-        
 
         Button00.setLayoutX(178.0);
         Button00.setLayoutY(11.0);
@@ -1029,13 +1006,11 @@ public class GamePage extends AnchorPane {
         gridPane.setPrefWidth(221.0);
         gridPane.setStyle("-fx-background-color: #343F4B;");
 
-        containerPane.setLayoutX(141.0);
+        containerPane.setLayoutX(115.0);
         containerPane.setLayoutY(158.0);
         containerPane.setPrefHeight(159.0);
         containerPane.setPrefWidth(218.0);
         containerPane.setStyle("-fx-background-color: #343F4B;");
-
-       
 
         firstColumnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         firstColumnConstraints.setMinWidth(10.0);
@@ -1191,48 +1166,4 @@ public class GamePage extends AnchorPane {
 
     }
 
-//    public int evaluate(Button board[][]) {
-//        // Checking for Rows for X or O victory. 
-//        for (int row = 0; row < 3; row++) {
-//            if (board[row][0].getText().equals(board[row][1].getText())
-//                    && board[row][1].getText().equals(board[row][2].getText())) {
-//                if (board[row][0].getText().equals(userChar)) {
-//                    return +10;
-//                } else if (board[row][0].getText().equals(computerChar)) {
-//                    return -10;
-//                }
-//            }
-//        }
-//
-//        // Checking for Columns for X or O victory. 
-//        for (int col = 0; col < 3; col++) {
-//            if (board[0][col].getText().equals(board[1][col].getText())
-//                    && board[1][col].getText().equals(board[2][col].getText())) {
-//                if (board[0][col].getText().equals(userChar)) {
-//                    return +10;
-//                } else if (board[0][col].getText().equals(computerChar)) {
-//                    return -10;
-//                }
-//            }
-//        }
-//
-//        // Checking for Diagonals for X or O victory. 
-//        if (board[0][0].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][2].getText())) {
-//            if (board[0][0].getText().equals(userChar)) {
-//                return +10;
-//            } else if (board[0][0].getText().equals(computerChar)) {
-//                return -10;
-//            }
-//        }
-//
-//        if (board[0][2].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][0].getText())) {
-//            if (board[0][2].getText().equals(userChar)) {
-//                return +10;
-//            } else if (board[0][2].getText().equals(computerChar)) {
-//                return -10;
-//            }
-//        }
-//        // Else if none of them have won then return 0 
-//        return 0;
-//    }
 }
