@@ -1,5 +1,8 @@
 package tictacteo;
 
+import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -33,6 +36,8 @@ public class MyDashboardPage extends AnchorPane {
     protected final DropShadow gameDropShadow;
     protected final Button playButton;
     protected final InnerShadow playButtonInnerShadow;
+    protected final Button WatchVideoButton;
+    protected final InnerShadow WatchVideoInnerShadow;
     protected final StackPane topScoreStackPane;
     protected final ImageView topScoreImageView;
     protected final DropShadow topScoreDropShadow;
@@ -51,7 +56,7 @@ public class MyDashboardPage extends AnchorPane {
     protected final DropShadow anchorDropShadow;
     private int playerId;
 
-    public MyDashboardPage(Stage primary, int id , Thread thread) {
+    public MyDashboardPage(Stage primary, int id, Thread thread) {
 
         logoStackPane = new StackPane();
         logoImageView = new ImageView();
@@ -66,6 +71,8 @@ public class MyDashboardPage extends AnchorPane {
         gameDropShadow = new DropShadow();
         playButton = new Button();
         playButtonInnerShadow = new InnerShadow();
+        WatchVideoButton = new Button();
+        WatchVideoInnerShadow = new InnerShadow();
         topScoreStackPane = new StackPane();
         topScoreImageView = new ImageView();
         topScoreDropShadow = new DropShadow();
@@ -83,9 +90,10 @@ public class MyDashboardPage extends AnchorPane {
         scoreValueText = new Text();
         anchorDropShadow = new DropShadow();
         playerId = id;
-
+        List<String> record = null;
+        List<String> position = null;
         setDesignProperty();
-        setActions(primary , thread);
+        setActions(primary, thread, record, position);
         setPlayerInfo();
     }
 
@@ -175,6 +183,17 @@ public class MyDashboardPage extends AnchorPane {
         playButton.getStyleClass().add("play-btn");
         playButton.setText("Play");
         playButton.setTextFill(javafx.scene.paint.Color.WHITE);
+        playButton.setLayoutX(26.0);
+        WatchVideoButton.setLayoutY(337.0);
+        WatchVideoButton.setMnemonicParsing(false);
+        WatchVideoButton.setPrefHeight(26.0);
+        WatchVideoButton.setPrefWidth(146.0);
+        WatchVideoButton.setStyle("-fx-background-radius: 15;");
+        WatchVideoButton.setStyle("-fx-background-color: RED;");
+        WatchVideoButton.getStyleClass().add("play-btn");
+        WatchVideoButton.setText("Watch Last Video");
+        WatchVideoButton.setTextFill(javafx.scene.paint.Color.WHITE);
+        WatchVideoButton.setLayoutX(185.0);
 
         topScoreStackPane.setLayoutX(194.0);
         topScoreStackPane.setLayoutY(154.0);
@@ -269,6 +288,7 @@ public class MyDashboardPage extends AnchorPane {
 
         setEffect(anchorDropShadow);
         playButton.setEffect(playButtonInnerShadow);
+        WatchVideoButton.setEffect(WatchVideoInnerShadow);
         logoStackPane.getChildren().add(logoImageView);
         getChildren().add(logoStackPane);
         getChildren().add(circle);
@@ -278,6 +298,7 @@ public class MyDashboardPage extends AnchorPane {
         gameStackPane.getChildren().add(gameImageView);
         getChildren().add(gameStackPane);
         getChildren().add(playButton);
+        getChildren().add(WatchVideoButton);
         topScoreStackPane.getChildren().add(topScoreImageView);
         getChildren().add(topScoreStackPane);
         getChildren().add(topScoreButton);
@@ -288,24 +309,29 @@ public class MyDashboardPage extends AnchorPane {
         getChildren().add(starImageView);
         getChildren().add(scoreText);
         getChildren().add(scoreValueText);
-        
 
     }
 
-    public void setActions(Stage primary , Thread thread) {
+    public void setActions(Stage primary, Thread thread, List<String> record, List<String> position) {
         //DISPLAY HISTORY OF THE USER HIMSELF
         myHistoryButton.setOnAction(e
-                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer , thread)))
+                -> primary.setScene(new Scene(new MyHistoryPage(primary, currentPlayer, thread)))
         );
 
         //SELECT TOP SCORE PAGE
         topScoreButton.setOnAction(e
-                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId , thread)))
+                -> primary.setScene(new Scene(new GameHistoryPage(primary, playerId, thread)))
         );
 
         playButton.setOnAction(e
-                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer ,thread)))
+                -> primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)))
         );
+        WatchVideoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent ev) {
+                primary.setScene(new Scene(new RecordSavedVideo(primary, currentPlayer, record, position, thread, "computer")));
+            }
+        });
     }
 
     public void setPlayerInfo() {
@@ -315,4 +341,5 @@ public class MyDashboardPage extends AnchorPane {
         firstCharText.setText("" + firstChar);
         scoreValueText.setText("" + currentPlayer.getScore());
     }
+
 }

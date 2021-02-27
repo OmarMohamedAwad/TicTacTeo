@@ -20,7 +20,7 @@ public class ClientSide extends Thread {
 
     public ClientSide() {
         try {
-            playerSocket = new Socket("127.0.0.1", 10000);
+            playerSocket = new Socket("127.0.0.1", 5000);
             playerDataInput = new DataInputStream(playerSocket.getInputStream());
             playerPrintStream = new PrintStream(playerSocket.getOutputStream());
             start();
@@ -29,6 +29,7 @@ public class ClientSide extends Thread {
         }
     }
 
+    @Override
     public void run() {
         while (true) {
             try {

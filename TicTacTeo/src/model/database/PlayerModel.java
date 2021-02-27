@@ -12,9 +12,11 @@ import model.database.Player;
 
 public class PlayerModel {
 
-    static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
-    static final String DB_USER = "root";	    
-    static final String DB_PASSWD = "root@#123";
+
+     static final String DB_URL = "jdbc:mysql://127.0.0.1/tiktaktoe";
+    static final String DB_USER = "root";
+    static final String DB_PASSWD = "1234";
+
 
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
