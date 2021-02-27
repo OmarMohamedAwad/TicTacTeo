@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -107,6 +107,14 @@
             </GridPane>
          </children>
       </Pane>
+      <Button layoutX="362.0" layoutY="353.0" maxHeight="37.0" maxWidth="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #3065b5; -fx-background-radius: 15px;" text="Save" textFill="#f8f7f7">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
    </children>
    <effect>
       <DropShadow />

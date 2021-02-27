@@ -1,4 +1,4 @@
-package view.fxm;
+package tictacteo;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
