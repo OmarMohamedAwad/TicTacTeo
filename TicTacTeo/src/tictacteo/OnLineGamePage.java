@@ -817,9 +817,10 @@ public class OnLineGamePage extends AnchorPane {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            int curruntRoom = RoomModel.showRoom(room.get_roomId());
-                            if(curruntRoom != -1)
-                                player2 = curruntRoom;
+                            int curruntPlayer2 = RoomModel.showRoom(room.get_roomId());
+                            
+                            if(curruntPlayer2 != -1)
+                                player2 = curruntPlayer2;
                         }
                     });
 
