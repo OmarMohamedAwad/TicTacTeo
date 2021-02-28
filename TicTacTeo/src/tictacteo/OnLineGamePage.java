@@ -573,52 +573,52 @@ public class OnLineGamePage extends AnchorPane {
         String b8 = button21.getText();
         String b9 = button22.getText();
 
-        if (b1 == "X" && b2 == "X" && b3 == "X") {
+        if ("X".equals(b1) && "X".equals(b2) && "X".equals(b3)) {
             changeButtonsColor(button00, button01, button02);
             userXWin();
-        } else if (b4 == "X" && b5 == "X" && b6 == "X") {
+        } else if ("X".equals(b4) && "X".equals(b5) && "X".equals(b6)) {
             changeButtonsColor(button10, button11, button12);
             userXWin();
-        } else if (b7 == "X" && b8 == "X" && b9 == "X") {
+        } else if ("X".equals(b7) && "X".equals(b8) && "X".equals(b9)) {
             changeButtonsColor(button20, button21, button22);
             userXWin();
-        } else if (b1 == "X" && b4 == "X" && b7 == "X") {
+        } else if ("X".equals(b1) && "X".equals(b4) && "X".equals(b7)) {
             changeButtonsColor(button00, button10, button20);
             userXWin();
-        } else if (b2 == "X" && b5 == "X" && b8 == "X") {
+        } else if ("X".equals(b2) && "X".equals(b5) && "X".equals(b8)) {
             changeButtonsColor(button01, button11, button21);
             userXWin();
-        } else if (b3 == "X" && b6 == "X" && b9 == "X") {
+        } else if ("X".equals(b3) && "X".equals(b6) && "X".equals(b9)) {
             changeButtonsColor(button02, button12, button22);
             userXWin();
-        } else if (b1 == "X" && b5 == "X" && b9 == "X") {
+        } else if ("X".equals(b1) && "X".equals(b5) && "X".equals(b9)) {
             changeButtonsColor(button00, button11, button22);
             userXWin();
-        } else if (b3 == "X" && b5 == "X" && b7 == "X") {
+        } else if ("X".equals(b3) && "X".equals(b5) && "X".equals(b7)) {
             changeButtonsColor(button02, button11, button20);
             userXWin();
-        } else if (b1 == "O" && b2 == "O" && b3 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b2) && "O".equals(b3)) {
             changeButtonsColor(button00, button01, button02);
             userOWin();
-        } else if (b4 == "O" && b5 == "O" && b6 == "O") {
+        } else if ("O".equals(b4) && "O".equals(b5) && "O".equals(b6)) {
             changeButtonsColor(button10, button11, button12);
             userOWin();
-        } else if (b7 == "O" && b8 == "O" && b9 == "O") {
+        } else if ("O".equals(b7) && "O".equals(b8) && "O".equals(b9)) {
             changeButtonsColor(button20, button21, button22);
             userOWin();
-        } else if (b1 == "O" && b4 == "O" && b7 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b4) && "O".equals(b7)) {
             changeButtonsColor(button00, button10, button20);
             userOWin();
-        } else if (b2 == "O" && b5 == "O" && b8 == "O") {
+        } else if ("O".equals(b2) && "O".equals(b5) && "O".equals(b8)) {
             changeButtonsColor(button01, button11, button21);
             userOWin();
-        } else if (b3 == "O" && b6 == "O" && b9 == "O") {
+        } else if ("O".equals(b3) && "O".equals(b6) && "O".equals(b9)) {
             changeButtonsColor(button02, button12, button22);
             userOWin();
-        } else if (b1 == "O" && b5 == "O" && b9 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b5) && "O".equals(b9)) {
             changeButtonsColor(button00, button11, button22);
             userOWin();
-        } else if (b3 == "O" && b5 == "O" && b7 == "O") {
+        } else if ("O".equals(b3) && "O".equals(b5) && "O".equals(b7)) {
             changeButtonsColor(button02, button11, button20);
             userOWin();
         } else if (drawCounter >= 9) {
@@ -640,7 +640,7 @@ public class OnLineGamePage extends AnchorPane {
         } else {
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
-            } else {
+            } else if (room.get_player1_Char().equalsIgnoreCase("X")){
                 userChar = "O";
             }
             return userChar;
@@ -701,7 +701,7 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void userXWin() {
-        if (userChar == "X") {
+        if (userChar.equalsIgnoreCase("X")) {
             score++;
             status = "winner";
             oImageView.setEffect(null);
@@ -711,7 +711,7 @@ public class OnLineGamePage extends AnchorPane {
             updatePlayerHistory();
 
 //            gif.setStyle("visibility: true;");
-        } else {
+        } else if (userChar.equalsIgnoreCase("O")){
             score--;
             status = "looser";
             scoreLabel.setText("Score :" + score);
@@ -724,7 +724,7 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void userOWin() {
-        if (userChar == "O") {
+        if (userChar.equalsIgnoreCase("O")) {
             score++;
             status = "winner";
             scoreLabel.setText("Score :" + score);
@@ -734,7 +734,7 @@ public class OnLineGamePage extends AnchorPane {
             updatePlayerHistory();
 //            gif.setStyle("visibility: true;");
 
-        } else {
+        } else if(userChar.equalsIgnoreCase("X")){
             score--;
             status = "loose";
             scoreLabel.setText("Score :" + score);
