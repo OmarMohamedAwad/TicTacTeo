@@ -60,11 +60,7 @@ public class RecordPage extends AnchorPane {
     protected final Label TicTacTeo;
     protected final DropShadow TicTacTeoShadow;
     protected final Line line;
-    protected final Label ScoreName;
-    protected final DropShadow ScoreNameShadow;
-    protected final Label ScoreNumber;
-    protected final DropShadow ScoreNumberShadow;
-    protected final ImageView Star;
+  
     protected final ImageView XImage;
     protected final ImageView OImage;
     protected final Button ExitButton;
@@ -92,6 +88,7 @@ public class RecordPage extends AnchorPane {
     protected final Button Button22;
     protected final DropShadow dropShadow3;
     static int index = 0;
+    
     static Thread thread2 = new Thread();
     Player currentPlayer;
 
@@ -107,11 +104,6 @@ public class RecordPage extends AnchorPane {
         TicTacTeo = new Label();
         TicTacTeoShadow = new DropShadow();
         line = new Line();
-        ScoreName = new Label();
-        ScoreNameShadow = new DropShadow();
-        ScoreNumber = new Label();
-        ScoreNumberShadow = new DropShadow();
-        Star = new ImageView();
         XImage = new ImageView();
         OImage = new ImageView();
         ExitButton = new Button();
@@ -172,35 +164,6 @@ public class RecordPage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-        ScoreName.setLayoutX(423.0);
-        ScoreName.setLayoutY(21.0);
-        ScoreName.setPrefHeight(25.0);
-        ScoreName.setPrefWidth(45.0);
-        ScoreName.setText("Score : ");
-        ScoreName.setTextFill(javafx.scene.paint.Color.WHITE);
-        ScoreName.setFont(new Font("SansSerif Regular", 12.0));
-
-        ScoreNameShadow.setColor(javafx.scene.paint.Color.BLACK);
-        ScoreName.setEffect(ScoreNameShadow);
-
-        ScoreNumber.setLayoutX(468.0);
-        ScoreNumber.setLayoutY(23.0);
-        ScoreNumber.setPrefHeight(25.0);
-        ScoreNumber.setPrefWidth(25.0);
-        ScoreNumber.setText("0");
-        ScoreNumber.setTextFill(javafx.scene.paint.Color.WHITE);
-        ScoreNumber.setFont(new Font("SansSerif Regular", 12.0));
-
-        ScoreNumberShadow.setColor(javafx.scene.paint.Color.BLACK);
-        ScoreNumber.setEffect(ScoreNumberShadow);
-
-        Star.setFitHeight(25.0);
-        Star.setFitWidth(25.0);
-        Star.setLayoutX(388.0);
-        Star.setLayoutY(21.0);
-        Star.setPickOnBounds(true);
-        Star.setPreserveRatio(true);
-        Star.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
 
         XImage.setFitHeight(55.0);
         XImage.setFitWidth(55.0);
@@ -218,7 +181,7 @@ public class RecordPage extends AnchorPane {
         OImage.setPreserveRatio(true);
         OImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
-        ExitButton.setLayoutX(115.0);
+        ExitButton.setLayoutX(40.0);
         ExitButton.setLayoutY(353.0);
         ExitButton.setMaxHeight(37.0);
         ExitButton.setMaxWidth(129.0);
@@ -239,12 +202,13 @@ public class RecordPage extends AnchorPane {
                 else if (page == "localFriend")
                     primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
 
+
             }
         });
 
         ExitButton.setEffect(ExitButtonInnerShadow);
 
-        WatchButton.setLayoutX(230.0);
+        WatchButton.setLayoutX(200.0);
         WatchButton.setLayoutY(353.0);
         WatchButton.setMaxHeight(37.0);
         WatchButton.setMaxWidth(129.0);
@@ -494,12 +458,6 @@ public class RecordPage extends AnchorPane {
         getChildren()
                 .add(line);
         getChildren()
-                .add(ScoreName);
-        getChildren()
-                .add(ScoreNumber);
-        getChildren()
-                .add(Star);
-        getChildren()
                 .add(XImage);
         getChildren()
                 .add(OImage);
@@ -576,33 +534,33 @@ public class RecordPage extends AnchorPane {
                                 public void run() {
                                     System.out.println("hi  " + index);
                                     System.out.println(record.size());
-                                    if (position2.get(index) == "00") {
+                                    if ("00".equals(position2.get(index))) {
                                         Button00.setText(record2.get(index));
                                         Button00.setFont(new Font("SansSerif Bold", 15.0));
                                         gridPane.getChildren().remove(Button00);
                                         gridPane.getChildren().add(Button00);
-                                    } else if (position2.get(index) == "01") {
+                                    } else if ("01".equals(position2.get(index))) {
                                         Button01.setText(record2.get(index));
                                         Button01.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "02") {
+                                    } else if ("02".equals(position2.get(index))) {
                                         Button02.setText(record2.get(index));
                                         Button02.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "10") {
+                                    } else if ("10".equals(position2.get(index))) {
                                         Button10.setText(record2.get(index));
                                         Button10.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "11") {
+                                    } else if ("11".equals(position2.get(index))) {
                                         Button11.setText(record2.get(index));
                                         Button11.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "12") {
+                                    } else if ("12".equals(position2.get(index))) {
                                         Button12.setText(record2.get(index));
                                         Button12.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "20") {
+                                    } else if ("20".equals(position2.get(index))) {
                                         Button20.setText(record2.get(index));
                                         Button20.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "21") {
+                                    } else if ("21".equals(position2.get(index))) {
                                         Button21.setText(record2.get(index));
                                         Button21.setFont(new Font("SansSerif Bold", 15.0));
-                                    } else if (position2.get(index) == "22") {
+                                    } else if ("22".equals(position2.get(index))) {
 
                                         Button22.setText(record2.get(index));
                                         Button22.setFont(new Font("SansSerif Bold", 15.0));
