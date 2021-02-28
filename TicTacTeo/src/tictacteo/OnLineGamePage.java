@@ -49,7 +49,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final Line line;
     protected final Button exitButton;
     protected final InnerShadow exitButtonInnerShadow;
-    protected final Button playAginButton;
     protected final InnerShadow playAgininnerShadow;
     protected final Pane containerPane;
     protected final GridPane gridPane;
@@ -83,7 +82,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final ImageView xIcone;
     protected final ImageView yIcone;
     protected final ImageView vsIcon;
-    protected final Button playAgainEnd;
     protected final InnerShadow innerShadow;
     protected final Button watchVideoEndGame;
     protected final InnerShadow innerShadow0;
@@ -122,7 +120,6 @@ public class OnLineGamePage extends AnchorPane {
         line = new Line();
         exitButton = new Button();
         exitButtonInnerShadow = new InnerShadow();
-        playAginButton = new Button();
         playAgininnerShadow = new InnerShadow();
         containerPane = new Pane();
         gridPane = new GridPane();
@@ -156,7 +153,6 @@ public class OnLineGamePage extends AnchorPane {
         xIcone = new ImageView();
         yIcone = new ImageView();
         vsIcon = new ImageView();
-        playAgainEnd = new Button();
         innerShadow = new InnerShadow();
         watchVideoEndGame = new Button();
         innerShadow0 = new InnerShadow();
@@ -210,7 +206,7 @@ public class OnLineGamePage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-        exitButton.setLayoutX(143.0);
+        exitButton.setLayoutX(200.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
         exitButton.setMaxWidth(129.0);
@@ -223,20 +219,6 @@ public class OnLineGamePage extends AnchorPane {
         exitButton.setFont(new Font(16.0));
 
         exitButton.setEffect(exitButtonInnerShadow);
-
-        playAginButton.setLayoutX(257.0);
-        playAginButton.setLayoutY(353.0);
-        playAginButton.setMaxHeight(37.0);
-        playAginButton.setMaxWidth(129.0);
-        playAginButton.setMnemonicParsing(false);
-        playAginButton.setPrefHeight(25.0);
-        playAginButton.setPrefWidth(103.0);
-        playAginButton.setStyle("-fx-background-color: #3065b5; -fx-background-radius: 15px;");
-        playAginButton.setText("Play again");
-        playAginButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
-        playAginButton.setFont(new Font(16.0));
-
-        playAginButton.setEffect(playAgininnerShadow);
 
         containerPane.setLayoutX(141.0);
         containerPane.setLayoutY(158.0);
@@ -403,7 +385,6 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(titleLabel);
         getChildren().add(line);
         getChildren().add(exitButton);
-        getChildren().add(playAginButton);
         gridPane.getColumnConstraints().add(firstColumnConstraints);
         gridPane.getColumnConstraints().add(secondColumnConstraints);
         gridPane.getColumnConstraints().add(thirdColumnConstraints);
@@ -465,18 +446,6 @@ public class OnLineGamePage extends AnchorPane {
         vsIcon.setLayoutY(-8.0);
         vsIcon.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
 
-        playAgainEnd.setLayoutX(35.0);
-        playAgainEnd.setLayoutY(185.0);
-        playAgainEnd.setMnemonicParsing(false);
-        playAgainEnd.setPrefHeight(17.0);
-        playAgainEnd.setPrefWidth(100.0);
-        playAgainEnd.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
-        playAgainEnd.getStyleClass().add("play-btn");
-        playAgainEnd.setText("Play Again");
-        playAgainEnd.setTextFill(javafx.scene.paint.Color.WHITE);
-
-        playAgainEnd.setEffect(innerShadow);
-
         watchVideoEndGame.setLayoutX(190.0);
         watchVideoEndGame.setLayoutY(185.0);
         watchVideoEndGame.setMnemonicParsing(false);
@@ -526,7 +495,6 @@ public class OnLineGamePage extends AnchorPane {
         endGamePane.getChildren().add(xIcone);
         endGamePane.getChildren().add(yIcone);
         endGamePane.getChildren().add(vsIcon);
-        endGamePane.getChildren().add(playAgainEnd);
         endGamePane.getChildren().add(watchVideoEndGame);
         endGamePane.getChildren().add(playerNameLabel);
         endGamePane.getChildren().add(playerCharacter);
@@ -537,17 +505,9 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void setActionsPage(Stage primary) {
-        playAginButton.setOnAction(e -> resetAll());
-
         exitButton.setOnAction(e -> {
             deleteRoom(primary);
             primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
-        });
-
-        playAgainEnd.setOnAction(e -> {
-            resetAll();
-            backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
-            endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
         });
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
@@ -637,10 +597,11 @@ public class OnLineGamePage extends AnchorPane {
             userChar = room.get_player1_Char();
             return userChar;
         } else {
-            if(room.get_player1_Char().equalsIgnoreCase("O") )
+            if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
-            else
+            } else {
                 userChar = "O";
+            }
             return userChar;
         }
 
@@ -678,7 +639,7 @@ public class OnLineGamePage extends AnchorPane {
             myTurn = false;
         }
 
-        drawMove(splitMessage[1],splitMessage[0]);
+        drawMove(splitMessage[1], splitMessage[0]);
 
         if (splitMessage[0].equalsIgnoreCase("O")) {
             oImageView.setEffect(null);
@@ -852,41 +813,40 @@ public class OnLineGamePage extends AnchorPane {
         switchTurns(first, commingData);
     }
 
-    public static void drawMove(String pos,String ch) {
+    public static void drawMove(String pos, String ch) {
         try {
             if ("00".equals(pos)) {
-            button00.setText(ch);
-            button00.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("01".equals(pos)) {
-            button01.setText(ch);
-            button01.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("02".equals(pos)) {
-            button02.setText(ch);
-            button02.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("10".equals(pos)) {
-            button10.setText(ch);
-            button10.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("11".equals(pos)) {
-            button11.setText(ch);
-            button11.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("12".equals(pos)) {
-            button12.setText(ch);
-            button12.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("20".equals(pos)) {
-            button20.setText(ch);
-            button20.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("21".equals(pos)) {
-            button21.setText(ch);
-            button21.setFont(new Font("SansSerif Bold", 15.0));
-        } else if ("22".equals(pos)) {
-
-            button22.setText(ch);
-            button22.setFont(new Font("SansSerif Bold", 15.0));
-        }
+                button00.setText(ch);
+                button00.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("01".equals(pos)) {
+                button01.setText(ch);
+                button01.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("02".equals(pos)) {
+                button02.setText(ch);
+                button02.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("10".equals(pos)) {
+                button10.setText(ch);
+                button10.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("11".equals(pos)) {
+                button11.setText(ch);
+                button11.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("12".equals(pos)) {
+                button12.setText(ch);
+                button12.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("20".equals(pos)) {
+                button20.setText(ch);
+                button20.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("21".equals(pos)) {
+                button21.setText(ch);
+                button21.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("22".equals(pos)) {
+                button22.setText(ch);
+                button22.setFont(new Font("SansSerif Bold", 15.0));
+            }
 
         } catch (Exception e) {
             System.out.println("Hi");
         }
-        
+
     }
 }
