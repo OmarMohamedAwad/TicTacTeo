@@ -7,6 +7,7 @@ package tictacteo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.database.Player;
 
 public class TicTacTeo extends Application{
 
@@ -22,8 +23,9 @@ public class TicTacTeo extends Application{
     public void start(Stage primaryStage) throws Exception {
         Thread thread = new Thread();
         thread.start();
-
-       LogInPage root = new LogInPage(primaryStage , thread);
+//        Player player = new Player(7, "omar", "awad", 0);
+//        OnLineGamePage root = new OnLineGamePage(primaryStage, player, true, thread, room);
+        LogInPage root = new LogInPage(primaryStage , thread);
         Scene scene = new Scene(root, 490, 417);
         
         primaryStage.setTitle("Tic Tac Toe");

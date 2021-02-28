@@ -33,6 +33,8 @@ import static tictacteo.RecordPage.position2;
 
 public class OnLineGamePage extends AnchorPane {
 
+    protected final ImageView gif;
+    
     static String status = "";
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
@@ -184,6 +186,9 @@ public class OnLineGamePage extends AnchorPane {
         setActionsPage(primary);
         setButtonsAction();
 
+        //GIFI
+         gif = new ImageView();
+         
     }
 
     public void setDesignProperty() {
@@ -191,6 +196,16 @@ public class OnLineGamePage extends AnchorPane {
         setPrefHeight(417.0);
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
+        
+        
+         //GIFI
+        gif.setFitHeight(360.0);
+        gif.setFitWidth(489.0);
+        gif.setLayoutY(69.0);
+        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
+        gif.setStyle("visibility: false;");
+        
+        
 
         logoImageView.setFitHeight(45.0);
         logoImageView.setFitWidth(45.0);
@@ -537,6 +552,8 @@ public class OnLineGamePage extends AnchorPane {
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
+        
+        getChildren().add(gif);
 
     }
 
@@ -709,8 +726,7 @@ public class OnLineGamePage extends AnchorPane {
             scoreLabel.setText("Score :" + score);
             displayEndGame("../view/images/gameMessages/win.png");
             updatePlayerHistory();
-
-//            gif.setStyle("visibility: true;");
+            gif.setStyle("visibility: true;");
         } else {
             score--;
             status = "looser";
@@ -732,7 +748,7 @@ public class OnLineGamePage extends AnchorPane {
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/win.png");
             updatePlayerHistory();
-//            gif.setStyle("visibility: true;");
+            gif.setStyle("visibility: true;");
 
         } else {
             score--;
