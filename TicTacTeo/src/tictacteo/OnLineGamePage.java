@@ -30,15 +30,12 @@ import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
 import static tictacteo.RecordPage.position2;
-
 public class OnLineGamePage extends AnchorPane {
-
     static String status = "";
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean friendTurn = false;
     volatile static String first;
-    String first;
     String userChar;
     static String commingData = "";
     int num = 0;
@@ -57,7 +54,6 @@ public class OnLineGamePage extends AnchorPane {
     boolean firstTurn;
     String userName;
     History newUserHistory = new History();
-    protected final DropShadow ds;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
     protected final Label titleLabel;
@@ -95,7 +91,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
     protected final Pane backPane;
-
     protected final Pane endGamePane;
     protected final ImageView endGameImageView;
     protected final ImageView xIcone;
@@ -109,8 +104,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     volatile static int player2 = -1;
-
-
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
         listenToServer = thread;
         curruntClient = new ClientSide();
@@ -187,7 +180,6 @@ public class OnLineGamePage extends AnchorPane {
         setButtonsAction();
 
     }
-
     public void setDesignProperty() {
         setId("AnchorPane");
         setPrefHeight(417.0);
@@ -447,7 +439,6 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(vsImageView);
         getChildren().add(oTurnLabel);
     }
-
     public void endGameDesign() {
         backPane.setLayoutX(0.0);
         backPane.setLayoutY(69.0);
@@ -542,7 +533,6 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(endGamePane);
 
     }
-
     public void setActionsPage(Stage primary) {
         exitButton.setOnAction(e -> {
             PlayerModel.updatePlayerScore(id, score);
@@ -552,7 +542,6 @@ public class OnLineGamePage extends AnchorPane {
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
     }
-
     public void setButtonsAction() {
         button00.setOnAction(e -> changeButtonStatus(button00, "00"));
         button01.setOnAction(e -> changeButtonStatus(button01, "01"));
@@ -564,7 +553,6 @@ public class OnLineGamePage extends AnchorPane {
         button21.setOnAction(e -> changeButtonStatus(button21, "21"));
         button22.setOnAction(e -> changeButtonStatus(button22, "22"));
     }
-
     public void checkStatus() {
         String b1 = button00.getText();
         String b2 = button01.getText();
@@ -629,13 +617,11 @@ public class OnLineGamePage extends AnchorPane {
         }
 
     }
-
     public void userEqual() {
         status = "draw";
         displayEndGame("../view/images/gameMessages/drawc.jpg");
         updatePlayerHistory();
     }
-
     public String userChar() {
         if (room.get_player1_Id() == currentPlayer.getUserID()) {
             userChar = room.get_player1_Char();
@@ -650,7 +636,6 @@ public class OnLineGamePage extends AnchorPane {
         }
 
     }
-
     public String firstTurn() {
         if (currentPlayer.getUserID() == room.get_player1_Id()) {
             myTurn = true;
@@ -674,7 +659,6 @@ public class OnLineGamePage extends AnchorPane {
         return first;
 
     }
-
     public static String switchTurns(String first, String commingData) {
         String[] splitMessage = commingData.split(",");
         if (splitMessage[2].equalsIgnoreCase(currentPlayer.getUserID() + "")) {
@@ -682,9 +666,7 @@ public class OnLineGamePage extends AnchorPane {
         } else {
             myTurn = false;
         }
-
         drawMove(splitMessage[1], splitMessage[0]);
-
         if (splitMessage[0].equalsIgnoreCase("O")) {
             oImageView.setEffect(null);
             xImageView.setEffect(ds);
@@ -702,7 +684,6 @@ public class OnLineGamePage extends AnchorPane {
         }
         return null;
     }
-
     public void userXWin() {
         if (userChar == "X") {
             score++;
@@ -725,7 +706,6 @@ public class OnLineGamePage extends AnchorPane {
 
         }
     }
-
     public void userOWin() {
         if (userChar == "O") {
             score++;
@@ -748,7 +728,6 @@ public class OnLineGamePage extends AnchorPane {
 
         }
     }
-
     public void displayEndGame(String img) {
         thread = new Thread(new Runnable() {
 
@@ -778,13 +757,11 @@ public class OnLineGamePage extends AnchorPane {
         });
         thread.start();
     }
-
     public void changeButtonsColor(Button btn1, Button btn2, Button btn3) {
         btn1.setStyle("-fx-background-color: blue; ");
         btn2.setStyle("-fx-background-color: blue; ");
         btn3.setStyle("-fx-background-color: blue; ");
     }
-
     public void changeButtonStatus(Button button, String symbol) {
         if (button.getText() == "" && player2 != -1 && myTurn) {
             drawCounter += 1;
@@ -801,7 +778,6 @@ public class OnLineGamePage extends AnchorPane {
             checkStatus();
         }
     }
-
     public void resetAll() {
         record.clear();
         position.clear();
@@ -831,12 +807,10 @@ public class OnLineGamePage extends AnchorPane {
         button21.setStyle("-fx-background-color: #ececec;");
         button22.setStyle("-fx-background-color: #ececec;");
     }
-
     public void deleteRoom(Stage primary) {
         RoomModel.DeleteRoom(room.get_roomId());
         primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }
-
     public void checkIfPlayersEnter() {
         thread = new Thread(new Runnable() {
 
@@ -864,8 +838,6 @@ public class OnLineGamePage extends AnchorPane {
         });
         thread.start();
     }
-
-
     public void updatePlayerHistory() {
         playerNameEndGameLabel.setText(userName);
         characterEndGameLable.setText(userChar);
@@ -873,12 +845,10 @@ public class OnLineGamePage extends AnchorPane {
         HistoryModel.addHistory(newUserHistory);
 
     }
-
     public static void messageFromeServer(String msg) {
         commingData = msg;
         switchTurns(first, commingData);
     }
-
     public static void drawMove(String pos, String ch) {
         try {
             if ("00".equals(pos)) {

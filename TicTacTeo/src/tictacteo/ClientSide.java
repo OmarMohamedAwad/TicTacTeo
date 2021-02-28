@@ -16,7 +16,11 @@ public class ClientSide extends Thread {
     Socket playerSocket;
     DataInputStream playerDataInput;
     PrintStream playerPrintStream;
+    static String user;
+    static Integer score;
+  
 
+    
     public ClientSide() {
         try {
             playerSocket = new Socket("127.0.0.1", 5000);
