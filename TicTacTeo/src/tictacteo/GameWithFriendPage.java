@@ -35,6 +35,9 @@ public class GameWithFriendPage extends AnchorPane {
     String userChar;
     int num = 0;
     int score = 0;
+    //gifi
+    protected final ImageView gif;
+    
     protected final DropShadow ds;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
@@ -102,7 +105,12 @@ public class GameWithFriendPage extends AnchorPane {
         ds = new DropShadow(20, Color.AQUA);
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
-
+        //GIFI
+         gif = new ImageView();
+        
+         
+         
+         
         titleLabel = new Label();
         titleDropShadow = new DropShadow();
         line = new Line();
@@ -174,6 +182,14 @@ public class GameWithFriendPage extends AnchorPane {
         logoImageView.setImage(new Image(getClass().getResource("../view/images/tic-tac-toe.jpg").toExternalForm()));
 
         logoImageView.setEffect(logoDropShadow);
+        
+        
+        //GIFI
+        gif.setFitHeight(360.0);
+        gif.setFitWidth(489.0);
+        gif.setLayoutY(69.0);
+        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
+        gif.setStyle("visibility: false;");
 
         titleLabel.setLayoutX(85.0);
         titleLabel.setLayoutY(23.0);
@@ -410,6 +426,8 @@ public class GameWithFriendPage extends AnchorPane {
         getChildren().add(xTurnLabel);
         getChildren().add(vsImageView);
         getChildren().add(oTurnLabel);
+        
+        
     }
 
     public void endGameDesign() {
@@ -506,6 +524,8 @@ public class GameWithFriendPage extends AnchorPane {
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         characterEndGameLable.setFont(new Font(13.0));
 
+        
+        
         getChildren().add(backPane);
         endGamePane.getChildren().add(endGameImageView);
         endGamePane.getChildren().add(xIcone);
@@ -518,6 +538,8 @@ public class GameWithFriendPage extends AnchorPane {
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
+        getChildren().add(gif);
+        
 
     }
 
@@ -531,6 +553,7 @@ public class GameWithFriendPage extends AnchorPane {
             resetAll();
             backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
             endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
+            gif.setStyle("visibility: false;");
         });
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
@@ -697,7 +720,9 @@ public class GameWithFriendPage extends AnchorPane {
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/win.png");
-        } else {
+            gif.setStyle("visibility: true;");
+        }
+        else {
             status = "Lose";
             oImageView.setEffect(null);
             xImageView.setEffect(null);
@@ -711,8 +736,11 @@ public class GameWithFriendPage extends AnchorPane {
             status = "winner";
             oImageView.setEffect(null);
             xImageView.setEffect(null);
+            gif.setStyle("visibility: true;");
             displayEndGame("../view/images/gameMessages/win.png");
-        } else {
+            
+        }
+        else {
             status = "Loose";
             oImageView.setEffect(null);
             xImageView.setEffect(null);
