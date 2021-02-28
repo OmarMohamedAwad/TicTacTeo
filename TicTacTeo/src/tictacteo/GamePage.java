@@ -1,26 +1,15 @@
 package tictacteo;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.awt.AWTException;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
@@ -35,22 +24,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import model.database.Player;
 import model.database.History;
 import model.database.HistoryModel;
 import model.database.Player;
 import model.database.PlayerModel;
 
 public class GamePage extends AnchorPane {
-
     static class Move {
 
         int row, col;
     };
-
     int countPressedBtn = 0;
-
     int num = 0;
     int id;
     int userCount;
@@ -249,7 +233,7 @@ public class GamePage extends AnchorPane {
         });
         middleButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
-                System.out.println("You choose Middle");
+
                 middleButton.setEffect(ds);
                 gameLevel = "middle";
                 middileLevel();
@@ -258,7 +242,7 @@ public class GamePage extends AnchorPane {
         });
         hardButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
-                System.out.println("You choose Hard");
+
                 hardButton.setEffect(ds);
                 gameLevel = "hard";
                 hardLevel();
@@ -558,9 +542,6 @@ public class GamePage extends AnchorPane {
                 }
             }
         }
-
-        System.out.printf("The value of the best Move "
-                + "is : %d\n\n", bestVal);
         return bestMove;
     }
 
@@ -1158,7 +1139,7 @@ public class GamePage extends AnchorPane {
         gridPane.setPrefWidth(221.0);
         gridPane.setStyle("-fx-background-color: #343F4B;");
 
-        containerPane.setLayoutX(115.0);
+        containerPane.setLayoutX(118.0);
         containerPane.setLayoutY(158.0);
         containerPane.setPrefHeight(159.0);
         containerPane.setPrefWidth(218.0);

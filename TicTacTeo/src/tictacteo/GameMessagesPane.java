@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 public abstract class GameMessagesPane extends AnchorPane {
 

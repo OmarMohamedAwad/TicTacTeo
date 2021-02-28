@@ -1,11 +1,8 @@
 package tictacteo;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,14 +26,13 @@ import model.database.Player;
 import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
-import static tictacteo.RecordPage.position2;
 public class OnLineGamePage extends AnchorPane {
     static String status = "";
-    List<String> record = new ArrayList<String>();
-    List<String> position = new ArrayList<String>();
+    static List<String> record = new ArrayList<String>();
+    static List<String> position = new ArrayList<String>();
     boolean friendTurn = false;
     volatile static String first;
-    String userChar;
+    static String userChar;
     static String commingData = "";
     int num = 0;
     int score = 0;
@@ -46,7 +42,7 @@ public class OnLineGamePage extends AnchorPane {
     int drawCounter = 0;
     int id;
     boolean xSelected;
-    Thread thread;
+    static Thread thread;
     static boolean stopThread = true;
     static Player currentPlayer;
     Room room;
@@ -91,9 +87,12 @@ public class OnLineGamePage extends AnchorPane {
     protected static Label oTurnLabel;
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
-    protected final Pane backPane;
-    protected final Pane endGamePane;
-    protected final ImageView endGameImageView;
+
+    protected static Pane backPane;
+
+    protected static Pane endGamePane;
+    protected static ImageView endGameImageView;
+
     protected final ImageView xIcone;
     protected final ImageView yIcone;
     protected final ImageView vsIcon;
@@ -540,7 +539,7 @@ public class OnLineGamePage extends AnchorPane {
             primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
         });
 
-        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
+        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "onlineFriend"))));
     }
     public void setButtonsAction() {
         button00.setOnAction(e -> changeButtonStatus(button00, "00"));
@@ -564,52 +563,52 @@ public class OnLineGamePage extends AnchorPane {
         String b8 = button21.getText();
         String b9 = button22.getText();
 
-        if (b1 == "X" && b2 == "X" && b3 == "X") {
+        if ("X".equals(b1) && "X".equals(b2) && "X".equals(b3)) {
             changeButtonsColor(button00, button01, button02);
             userXWin();
-        } else if (b4 == "X" && b5 == "X" && b6 == "X") {
+        } else if ("X".equals(b4) && "X".equals(b5) && "X".equals(b6)) {
             changeButtonsColor(button10, button11, button12);
             userXWin();
-        } else if (b7 == "X" && b8 == "X" && b9 == "X") {
+        } else if ("X".equals(b7) && "X".equals(b8) && "X".equals(b9)) {
             changeButtonsColor(button20, button21, button22);
             userXWin();
-        } else if (b1 == "X" && b4 == "X" && b7 == "X") {
+        } else if ("X".equals(b1) && "X".equals(b4) && "X".equals(b7)) {
             changeButtonsColor(button00, button10, button20);
             userXWin();
-        } else if (b2 == "X" && b5 == "X" && b8 == "X") {
+        } else if ("X".equals(b2) && "X".equals(b5) && "X".equals(b8)) {
             changeButtonsColor(button01, button11, button21);
             userXWin();
-        } else if (b3 == "X" && b6 == "X" && b9 == "X") {
+        } else if ("X".equals(b3) && "X".equals(b6) && "X".equals(b9)) {
             changeButtonsColor(button02, button12, button22);
             userXWin();
-        } else if (b1 == "X" && b5 == "X" && b9 == "X") {
+        } else if ("X".equals(b1) && "X".equals(b5) && "X".equals(b9)) {
             changeButtonsColor(button00, button11, button22);
             userXWin();
-        } else if (b3 == "X" && b5 == "X" && b7 == "X") {
+        } else if ("X".equals(b3) && "X".equals(b5) && "X".equals(b7)) {
             changeButtonsColor(button02, button11, button20);
             userXWin();
-        } else if (b1 == "O" && b2 == "O" && b3 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b2) && "O".equals(b3)) {
             changeButtonsColor(button00, button01, button02);
             userOWin();
-        } else if (b4 == "O" && b5 == "O" && b6 == "O") {
+        } else if ("O".equals(b4) && "O".equals(b5) && "O".equals(b6)) {
             changeButtonsColor(button10, button11, button12);
             userOWin();
-        } else if (b7 == "O" && b8 == "O" && b9 == "O") {
+        } else if ("O".equals(b7) && "O".equals(b8) && "O".equals(b9)) {
             changeButtonsColor(button20, button21, button22);
             userOWin();
-        } else if (b1 == "O" && b4 == "O" && b7 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b4) && "O".equals(b7)) {
             changeButtonsColor(button00, button10, button20);
             userOWin();
-        } else if (b2 == "O" && b5 == "O" && b8 == "O") {
+        } else if ("O".equals(b2) && "O".equals(b5) && "O".equals(b8)) {
             changeButtonsColor(button01, button11, button21);
             userOWin();
-        } else if (b3 == "O" && b6 == "O" && b9 == "O") {
+        } else if ("O".equals(b3) && "O".equals(b6) && "O".equals(b9)) {
             changeButtonsColor(button02, button12, button22);
             userOWin();
-        } else if (b1 == "O" && b5 == "O" && b9 == "O") {
+        } else if ("O".equals(b1) && "O".equals(b5) && "O".equals(b9)) {
             changeButtonsColor(button00, button11, button22);
             userOWin();
-        } else if (b3 == "O" && b5 == "O" && b7 == "O") {
+        } else if ("O".equals(b3) && "O".equals(b5) && "O".equals(b7)) {
             changeButtonsColor(button02, button11, button20);
             userOWin();
         } else if (drawCounter >= 9) {
@@ -629,7 +628,7 @@ public class OnLineGamePage extends AnchorPane {
         } else {
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
-            } else {
+            } else if (room.get_player1_Char().equalsIgnoreCase("X")){
                 userChar = "O";
             }
             return userChar;
@@ -642,7 +641,6 @@ public class OnLineGamePage extends AnchorPane {
         } else {
             myTurn = false;
         }
-        System.out.println(room.get_player1_Char());
         if (room.get_player1_Char().equalsIgnoreCase("X")) {
             first = "X";
             xImageView.setEffect(ds);
@@ -666,7 +664,7 @@ public class OnLineGamePage extends AnchorPane {
         } else {
             myTurn = false;
         }
-        drawMove(splitMessage[1], splitMessage[0]);
+        drawMove(splitMessage);
         if (splitMessage[0].equalsIgnoreCase("O")) {
             oImageView.setEffect(null);
             xImageView.setEffect(ds);
@@ -685,7 +683,7 @@ public class OnLineGamePage extends AnchorPane {
         return null;
     }
     public void userXWin() {
-        if (userChar == "X") {
+        if (userChar.equalsIgnoreCase("X")) {
             score++;
             status = "winner";
             oImageView.setEffect(null);
@@ -695,7 +693,7 @@ public class OnLineGamePage extends AnchorPane {
             updatePlayerHistory();
 
 //            gif.setStyle("visibility: true;");
-        } else {
+        } else if (userChar.equalsIgnoreCase("O")){
             score--;
             status = "looser";
             scoreLabel.setText("Score :" + score);
@@ -707,7 +705,7 @@ public class OnLineGamePage extends AnchorPane {
         }
     }
     public void userOWin() {
-        if (userChar == "O") {
+        if (userChar.equalsIgnoreCase("O")) {
             score++;
             status = "winner";
             scoreLabel.setText("Score :" + score);
@@ -717,7 +715,7 @@ public class OnLineGamePage extends AnchorPane {
             updatePlayerHistory();
 //            gif.setStyle("visibility: true;");
 
-        } else {
+        } else if(userChar.equalsIgnoreCase("X")){
             score--;
             status = "loose";
             scoreLabel.setText("Score :" + score);
@@ -728,7 +726,9 @@ public class OnLineGamePage extends AnchorPane {
 
         }
     }
-    public void displayEndGame(String img) {
+
+
+    public static void displayEndGame(String img) {
         thread = new Thread(new Runnable() {
 
             @Override
@@ -767,15 +767,31 @@ public class OnLineGamePage extends AnchorPane {
             drawCounter += 1;
             button.setText(userChar);
             button.setFont(new Font("SansSerif Bold", 15.0));
-            if (player2 == currentPlayer.getUserID()) {
-                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id());
-            } else {
-                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
-            }
+            
 
             record.add(userChar);
             position.add(symbol);
             checkStatus();
+            if (player2 == currentPlayer.getUserID() && status == "") {
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id());
+            } else if (player2 == currentPlayer.getUserID() && status != ""){
+                if(status.equals("winner"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",l");
+                else if (status.equals("looser"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",w");
+                else if (status.equals("draw"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",d");
+                
+            }else if (currentPlayer.getUserID() == room.get_player1_Id() && status == ""){
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
+            }else if (currentPlayer.getUserID() == room.get_player1_Id() && status != ""){
+                if(status.equals("winner"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",l");
+                else if (status.equals("looser"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",w");
+                else if (status.equals("draw"))
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",d");
+            }
         }
     }
     public void resetAll() {
@@ -849,7 +865,17 @@ public class OnLineGamePage extends AnchorPane {
         commingData = msg;
         switchTurns(first, commingData);
     }
-    public static void drawMove(String pos, String ch) {
+    public static void drawMove(String[] splitMessage) {
+        if(splitMessage.length == 4 && splitMessage[2] != currentPlayer.getUserID()+""){
+            if(splitMessage[3].equals("l"))
+                displayEndGame("../view/images/gameMessages/loos.png");
+            else if (splitMessage[3].equals("w"))
+                displayEndGame("../view/images/gameMessages/win.png");
+            else if (splitMessage[3].equals("d"))
+               displayEndGame("../view/images/gameMessages/drawc.jpg"); 
+        } 
+        String pos = splitMessage[1];
+        String ch = splitMessage[0];
         try {
             if ("00".equals(pos)) {
                 button00.setText(ch);
@@ -879,9 +905,11 @@ public class OnLineGamePage extends AnchorPane {
                 button22.setText(ch);
                 button22.setFont(new Font("SansSerif Bold", 15.0));
             }
+            record.add(ch);
+            position.add(pos);
 
         } catch (Exception e) {
-            System.out.println("Hi");
+            System.out.println("Thread Not Running Correctly");
         }
 
     }
