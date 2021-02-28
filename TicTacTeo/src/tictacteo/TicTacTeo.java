@@ -31,11 +31,6 @@ public class TicTacTeo extends Application{
         primaryStage.resizableProperty().setValue(false);
         primaryStage.show();
         
-//        Stage secondryStage = new Stage();
-//        secondryStage.setTitle("Tic Tac Toe");
-//        secondryStage.setScene(new Scene(new MyHistoryPage(primary, currentPlayer)));
-//        secondryStage.resizableProperty().setValue(false);
-//        secondryStage.show();
     }
     
 }

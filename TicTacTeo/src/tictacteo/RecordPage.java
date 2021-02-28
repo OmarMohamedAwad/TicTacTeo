@@ -60,7 +60,7 @@ public class RecordPage extends AnchorPane {
     protected final Label TicTacTeo;
     protected final DropShadow TicTacTeoShadow;
     protected final Line line;
-  
+
     protected final ImageView XImage;
     protected final ImageView OImage;
     protected final Button ExitButton;
@@ -88,7 +88,7 @@ public class RecordPage extends AnchorPane {
     protected final Button Button22;
     protected final DropShadow dropShadow3;
     static int index = 0;
-    
+
     static Thread thread2 = new Thread();
     Player currentPlayer;
 
@@ -164,10 +164,9 @@ public class RecordPage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-
         XImage.setFitHeight(55.0);
         XImage.setFitWidth(55.0);
-        XImage.setLayoutX(145.0);
+        XImage.setLayoutX(175.0);
         XImage.setLayoutY(89.0);
         XImage.setPickOnBounds(true);
         XImage.setPreserveRatio(true);
@@ -181,7 +180,7 @@ public class RecordPage extends AnchorPane {
         OImage.setPreserveRatio(true);
         OImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
-        ExitButton.setLayoutX(40.0);
+        ExitButton.setLayoutX(30.0);
         ExitButton.setLayoutY(353.0);
         ExitButton.setMaxHeight(37.0);
         ExitButton.setMaxWidth(129.0);
@@ -197,18 +196,20 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
-                if (page == "computer")
+                if (page == "computer") {
                     primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
-                else if (page == "localFriend")
+                } else if (page == "localFriend") {
                     primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
-
+                } else {
+                    primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread2)));
+                }
 
             }
         });
 
         ExitButton.setEffect(ExitButtonInnerShadow);
 
-        WatchButton.setLayoutX(200.0);
+        WatchButton.setLayoutX(190.0);
         WatchButton.setLayoutY(353.0);
         WatchButton.setMaxHeight(37.0);
         WatchButton.setMaxWidth(129.0);
@@ -236,37 +237,30 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
+                try {
 
-//                FileChooser fc = new FileChooser();
-  //              Window stage = null;
-    //            File file = fc.showSaveDialog(stage);
-           //     if (file != null) {
+                    PrintWriter pw = new PrintWriter(new FileOutputStream("AYA.txt"));
+                    for (int i = 0; i < record.size(); i++) {
+                        // pw.println(record.get(i)+","+position.get(i));
 
-      //              String filePath = file.getPath();
-                    try {
-
-                        PrintWriter pw = new PrintWriter(new FileOutputStream("AYA.txt"));
-                        for (int i = 0; i < record.size(); i++) {
-                             // pw.println(record.get(i)+","+position.get(i));
-                              
-                            pw.print(record.get(i)+" ");
-                            pw.print(position.get(i)+" ");
-
-                        }
-
-                        pw.close();
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(RecordPage.class.getName()).log(Level.SEVERE, null, ex);
+                        pw.print(record.get(i) + " ");
+                        pw.print(position.get(i) + " ");
 
                     }
-               
+
+                    pw.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(RecordPage.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+
             }
         });
-        
+
         SaveButton.setEffect(SaveButtonShadow);
 
         pane.setLayoutX(
-                114.0);
+                135.0);
         pane.setLayoutY(
                 160.0);
         pane.setPrefHeight(
