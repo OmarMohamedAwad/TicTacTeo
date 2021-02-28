@@ -23,7 +23,7 @@ public class TicTacTeo extends Application{
         Thread thread = new Thread();
         thread.start();
 
-        LogInPage root = new LogInPage(primaryStage , thread);
+       LogInPage root = new LogInPage(primaryStage , thread);
         Scene scene = new Scene(root, 490, 417);
         
         primaryStage.setTitle("Tic Tac Toe");
@@ -31,11 +31,6 @@ public class TicTacTeo extends Application{
         primaryStage.resizableProperty().setValue(false);
         primaryStage.show();
         
-//        Stage secondryStage = new Stage();
-//        secondryStage.setTitle("Tic Tac Toe");
-//        secondryStage.setScene(new Scene(new MyHistoryPage(primary, currentPlayer)));
-//        secondryStage.resizableProperty().setValue(false);
-//        secondryStage.show();
     }
     
 }

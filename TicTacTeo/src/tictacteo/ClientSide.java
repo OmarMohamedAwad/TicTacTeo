@@ -7,6 +7,9 @@ package tictacteo;
 
 import java.io.*;
 import java.net.Socket;
+import javafx.application.Platform;
+import model.database.RoomModel;
+import static tictacteo.OnLineGamePage.player2;
 
 /**
  *
@@ -16,7 +19,7 @@ public class ClientSide extends Thread {
     Socket playerSocket;
     DataInputStream playerDataInput;
     PrintStream playerPrintStream;
-
+    static String dataListened;
     public ClientSide() {
         try {
             playerSocket = new Socket("127.0.0.1", 5000);
@@ -32,12 +35,17 @@ public class ClientSide extends Thread {
     public void run() {
         while (true) {
             try {
-                String dataListened = playerDataInput.readLine();
-                OnLineGamePage.messageFromeServer(dataListened);
+                dataListened = playerDataInput.readLine();  
 //                System.out.println(message);
             } catch (IOException exc) {
                 System.out.println("");
             }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    OnLineGamePage.messageFromeServer(dataListened);
+                }
+            });
         }
     }
 }
