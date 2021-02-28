@@ -23,7 +23,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.database.History;
+import model.database.HistoryModel;
 import model.database.Player;
+import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
 import static tictacteo.RecordPage.position2;
@@ -34,19 +37,35 @@ public class OnLineGamePage extends AnchorPane {
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean friendTurn = false;
-    Random random = new Random();
-    Random rand = new Random();
     volatile static String first;
+    String first;
     String userChar;
     static String commingData = "";
     int num = 0;
     int score = 0;
     protected static DropShadow ds;
+    volatile static boolean myTurn;
+    static Thread listenToServer;
+    ClientSide curruntClient;
+    int drawCounter = 0;
+    int id;
+    boolean xSelected;
+    Thread thread;
+    static boolean stopThread = true;
+    static Player currentPlayer;
+    Room room;
+    boolean firstTurn;
+    String userName;
+    History newUserHistory = new History();
+    protected final DropShadow ds;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
     protected final Label titleLabel;
     protected final DropShadow titleDropShadow;
     protected final Line line;
+    protected final Label scoreLabel;
+    protected final DropShadow scoreLabelShadow;
+    protected final ImageView scoreImage;
     protected final Button exitButton;
     protected final InnerShadow exitButtonInnerShadow;
     protected final InnerShadow playAgininnerShadow;
@@ -91,16 +110,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label characterEndGameLable;
     volatile static int player2 = -1;
 
-    ClientSide curruntClient;
-    int drawCounter = 0;
-    int id;
-    boolean xSelected;
-    Thread thread;
-    static boolean stopThread = true;
-    static Player currentPlayer;
-    Room room;
-    volatile static boolean myTurn;
-    static Thread listenToServer;
 
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
         listenToServer = thread;
@@ -108,8 +117,11 @@ public class OnLineGamePage extends AnchorPane {
         stopThread = true;
         this.room = room;
         this.currentPlayer = currentPlayer;
+        this.id = currentPlayer.getUserID();
+        this.userName = currentPlayer.getUserName();
         this.thread = thread;
-        this.id = id;
+        newUserHistory.setVsPlayer("Computer");
+        newUserHistory.setPlayerId(id);
         this.xSelected = xSelected;
         ds = new DropShadow(20, Color.AQUA);
         logoImageView = new ImageView();
@@ -118,6 +130,11 @@ public class OnLineGamePage extends AnchorPane {
         titleLabel = new Label();
         titleDropShadow = new DropShadow();
         line = new Line();
+
+        scoreLabel = new Label();
+        scoreLabelShadow = new DropShadow();
+        scoreImage = new ImageView();
+
         exitButton = new Button();
         exitButtonInnerShadow = new InnerShadow();
         playAgininnerShadow = new InnerShadow();
@@ -161,12 +178,11 @@ public class OnLineGamePage extends AnchorPane {
         playerNameEndGameLabel = new Label();
         characterEndGameLable = new Label();
 
-        userChar = userChar(xSelected);
-
         setDesignProperty();
         checkIfPlayersEnter();
         endGameDesign();
-        first = firstTurn();
+        userChar();
+        firstTurn();
         setActionsPage(primary);
         setButtonsAction();
 
@@ -207,6 +223,26 @@ public class OnLineGamePage extends AnchorPane {
         line.setStrokeWidth(2.0);
 
         exitButton.setLayoutX(200.0);
+        scoreLabel.setLayoutX(423.0);
+        scoreLabel.setLayoutY(21.0);
+        scoreLabel.setPrefHeight(25.0);
+        scoreLabel.setPrefWidth(65.0);
+        scoreLabel.setText("Score : 0");
+        scoreLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        scoreLabel.setFont(new Font("SansSerif Regular", 12.0));
+
+        scoreLabelShadow.setColor(javafx.scene.paint.Color.BLACK);
+        scoreLabel.setEffect(scoreLabelShadow);
+
+        scoreImage.setFitHeight(25.0);
+        scoreImage.setFitWidth(25.0);
+        scoreImage.setLayoutX(388.0);
+        scoreImage.setLayoutY(21.0);
+        scoreImage.setPickOnBounds(true);
+        scoreImage.setPreserveRatio(true);
+        scoreImage.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
+
+        exitButton.setLayoutX(143.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
         exitButton.setMaxWidth(129.0);
@@ -385,6 +421,9 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(titleLabel);
         getChildren().add(line);
         getChildren().add(exitButton);
+
+        getChildren().add(scoreLabel);
+        getChildren().add(scoreImage);
         gridPane.getColumnConstraints().add(firstColumnConstraints);
         gridPane.getColumnConstraints().add(secondColumnConstraints);
         gridPane.getColumnConstraints().add(thirdColumnConstraints);
@@ -506,6 +545,7 @@ public class OnLineGamePage extends AnchorPane {
 
     public void setActionsPage(Stage primary) {
         exitButton.setOnAction(e -> {
+            PlayerModel.updatePlayerScore(id, score);
             deleteRoom(primary);
             primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
         });
@@ -585,14 +625,18 @@ public class OnLineGamePage extends AnchorPane {
             changeButtonsColor(button02, button11, button20);
             userOWin();
         } else if (drawCounter >= 9) {
-            status = "Equal";
-            displayEndGame("../view/images/gameMessages/drawc.jpg");
+            userEqual();
         }
 
     }
 
-    public String userChar(boolean xSelected) {
-        String userChar;
+    public void userEqual() {
+        status = "draw";
+        displayEndGame("../view/images/gameMessages/drawc.jpg");
+        updatePlayerHistory();
+    }
+
+    public String userChar() {
         if (room.get_player1_Id() == currentPlayer.getUserID()) {
             userChar = room.get_player1_Char();
             return userChar;
@@ -665,12 +709,20 @@ public class OnLineGamePage extends AnchorPane {
             status = "winner";
             oImageView.setEffect(null);
             xImageView.setEffect(null);
+            scoreLabel.setText("Score :" + score);
             displayEndGame("../view/images/gameMessages/win.png");
+            updatePlayerHistory();
+
+//            gif.setStyle("visibility: true;");
         } else {
-            status = "Lose";
+            score--;
+            status = "looser";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
+            updatePlayerHistory();
+
         }
     }
 
@@ -678,14 +730,22 @@ public class OnLineGamePage extends AnchorPane {
         if (userChar == "O") {
             score++;
             status = "winner";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/win.png");
+            updatePlayerHistory();
+//            gif.setStyle("visibility: true;");
+
         } else {
-            status = "Loose";
+            score--;
+            status = "loose";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
+            updatePlayerHistory();
+
         }
     }
 
@@ -799,13 +859,19 @@ public class OnLineGamePage extends AnchorPane {
                             }
                         }
                     });
-
                 }
-
             }
-
         });
         thread.start();
+    }
+
+
+    public void updatePlayerHistory() {
+        playerNameEndGameLabel.setText(userName);
+        characterEndGameLable.setText(userChar);
+        newUserHistory.setStatus(status);
+        HistoryModel.addHistory(newUserHistory);
+
     }
 
     public static void messageFromeServer(String msg) {
