@@ -24,6 +24,7 @@ import model.database.RoomModel;
 import static tictacteo.MyDashboardPage.currentPlayer;
 
 public class OnlineOfflinePage extends AnchorPane {
+
     protected final Line line;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
@@ -238,22 +239,16 @@ public class OnlineOfflinePage extends AnchorPane {
             int roomId;
             Room room = new Room();
             room.set_roomName(newRoom);
-            if (xSelected)
+            if (xSelected) {
                 room.setplayer1_Char("X");
-            else 
+            } else {
                 room.setplayer1_Char("O");
-            
+            }
             room.setplayer1_Id(player1ID);
             Room createdRoom = RoomModel.addRoom(room);
-            if(createdRoom != null){
+            if (createdRoom != null) {
                 createdRoom.get_roomId();
-                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,createdRoom)));
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setTitle("Room Validation");
-                alert.setContentText("Pleas Enter valid name, or unique name");
-                alert.showAndWait();
+                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread, createdRoom)));
             }
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
@@ -267,7 +262,7 @@ public class OnlineOfflinePage extends AnchorPane {
                 alert.setContentText("Room Not Exist ,Please Create One");
                 alert.showAndWait();
             } else {
-                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread,room)));
+                primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread, room)));
 
             }
 
@@ -281,7 +276,7 @@ public class OnlineOfflinePage extends AnchorPane {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Room Validation");
-            alert.setContentText("Pleas Create New Room Or Enter Exist Room To Play");
+            alert.setContentText("Pleas enter valid ");
             alert.showAndWait();
         }
 
