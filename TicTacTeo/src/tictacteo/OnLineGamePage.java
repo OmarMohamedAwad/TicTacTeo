@@ -27,6 +27,12 @@ import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
 public class OnLineGamePage extends AnchorPane {
+<<<<<<< HEAD
+=======
+
+    public Player Player1Id;
+    public static Player VSPlayer;
+>>>>>>> 83d49da47a77b8799e8029f9dab94f1d5a97c2ad
     static String status = "";
     static List<String> record = new ArrayList<String>();
     static List<String> position = new ArrayList<String>();
@@ -104,7 +110,12 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     volatile static int player2 = -1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 83d49da47a77b8799e8029f9dab94f1d5a97c2ad
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
+
         listenToServer = thread;
         curruntClient = new ClientSide();
         stopThread = true;
@@ -172,9 +183,25 @@ public class OnLineGamePage extends AnchorPane {
         characterEndGameLable = new Label();
 
         setDesignProperty();
+          if (currentPlayer.getUserID() != room.get_player1_Id()) {
+
+            player2 = currentPlayer.getUserID();
+            if (room.get_player1_Char().equalsIgnoreCase("O")) {
+                userChar = "X";
+                xTurnLabel.setText(currentPlayer.getUserName());
+
+            } else {
+                userChar = "O";
+                oTurnLabel.setText(currentPlayer.getUserName());
+            }
+      //  } //else {
+
+
+        }
         checkIfPlayersEnter();
         endGameDesign();
         userChar();
+        System.out.println(userChar);
         firstTurn();
         setActionsPage(primary);
         setButtonsAction();
@@ -370,13 +397,13 @@ public class OnLineGamePage extends AnchorPane {
         xTurnLabel.setLayoutY(254.0);
         xTurnLabel.setPrefHeight(26.0);
         xTurnLabel.setPrefWidth(72.0);
-        xTurnLabel.setText("Your Turn");
+        //   xTurnLabel.setText("Your Turn");
         xTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         xTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         xTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
 
         xTurnLabel.setEffect(looserDropShadow);
-        xTurnLabel.setStyle("visibility: false;");
+        xTurnLabel.setStyle("visibility: true;");
 
         vsImageView.setFitHeight(78.0);
         vsImageView.setFitWidth(83.0);
@@ -388,7 +415,7 @@ public class OnLineGamePage extends AnchorPane {
         oTurnLabel.setLayoutY(254.0);
         oTurnLabel.setPrefHeight(26.0);
         oTurnLabel.setPrefWidth(72.0);
-        oTurnLabel.setText("Your Turn");
+        //   oTurnLabel.setText("Your Turn");
         oTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         oTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         oTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
@@ -396,7 +423,7 @@ public class OnLineGamePage extends AnchorPane {
         oImageView.setEffect(null);
         dropShadow3.setColor(javafx.scene.paint.Color.valueOf("#1b1a1a"));
         oTurnLabel.setEffect(dropShadow3);
-        oTurnLabel.setStyle("visibility: false;");
+        oTurnLabel.setStyle("visibility: true;");
 
         backPane.setLayoutX(0.0);
         backPane.setLayoutY(69.0);
@@ -530,6 +557,7 @@ public class OnLineGamePage extends AnchorPane {
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
+      
 
     }
     public void setActionsPage(Stage primary) {
@@ -624,18 +652,36 @@ public class OnLineGamePage extends AnchorPane {
     public String userChar() {
         if (room.get_player1_Id() == currentPlayer.getUserID()) {
             userChar = room.get_player1_Char();
+            if ("X".equals(userChar)) {
+
+                xTurnLabel.setText(currentPlayer.getUserName());
+
+            } else if ("O".equals(userChar)) {
+
+                oTurnLabel.setText(currentPlayer.getUserName());
+
+            }
             return userChar;
+
         } else {
+
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
+
+
+            } else {
+
             } else if (room.get_player1_Char().equalsIgnoreCase("X")){
+
                 userChar = "O";
+
             }
             return userChar;
         }
 
     }
     public String firstTurn() {
+
         if (currentPlayer.getUserID() == room.get_player1_Id()) {
             myTurn = true;
         } else {
@@ -643,21 +689,22 @@ public class OnLineGamePage extends AnchorPane {
         }
         if (room.get_player1_Char().equalsIgnoreCase("X")) {
             first = "X";
+
             xImageView.setEffect(ds);
             oImageView.setEffect(null);
-            xTurnLabel.setStyle("visibility: true;");
-            oTurnLabel.setStyle("visibility: false;");
+
         } else if (room.get_player1_Char().equalsIgnoreCase("O")) {
+
             first = "O";
             oImageView.setEffect(ds);
             xImageView.setEffect(null);
-            oTurnLabel.setStyle("visibility: true;");
-            xTurnLabel.setStyle("visibility: false;");
+
         }
         return first;
 
     }
     public static String switchTurns(String first, String commingData) {
+
         String[] splitMessage = commingData.split(",");
         if (splitMessage[2].equalsIgnoreCase(currentPlayer.getUserID() + "")) {
             myTurn = true;
@@ -669,14 +716,16 @@ public class OnLineGamePage extends AnchorPane {
             oImageView.setEffect(null);
             xImageView.setEffect(ds);
             first = "X";
-            oTurnLabel.setStyle("visibility: false;");
-            xTurnLabel.setStyle("visibility: true;");
+
+//            oTurnLabel.setStyle("visibility: false;");
+//            xTurnLabel.setStyle("visibility: true;");
             return first;
         } else if (splitMessage[0].equalsIgnoreCase("X")) {
+            //         oTurnLabel.setText(Player1Id.getUserName());
             oImageView.setEffect(ds);
             xImageView.setEffect(null);
-            xTurnLabel.setStyle("visibility: false;");
-            oTurnLabel.setStyle("visibility: true;");
+//            xTurnLabel.setStyle("visibility: false;");
+//            oTurnLabel.setStyle("visibility: true;");
             first = "O";
             return first;
         }
@@ -845,7 +894,17 @@ public class OnLineGamePage extends AnchorPane {
                             int curruntPlayer2 = RoomModel.showRoom(room.get_roomId());
 
                             if (curruntPlayer2 != -1) {
+                                VSPlayer = PlayerModel.playerInfo(curruntPlayer2);
                                 player2 = curruntPlayer2;
+
+                                if ("X".equals(userChar)) {
+                                    oTurnLabel.setText(VSPlayer.getUserName());
+                                //    xTurnLabel.setText(currentPlayer.getUserName());
+                                } else if ("O".equals(userChar)) {
+                                    xTurnLabel.setText(VSPlayer.getUserName());
+                                //    oTurnLabel.setText(currentPlayer.getUserName());
+
+                                }
                             }
                         }
                     });
