@@ -73,12 +73,12 @@ public class GamePage extends AnchorPane {
     protected final Label gameName;
     protected final DropShadow gameNameShadow;
     protected final Line line;
-    protected final Label scoreLabel;
+    
     protected final Label you;
     protected final Label computer;
 
     protected final ImageView gif;
-    
+    protected final Label scoreLabel;
     protected final DropShadow scoreLabelShadow;
     protected final ImageView scoreImage;
     protected final Button easyButton;
@@ -234,44 +234,30 @@ public class GamePage extends AnchorPane {
         watchVideoEndGame = new Button();
         playerNameEndGameLabel = new Label();
         characterEndGameLable = new Label();
-        easyButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (gameLevel.equals("unknown")) {
-                    gameLevel = "easy";
-                    easyLevel();
-                }
-
+        easyButton.setOnAction((ActionEvent ev) -> {
+            if (gameLevel.equals("unknown")) {
+                gameLevel = "easy";
+                easyLevel();
             }
         });
-        middleButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (gameLevel.equals("unknown")) {
-                    System.out.println("You choose Middle");
-                    gameLevel = "Middle";
-                    middileLevel();
-
-                }
+        middleButton.setOnAction((ActionEvent ev) -> {
+            if (gameLevel.equals("unknown")) {
+                System.out.println("You choose Middle");
+                gameLevel = "Middle";
+                middileLevel();
+                
             }
         });
-        hardButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                if (gameLevel.equals("unknown")) {
-                    System.out.println("You choose Hard");
-                    gameLevel = "hard";
-                    hardLevel();
-                }
-
+        hardButton.setOnAction((ActionEvent ev) -> {
+            if (gameLevel.equals("unknown")) {
+                System.out.println("You choose Hard");
+                gameLevel = "hard";
+                hardLevel();
             }
         });
-        exitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                PlayerModel.updatePlayerScore(id, score);
-                primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)));
-            }
+        exitButton.setOnAction((ActionEvent ev) -> {
+            PlayerModel.updatePlayerScore(id, score);
+            primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)));
         });
         playAgainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -516,13 +502,8 @@ public class GamePage extends AnchorPane {
 
         } else {
             if (!"".equals(b1) && !"".equals(b2) && !"".equals(b3) && !"".equals(b4) && !"".equals(b5) && !"".equals(b6) && !"".equals(b7) && !"".equals(b8) && !"".equals(b9)) {
-//            userEqual();
-                status = "draw";
-                displayEndGame("../view/images/gameMessages/drawc.jpg");
-                playerNameEndGameLabel.setText(userName);
-                characterEndGameLable.setText(userChar);
-                newUserHistory.setStatus(status);
-                HistoryModel.addHistory(newUserHistory);
+                userEqual();
+ 
             }
         }
     }
@@ -535,23 +516,18 @@ public class GamePage extends AnchorPane {
             xImage.setEffect(null);
             scoreLabel.setText("Score :" + score);
             displayEndGame("../view/images/gameMessages/win.png");
-            playerNameEndGameLabel.setText(userName);
-            characterEndGameLable.setText(userChar);
-            newUserHistory.setStatus(status);
-            HistoryModel.addHistory(newUserHistory);
+            updatePlayerHistory();
 
             gif.setStyle("visibility: true;");
 
-
         } else {
+            score--;
             status = "looser";
+            scoreLabel.setText("Score :" + score);
             oImage.setEffect(null);
             xImage.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
-            playerNameEndGameLabel.setText(userName);
-            characterEndGameLable.setText(userChar);
-            newUserHistory.setStatus(status);
-            HistoryModel.addHistory(newUserHistory);
+            updatePlayerHistory();
 
         }
     }
@@ -645,21 +621,17 @@ public class GamePage extends AnchorPane {
             oImage.setEffect(null);
             xImage.setEffect(null);
             displayEndGame("../view/images/gameMessages/win.png");
-            playerNameEndGameLabel.setText(userName);
-            characterEndGameLable.setText(userChar);
-            newUserHistory.setStatus(status);
-            HistoryModel.addHistory(newUserHistory);
+            updatePlayerHistory();
             gif.setStyle("visibility: true;");
 
         } else {
+            score--;
             status = "loose";
+            scoreLabel.setText("Score :" + score);
             oImage.setEffect(null);
             xImage.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
-            playerNameEndGameLabel.setText(userName);
-            characterEndGameLable.setText(userChar);
-            newUserHistory.setStatus(status);
-            HistoryModel.addHistory(newUserHistory);
+            updatePlayerHistory();
 
         }
     }
@@ -667,11 +639,7 @@ public class GamePage extends AnchorPane {
     public void userEqual() {
         status = "draw";
         displayEndGame("../view/images/gameMessages/drawc.jpg");
-        playerNameEndGameLabel.setText(userName);
-        characterEndGameLable.setText(userChar);
-        newUserHistory.setStatus(status);
-        HistoryModel.addHistory(newUserHistory);
-
+        updatePlayerHistory();
     }
 
     public void displayEndGame(String img) {
@@ -772,6 +740,7 @@ public class GamePage extends AnchorPane {
     public void hardLevel() {
         firstTurn();
     }
+
     public void changeButtonStatus(Button button, String symbol) {
         if ("".equals(button.getText()) && "easy".equals(gameLevel)) {
             button.setText(first);
@@ -825,14 +794,12 @@ public class GamePage extends AnchorPane {
         gameNameShadow.setColor(javafx.scene.paint.Color.BLACK);
         gameName.setEffect(gameNameShadow);
 
-        
         gif.setFitHeight(360.0);
         gif.setFitWidth(489.0);
         gif.setLayoutY(69.0);
         gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
         gif.setStyle("visibility: false;");
-        
-        
+
         line.setEndX(400.0);
         line.setLayoutX(101.0);
         line.setLayoutY(68.0);
@@ -1166,19 +1133,15 @@ public class GamePage extends AnchorPane {
         characterEndGameLable.setStyle("-fx-font-family: sans serif; -fx-font-weight: bold;");
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         characterEndGameLable.setFont(new Font(13.0));
-        
+
         getChildren().add(backPane);
-                
-        
-                
+
         endGamePane.getChildren().add(endGameImageView);
-        
+
         endGamePane.getChildren().add(xIcone);
         endGamePane.getChildren().add(yIcone);
         endGamePane.getChildren().add(vsIcon);
-        
-         
-         
+
         endGamePane.getChildren().add(playAgainEnd);
         endGamePane.getChildren().add(watchVideoEndGame);
         endGamePane.getChildren().add(playerNameLabel);
@@ -1187,7 +1150,14 @@ public class GamePage extends AnchorPane {
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
         getChildren().add(gif);
-       
+
+    }
+
+    public void updatePlayerHistory() {
+        playerNameEndGameLabel.setText(userName);
+        characterEndGameLable.setText(userChar);
+        newUserHistory.setStatus(status);
+        HistoryModel.addHistory(newUserHistory);
 
     }
 
