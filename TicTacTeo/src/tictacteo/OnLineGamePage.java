@@ -885,6 +885,7 @@ public class OnLineGamePage extends AnchorPane {
         }
 
         } catch (Exception e) {
+            System.out.println("Hi");
         }
         
     }

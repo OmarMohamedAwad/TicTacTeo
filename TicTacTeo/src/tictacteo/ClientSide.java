@@ -24,7 +24,7 @@ public class ClientSide extends Thread {
             playerPrintStream = new PrintStream(playerSocket.getOutputStream());
             start();
         } catch (IOException exc) {
-            exc.printStackTrace();
+            System.out.println("");
         }
     }
 
@@ -36,7 +36,7 @@ public class ClientSide extends Thread {
                 OnLineGamePage.messageFromeServer(dataListened);
 //                System.out.println(message);
             } catch (IOException exc) {
-                exc.printStackTrace();
+                System.out.println("");
             }
         }
     }
