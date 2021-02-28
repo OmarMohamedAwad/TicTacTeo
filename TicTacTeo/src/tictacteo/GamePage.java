@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -242,12 +243,14 @@ public class GamePage extends AnchorPane {
         easyButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
                 gameLevel = "easy";
+                easyButton.setEffect(ds);
                 easyLevel();
             }
         });
         middleButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
                 System.out.println("You choose Middle");
+                middleButton.setEffect(ds);
                 gameLevel = "middle";
                 middileLevel();
 
@@ -256,6 +259,7 @@ public class GamePage extends AnchorPane {
         hardButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
                 System.out.println("You choose Hard");
+                hardButton.setEffect(ds);
                 gameLevel = "hard";
                 hardLevel();
             }
@@ -807,6 +811,9 @@ public class GamePage extends AnchorPane {
     public void gameReset() {
         xImage.setEffect(null);
         oImage.setEffect(null);
+        middleButton.setEffect(null);
+        hardButton.setEffect(null);
+        easyButton.setEffect(null);
         stopThread = true;
         record.clear();
         position.clear();
@@ -908,6 +915,12 @@ public class GamePage extends AnchorPane {
             switchTurns();
             hardLevelAlgorithm();
             check();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle(" Choose Level!");
+            alert.setContentText("You Must Choose Level");
+            alert.showAndWait();
         }
     }
 

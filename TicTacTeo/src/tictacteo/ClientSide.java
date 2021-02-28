@@ -18,12 +18,10 @@ public class ClientSide extends Thread {
     PrintStream playerPrintStream;
     static String user;
     static Integer score;
-  
-
-    
+ 
     public ClientSide() {
         try {
-            playerSocket = new Socket("127.0.0.1", 5000);
+            playerSocket = new Socket("omarawadtictacteo.hopto.org", 5000);
             playerDataInput = new DataInputStream(playerSocket.getInputStream());
             playerPrintStream = new PrintStream(playerSocket.getOutputStream());
             start();
@@ -31,7 +29,6 @@ public class ClientSide extends Thread {
             System.out.println("");
         }
     }
-
     @Override
     public void run() {
         while (true) {

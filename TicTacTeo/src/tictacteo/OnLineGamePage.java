@@ -40,7 +40,6 @@ public class OnLineGamePage extends AnchorPane {
     static String commingData = "";
     int num = 0;
     int score = 0;
-    protected static DropShadow ds;
     volatile static boolean myTurn;
     static Thread listenToServer;
     ClientSide curruntClient;
@@ -54,6 +53,8 @@ public class OnLineGamePage extends AnchorPane {
     boolean firstTurn;
     String userName;
     History newUserHistory = new History();
+    protected static DropShadow ds;
+
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
     protected final Label titleLabel;
@@ -214,7 +215,6 @@ public class OnLineGamePage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-        exitButton.setLayoutX(200.0);
         scoreLabel.setLayoutX(423.0);
         scoreLabel.setLayoutY(21.0);
         scoreLabel.setPrefHeight(25.0);
@@ -234,7 +234,7 @@ public class OnLineGamePage extends AnchorPane {
         scoreImage.setPreserveRatio(true);
         scoreImage.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
 
-        exitButton.setLayoutX(143.0);
+        exitButton.setLayoutX(210.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
         exitButton.setMaxWidth(129.0);
@@ -773,7 +773,7 @@ public class OnLineGamePage extends AnchorPane {
                 curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
             }
 
-            record.add(first);
+            record.add(userChar);
             position.add(symbol);
             checkStatus();
         }
