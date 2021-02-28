@@ -96,6 +96,11 @@
       </ImageView>
       <Text fill="WHITE" layoutX="101.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score: " AnchorPane.leftAnchor="100.0" />
       <Text fill="WHITE" layoutX="145.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="80" AnchorPane.leftAnchor="140.0" />
+      <Button layoutX="185.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" style="-fx-background-radius: 15; -fx-background-color: red;" styleClass="play-btn" text="Watch The Last Game" textFill="WHITE">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
    </children>
    <effect>
       <DropShadow />

@@ -1,8 +1,11 @@
 package tictacteo;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,33 +23,49 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.database.History;
+import model.database.HistoryModel;
 import model.database.Player;
+import model.database.PlayerModel;
+import model.database.Room;
 import model.database.RoomModel;
+import static tictacteo.RecordPage.position2;
 
+public class OnLineGamePage extends AnchorPane {
 
-public class GameWithFriendPage extends AnchorPane {
-
+    static String status = "";
     List<String> record = new ArrayList<String>();
     List<String> position = new ArrayList<String>();
     boolean friendTurn = false;
-    Random random = new Random();
-    Random rand = new Random();
-    String first;
+    volatile static String first;
     String userChar;
+    static String commingData = "";
     int num = 0;
     int score = 0;
-    //gifi
-    protected final ImageView gif;
-    
-    protected final DropShadow ds;
+    volatile static boolean myTurn;
+    static Thread listenToServer;
+    ClientSide curruntClient;
+    int drawCounter = 0;
+    int id;
+    boolean xSelected;
+    Thread thread;
+    static boolean stopThread = true;
+    static Player currentPlayer;
+    Room room;
+    boolean firstTurn;
+    String userName;
+    History newUserHistory = new History();
+    protected static DropShadow ds;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
     protected final Label titleLabel;
     protected final DropShadow titleDropShadow;
     protected final Line line;
+    protected final Label scoreLabel;
+    protected final DropShadow scoreLabelShadow;
+    protected final ImageView scoreImage;
     protected final Button exitButton;
     protected final InnerShadow exitButtonInnerShadow;
-    protected final Button playAginButton;
     protected final InnerShadow playAgininnerShadow;
     protected final Pane containerPane;
     protected final GridPane gridPane;
@@ -56,66 +75,66 @@ public class GameWithFriendPage extends AnchorPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-    protected final Button button00;
-    protected final Button button01;
-    protected final Button button02;
-    protected final Button button10;
-    protected final Button button11;
-    protected final Button button12;
-    protected final Button button20;
-    protected final Button button21;
-    protected final Button button22;
-    protected final ImageView xImageView;
-    protected final ImageView oImageView;
-    protected final Label xTurnLabel;
-    protected final Label oTurnLabel;
+    protected static Button button00;
+    protected static Button button01;
+    protected static Button button02;
+    protected static Button button10;
+    protected static Button button11;
+    protected static Button button12;
+    protected static Button button20;
+    protected static Button button21;
+    protected static Button button22;
+    protected static ImageView xImageView;
+    protected static ImageView oImageView;
+    protected static Label xTurnLabel;
     protected final DropShadow looserDropShadow;
     protected final ImageView vsImageView;
+    protected static Label oTurnLabel;
     protected final DropShadow dropShadow3;
     protected final DropShadow dropShadow4;
     protected final Pane backPane;
+
     protected final Pane endGamePane;
     protected final ImageView endGameImageView;
     protected final ImageView xIcone;
     protected final ImageView yIcone;
     protected final ImageView vsIcon;
-    protected final Button playAgainEnd;
+    protected final InnerShadow innerShadow;
     protected final Button watchVideoEndGame;
     protected final InnerShadow innerShadow0;
     protected final Label playerNameLabel;
     protected final Label playerCharacter;
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
-    protected final InnerShadow innerShadow;
+    volatile static int player2 = -1;
 
-    int drawCounter = 0;
-    int id;
-    boolean xSelected;
-    Thread thread;
-    static boolean stopThread = true;
-    Player currentPlayer;
 
-    public GameWithFriendPage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread) {
+    public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
+        listenToServer = thread;
+        curruntClient = new ClientSide();
         stopThread = true;
+        this.room = room;
         this.currentPlayer = currentPlayer;
+        this.id = currentPlayer.getUserID();
+        this.userName = currentPlayer.getUserName();
         this.thread = thread;
-        this.id = id;
+        newUserHistory.setVsPlayer("Computer");
+        newUserHistory.setPlayerId(id);
         this.xSelected = xSelected;
         ds = new DropShadow(20, Color.AQUA);
         logoImageView = new ImageView();
         logoDropShadow = new DropShadow();
-        //GIFI
-         gif = new ImageView();
-        
-         
-         
-         
+
         titleLabel = new Label();
         titleDropShadow = new DropShadow();
         line = new Line();
+
+        scoreLabel = new Label();
+        scoreLabelShadow = new DropShadow();
+        scoreImage = new ImageView();
+
         exitButton = new Button();
         exitButtonInnerShadow = new InnerShadow();
-        playAginButton = new Button();
         playAgininnerShadow = new InnerShadow();
         containerPane = new Pane();
         gridPane = new GridPane();
@@ -149,7 +168,6 @@ public class GameWithFriendPage extends AnchorPane {
         xIcone = new ImageView();
         yIcone = new ImageView();
         vsIcon = new ImageView();
-        playAgainEnd = new Button();
         innerShadow = new InnerShadow();
         watchVideoEndGame = new Button();
         innerShadow0 = new InnerShadow();
@@ -157,10 +175,12 @@ public class GameWithFriendPage extends AnchorPane {
         playerCharacter = new Label();
         playerNameEndGameLabel = new Label();
         characterEndGameLable = new Label();
-        userChar = userChar(xSelected);
+
         setDesignProperty();
+        checkIfPlayersEnter();
         endGameDesign();
-        first = firstTurn(xSelected);
+        userChar();
+        firstTurn();
         setActionsPage(primary);
         setButtonsAction();
 
@@ -181,14 +201,6 @@ public class GameWithFriendPage extends AnchorPane {
         logoImageView.setImage(new Image(getClass().getResource("../view/images/tic-tac-toe.jpg").toExternalForm()));
 
         logoImageView.setEffect(logoDropShadow);
-        
-        
-        //GIFI
-        gif.setFitHeight(360.0);
-        gif.setFitWidth(489.0);
-        gif.setLayoutY(69.0);
-        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
-        gif.setStyle("visibility: false;");
 
         titleLabel.setLayoutX(85.0);
         titleLabel.setLayoutY(23.0);
@@ -208,7 +220,26 @@ public class GameWithFriendPage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-        exitButton.setLayoutX(143.0);
+        scoreLabel.setLayoutX(423.0);
+        scoreLabel.setLayoutY(21.0);
+        scoreLabel.setPrefHeight(25.0);
+        scoreLabel.setPrefWidth(65.0);
+        scoreLabel.setText("Score : 0");
+        scoreLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        scoreLabel.setFont(new Font("SansSerif Regular", 12.0));
+
+        scoreLabelShadow.setColor(javafx.scene.paint.Color.BLACK);
+        scoreLabel.setEffect(scoreLabelShadow);
+
+        scoreImage.setFitHeight(25.0);
+        scoreImage.setFitWidth(25.0);
+        scoreImage.setLayoutX(388.0);
+        scoreImage.setLayoutY(21.0);
+        scoreImage.setPickOnBounds(true);
+        scoreImage.setPreserveRatio(true);
+        scoreImage.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
+
+        exitButton.setLayoutX(210.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
         exitButton.setMaxWidth(129.0);
@@ -222,32 +253,17 @@ public class GameWithFriendPage extends AnchorPane {
 
         exitButton.setEffect(exitButtonInnerShadow);
 
-        playAginButton.setLayoutX(257.0);
-        playAginButton.setLayoutY(353.0);
-        playAginButton.setMaxHeight(37.0);
-        playAginButton.setMaxWidth(129.0);
-        playAginButton.setMnemonicParsing(false);
-        playAginButton.setPrefHeight(25.0);
-        playAginButton.setPrefWidth(103.0);
-        playAginButton.setStyle("-fx-background-color: #3065b5; -fx-background-radius: 15px;");
-        playAginButton.setText("Play again");
-        playAginButton.setTextFill(javafx.scene.paint.Color.valueOf("#f8f7f7"));
-        playAginButton.setFont(new Font(16.0));
-
-        playAginButton.setEffect(playAgininnerShadow);
-        gridPane.setLayoutX(5.0);
-        gridPane.setLayoutY(-8.0);
-        gridPane.setPrefHeight(178.0);
-        gridPane.setPrefWidth(221.0);
-        gridPane.setStyle("-fx-background-color: #343F4B;");
-
         containerPane.setLayoutX(141.0);
         containerPane.setLayoutY(158.0);
         containerPane.setPrefHeight(159.0);
         containerPane.setPrefWidth(218.0);
         containerPane.setStyle("-fx-background-color: #343F4B;");
 
-       
+        gridPane.setLayoutX(5.0);
+        gridPane.setLayoutY(-8.0);
+        gridPane.setPrefHeight(178.0);
+        gridPane.setPrefWidth(221.0);
+        gridPane.setStyle("-fx-background-color: #343F4B;");
 
         firstColumnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         firstColumnConstraints.setMinWidth(10.0);
@@ -402,7 +418,9 @@ public class GameWithFriendPage extends AnchorPane {
         getChildren().add(titleLabel);
         getChildren().add(line);
         getChildren().add(exitButton);
-        getChildren().add(playAginButton);
+
+        getChildren().add(scoreLabel);
+        getChildren().add(scoreImage);
         gridPane.getColumnConstraints().add(firstColumnConstraints);
         gridPane.getColumnConstraints().add(secondColumnConstraints);
         gridPane.getColumnConstraints().add(thirdColumnConstraints);
@@ -425,8 +443,6 @@ public class GameWithFriendPage extends AnchorPane {
         getChildren().add(xTurnLabel);
         getChildren().add(vsImageView);
         getChildren().add(oTurnLabel);
-        
-        
     }
 
     public void endGameDesign() {
@@ -447,7 +463,6 @@ public class GameWithFriendPage extends AnchorPane {
         endGameImageView.setFitWidth(335.0);
         endGameImageView.setLayoutX(5.0);
         endGameImageView.setLayoutY(4.0);
-        //endGameImageView.setImage(new Image(getClass().getResource("../view/images/gameMessages/win.jpg").toExternalForm()));
 
         xIcone.setFitHeight(45.0);
         xIcone.setFitWidth(72.0);
@@ -466,18 +481,6 @@ public class GameWithFriendPage extends AnchorPane {
         vsIcon.setLayoutX(148.0);
         vsIcon.setLayoutY(-8.0);
         vsIcon.setImage(new Image(getClass().getResource("../view/images/gameMessages/vs.png").toExternalForm()));
-
-        playAgainEnd.setLayoutX(35.0);
-        playAgainEnd.setLayoutY(185.0);
-        playAgainEnd.setMnemonicParsing(false);
-        playAgainEnd.setPrefHeight(17.0);
-        playAgainEnd.setPrefWidth(100.0);
-        playAgainEnd.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
-        playAgainEnd.getStyleClass().add("play-btn");
-        playAgainEnd.setText("Play Again");
-        playAgainEnd.setTextFill(javafx.scene.paint.Color.WHITE);
-
-        playAgainEnd.setEffect(innerShadow);
 
         watchVideoEndGame.setLayoutX(190.0);
         watchVideoEndGame.setLayoutY(185.0);
@@ -523,36 +526,25 @@ public class GameWithFriendPage extends AnchorPane {
         characterEndGameLable.setTextFill(javafx.scene.paint.Color.valueOf("#d955eb"));
         characterEndGameLable.setFont(new Font(13.0));
 
-        
-        
         getChildren().add(backPane);
         endGamePane.getChildren().add(endGameImageView);
         endGamePane.getChildren().add(xIcone);
         endGamePane.getChildren().add(yIcone);
         endGamePane.getChildren().add(vsIcon);
-        endGamePane.getChildren().add(playAgainEnd);
         endGamePane.getChildren().add(watchVideoEndGame);
         endGamePane.getChildren().add(playerNameLabel);
         endGamePane.getChildren().add(playerCharacter);
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
-        getChildren().add(gif);
-        
 
     }
 
     public void setActionsPage(Stage primary) {
-        playAginButton.setOnAction(e -> resetAll());
-
-        exitButton.setOnAction(e -> primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread))));
-
-        playAgainEnd.setOnAction(e
-                -> {
-            resetAll();
-            backPane.setStyle("-fx-background-color: #0c0721; visibility: false;");
-            endGamePane.setStyle("-fx-border-color: #A500C2; -fx-border-width: 4px; -fx-background-color: #0c0721; visibility: false;");
-            gif.setStyle("visibility: false;");
+        exitButton.setOnAction(e -> {
+            PlayerModel.updatePlayerScore(id, score);
+            deleteRoom(primary);
+            primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
         });
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "localFriend"))));
@@ -571,7 +563,6 @@ public class GameWithFriendPage extends AnchorPane {
     }
 
     public void checkStatus() {
-        String status = "";
         String b1 = button00.getText();
         String b2 = button01.getText();
         String b3 = button02.getText();
@@ -584,120 +575,121 @@ public class GameWithFriendPage extends AnchorPane {
 
         if (b1 == "X" && b2 == "X" && b3 == "X") {
             changeButtonsColor(button00, button01, button02);
-            userXWin(status);
+            userXWin();
         } else if (b4 == "X" && b5 == "X" && b6 == "X") {
             changeButtonsColor(button10, button11, button12);
-            userXWin(status);
+            userXWin();
         } else if (b7 == "X" && b8 == "X" && b9 == "X") {
             changeButtonsColor(button20, button21, button22);
-            userXWin(status);
+            userXWin();
         } else if (b1 == "X" && b4 == "X" && b7 == "X") {
             changeButtonsColor(button00, button10, button20);
-            userXWin(status);
+            userXWin();
         } else if (b2 == "X" && b5 == "X" && b8 == "X") {
             changeButtonsColor(button01, button11, button21);
-            userXWin(status);
+            userXWin();
         } else if (b3 == "X" && b6 == "X" && b9 == "X") {
             changeButtonsColor(button02, button12, button22);
-            userXWin(status);
+            userXWin();
         } else if (b1 == "X" && b5 == "X" && b9 == "X") {
             changeButtonsColor(button00, button11, button22);
-            userXWin(status);
+            userXWin();
         } else if (b3 == "X" && b5 == "X" && b7 == "X") {
             changeButtonsColor(button02, button11, button20);
-            userXWin(status);
+            userXWin();
         } else if (b1 == "O" && b2 == "O" && b3 == "O") {
             changeButtonsColor(button00, button01, button02);
-            userOWin(status);
+            userOWin();
         } else if (b4 == "O" && b5 == "O" && b6 == "O") {
             changeButtonsColor(button10, button11, button12);
-            userOWin(status);
+            userOWin();
         } else if (b7 == "O" && b8 == "O" && b9 == "O") {
             changeButtonsColor(button20, button21, button22);
-            userOWin(status);
+            userOWin();
         } else if (b1 == "O" && b4 == "O" && b7 == "O") {
             changeButtonsColor(button00, button10, button20);
-            userOWin(status);
+            userOWin();
         } else if (b2 == "O" && b5 == "O" && b8 == "O") {
             changeButtonsColor(button01, button11, button21);
-            userOWin(status);
+            userOWin();
         } else if (b3 == "O" && b6 == "O" && b9 == "O") {
             changeButtonsColor(button02, button12, button22);
-            userOWin(status);
+            userOWin();
         } else if (b1 == "O" && b5 == "O" && b9 == "O") {
             changeButtonsColor(button00, button11, button22);
-            userOWin(status);
+            userOWin();
         } else if (b3 == "O" && b5 == "O" && b7 == "O") {
             changeButtonsColor(button02, button11, button20);
-            userOWin(status);
-        }else 
-            if (drawCounter >= 9) {
-                status = "Equal";
-                displayEndGame("../view/images/gameMessages/drawc.jpg");
-            }
-        
+            userOWin();
+        } else if (drawCounter >= 9) {
+            userEqual();
+        }
+
     }
 
-    public String userChar(boolean xSelected) {
-        String userChar;
-        if (xSelected) {
-            userChar = "X";
+    public void userEqual() {
+        status = "draw";
+        displayEndGame("../view/images/gameMessages/drawc.jpg");
+        updatePlayerHistory();
+    }
+
+    public String userChar() {
+        if (room.get_player1_Id() == currentPlayer.getUserID()) {
+            userChar = room.get_player1_Char();
             return userChar;
         } else {
-            userChar = "O";
+            if (room.get_player1_Char().equalsIgnoreCase("O")) {
+                userChar = "X";
+            } else {
+                userChar = "O";
+            }
             return userChar;
         }
 
     }
 
-    public String firstTurn(boolean xSelected) {
-        if (random.nextInt(2) == 0) {
-            friendTurn = true;
-            if (xSelected) {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: true;");
-                xTurnLabel.setStyle("visibility: false;");
-                first = "O";
-                return first;
-            } else {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: true;");
-                oTurnLabel.setStyle("visibility: false;");
-                first = "X";
-                return first;
-            }
+    public String firstTurn() {
+        if (currentPlayer.getUserID() == room.get_player1_Id()) {
+            myTurn = true;
         } else {
-            friendTurn = false;
-            if (xSelected) {
-                xImageView.setEffect(ds);
-                oImageView.setEffect(null);
-                oTurnLabel.setStyle("visibility: false;");
-                xTurnLabel.setStyle("visibility: true;");
-                first = "X";
-                return first;
-            } else {
-                oImageView.setEffect(ds);
-                xImageView.setEffect(null);
-                xTurnLabel.setStyle("visibility: false;");
-                oTurnLabel.setStyle("visibility: true;");
-                first = "O";
-                return first;
-            }
+            myTurn = false;
         }
+        System.out.println(room.get_player1_Char());
+        if (room.get_player1_Char().equalsIgnoreCase("X")) {
+            first = "X";
+            xImageView.setEffect(ds);
+            oImageView.setEffect(null);
+            xTurnLabel.setStyle("visibility: true;");
+            oTurnLabel.setStyle("visibility: false;");
+        } else if (room.get_player1_Char().equalsIgnoreCase("O")) {
+            first = "O";
+            oImageView.setEffect(ds);
+            xImageView.setEffect(null);
+            oTurnLabel.setStyle("visibility: true;");
+            xTurnLabel.setStyle("visibility: false;");
+        }
+        return first;
 
     }
 
-    public String switchTurns(String first) {
-        if (first == "O") {
+    public static String switchTurns(String first, String commingData) {
+        String[] splitMessage = commingData.split(",");
+        if (splitMessage[2].equalsIgnoreCase(currentPlayer.getUserID() + "")) {
+            myTurn = true;
+        } else {
+            myTurn = false;
+        }
+
+        drawMove(splitMessage[1], splitMessage[0]);
+
+        if (splitMessage[0].equalsIgnoreCase("O")) {
             oImageView.setEffect(null);
             xImageView.setEffect(ds);
             first = "X";
             oTurnLabel.setStyle("visibility: false;");
             xTurnLabel.setStyle("visibility: true;");
             return first;
-        } else if (first == "X") {
+        } else if (splitMessage[0].equalsIgnoreCase("X")) {
             oImageView.setEffect(ds);
             xImageView.setEffect(null);
             xTurnLabel.setStyle("visibility: false;");
@@ -708,38 +700,49 @@ public class GameWithFriendPage extends AnchorPane {
         return null;
     }
 
-    public void userXWin(String status) {
+    public void userXWin() {
         if (userChar == "X") {
             score++;
             status = "winner";
             oImageView.setEffect(null);
             xImageView.setEffect(null);
+            scoreLabel.setText("Score :" + score);
             displayEndGame("../view/images/gameMessages/win.png");
-            gif.setStyle("visibility: true;");
-        }
-        else {
-            status = "Lose";
+            updatePlayerHistory();
+
+//            gif.setStyle("visibility: true;");
+        } else {
+            score--;
+            status = "looser";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
+            updatePlayerHistory();
+
         }
     }
 
-    public void userOWin(String status) {
+    public void userOWin() {
         if (userChar == "O") {
             score++;
             status = "winner";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
-            gif.setStyle("visibility: true;");
             displayEndGame("../view/images/gameMessages/win.png");
-            
-        }
-        else {
-            status = "Loose";
+            updatePlayerHistory();
+//            gif.setStyle("visibility: true;");
+
+        } else {
+            score--;
+            status = "loose";
+            scoreLabel.setText("Score :" + score);
             oImageView.setEffect(null);
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/loos.png");
+            updatePlayerHistory();
+
         }
     }
 
@@ -780,13 +783,18 @@ public class GameWithFriendPage extends AnchorPane {
     }
 
     public void changeButtonStatus(Button button, String symbol) {
-        if (button.getText() == "") {
+        if (button.getText() == "" && player2 != -1 && myTurn) {
             drawCounter += 1;
-            button.setText(first);
+            button.setText(userChar);
             button.setFont(new Font("SansSerif Bold", 15.0));
-            record.add(first);
+            if (player2 == currentPlayer.getUserID()) {
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id());
+            } else {
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
+            }
+
+            record.add(userChar);
             position.add(symbol);
-            first = switchTurns(first);
             checkStatus();
         }
     }
@@ -800,7 +808,7 @@ public class GameWithFriendPage extends AnchorPane {
         stopThread = true;
         oTurnLabel.setStyle("visibility: false;");
         xTurnLabel.setStyle("visibility: false;");
-        first = firstTurn(xSelected);
+        first = firstTurn();
         button00.setText("");
         button01.setText("");
         button02.setText("");
@@ -819,5 +827,88 @@ public class GameWithFriendPage extends AnchorPane {
         button20.setStyle("-fx-background-color: #ececec;");
         button21.setStyle("-fx-background-color: #ececec;");
         button22.setStyle("-fx-background-color: #ececec;");
+    }
+
+    public void deleteRoom(Stage primary) {
+        RoomModel.DeleteRoom(room.get_roomId());
+        primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+    }
+
+    public void checkIfPlayersEnter() {
+        thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (player2 == -1) {
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                    }
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            int curruntPlayer2 = RoomModel.showRoom(room.get_roomId());
+
+                            if (curruntPlayer2 != -1) {
+                                player2 = curruntPlayer2;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void updatePlayerHistory() {
+        playerNameEndGameLabel.setText(userName);
+        characterEndGameLable.setText(userChar);
+        newUserHistory.setStatus(status);
+        HistoryModel.addHistory(newUserHistory);
+
+    }
+
+    public static void messageFromeServer(String msg) {
+        commingData = msg;
+        switchTurns(first, commingData);
+    }
+
+    public static void drawMove(String pos, String ch) {
+        try {
+            if ("00".equals(pos)) {
+                button00.setText(ch);
+                button00.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("01".equals(pos)) {
+                button01.setText(ch);
+                button01.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("02".equals(pos)) {
+                button02.setText(ch);
+                button02.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("10".equals(pos)) {
+                button10.setText(ch);
+                button10.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("11".equals(pos)) {
+                button11.setText(ch);
+                button11.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("12".equals(pos)) {
+                button12.setText(ch);
+                button12.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("20".equals(pos)) {
+                button20.setText(ch);
+                button20.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("21".equals(pos)) {
+                button21.setText(ch);
+                button21.setFont(new Font("SansSerif Bold", 15.0));
+            } else if ("22".equals(pos)) {
+                button22.setText(ch);
+                button22.setFont(new Font("SansSerif Bold", 15.0));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Hi");
+        }
+
     }
 }

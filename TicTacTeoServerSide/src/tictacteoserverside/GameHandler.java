@@ -24,7 +24,8 @@ public class GameHandler extends Thread {
             serverDataInput = new DataInputStream(clientSocket.getInputStream());
             serverPrintStreem = new PrintStream(clientSocket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            clientsList.remove(this);
+            System.out.println("Thread Deleted");
         }
         clientsList.add(this);
         start();
@@ -38,7 +39,7 @@ public class GameHandler extends Thread {
                 String strMove = serverDataInput.readLine();
                 sendMoveToClients(strMove);
             } catch (IOException e) {
-                e.printStackTrace();
+               //System.out.println("Thread Deleted");
             }
 
         }
