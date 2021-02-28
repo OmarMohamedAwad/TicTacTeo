@@ -23,7 +23,7 @@ public class TicTacTeo extends Application{
         Thread thread = new Thread();
         thread.start();
 
-        LogInPage root = new LogInPage(primaryStage , thread);
+       LogInPage root = new LogInPage(primaryStage , thread);
         Scene scene = new Scene(root, 490, 417);
         
         primaryStage.setTitle("Tic Tac Toe");

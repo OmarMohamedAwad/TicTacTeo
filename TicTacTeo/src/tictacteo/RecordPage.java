@@ -203,7 +203,6 @@ public class RecordPage extends AnchorPane {
                 } else {
                     primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread2)));
                 }
-
             }
         });
 
