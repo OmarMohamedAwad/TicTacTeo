@@ -17,6 +17,7 @@ import model.database.PlayerModel;
  */
 public class HistoryModel {
 
+
     static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
     static final String DB_PASSWD = "1234abjd";
