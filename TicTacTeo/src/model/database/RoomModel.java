@@ -21,8 +21,7 @@ import static model.database.PlayerModel.connect;
  */
 public class RoomModel {
 
-
-    static final String DB_URL = "jdbc:mysql://127.0.0.1/tiktaktoe";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/tiktaktoe";
     static final String DB_USER = "root";
     static final String DB_PASSWD = "root@#123";
 

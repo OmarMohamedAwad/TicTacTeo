@@ -253,7 +253,7 @@ public class OnlineOfflinePage extends AnchorPane {
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
             Room room = RoomModel.UpdateRoom(enterExistRoom, player1ID);
-            System.out.println(room.get_roomId());
+
             room.get_player2_Id();
             if (room == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
