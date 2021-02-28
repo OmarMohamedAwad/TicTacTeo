@@ -27,12 +27,10 @@ import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
 public class OnLineGamePage extends AnchorPane {
-<<<<<<< HEAD
-=======
+
 
     public Player Player1Id;
     public static Player VSPlayer;
->>>>>>> 83d49da47a77b8799e8029f9dab94f1d5a97c2ad
     static String status = "";
     static List<String> record = new ArrayList<String>();
     static List<String> position = new ArrayList<String>();
@@ -110,10 +108,6 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     volatile static int player2 = -1;
-<<<<<<< HEAD
-=======
-
->>>>>>> 83d49da47a77b8799e8029f9dab94f1d5a97c2ad
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
 
         listenToServer = thread;
@@ -659,26 +653,17 @@ public class OnLineGamePage extends AnchorPane {
             } else if ("O".equals(userChar)) {
 
                 oTurnLabel.setText(currentPlayer.getUserName());
-
             }
             return userChar;
-
         } else {
-
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
-
-
             } else {
-
-            } else if (room.get_player1_Char().equalsIgnoreCase("X")){
-
+            } if (room.get_player1_Char().equalsIgnoreCase("X")){
                 userChar = "O";
-
             }
             return userChar;
         }
-
     }
     public String firstTurn() {
 
