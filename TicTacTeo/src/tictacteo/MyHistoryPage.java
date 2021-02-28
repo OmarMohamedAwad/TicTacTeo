@@ -1,7 +1,5 @@
 package tictacteo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Vector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
@@ -20,7 +17,6 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -61,8 +57,8 @@ public class MyHistoryPage extends AnchorPane {
     protected final Label userNameLabel;
 
     @SuppressWarnings("empty-statement")
-    public MyHistoryPage(Stage primary, Player currentPlayer , Thread thread) {
-       int playerId=currentPlayer.getUserID();
+    public MyHistoryPage(Stage primary, Player currentPlayer, Thread thread) {
+        int playerId = currentPlayer.getUserID();
         progressImageView = new ImageView();
         maxScoreView = new ImageView();
         dropShadow = new DropShadow();
@@ -74,7 +70,7 @@ public class MyHistoryPage extends AnchorPane {
         backToDashboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ev) {
-                primary.setScene(new Scene(new MyDashboardPage(primary, playerId , thread)));
+                primary.setScene(new Scene(new MyDashboardPage(primary, playerId, thread)));
             }
         });
         backInnerShadow = new InnerShadow();
@@ -281,23 +277,22 @@ public class MyHistoryPage extends AnchorPane {
         int index = 1;
         for (History history : tmp) {
             data.add(new History(index + "", history.getDate(), history.getVsPlayer(), history.getStatus(), history.getPlayerId() + ""));
-            switch(history.getStatus())
-                    {
-                case("winner"):
-                        winNumbers++;
-                break;
-                case("looser"):
+            switch (history.getStatus()) {
+                case ("winner"):
+                    winNumbers++;
+                    break;
+                case ("looser"):
                     loseNumbers++;
-                break;
+                    break;
                 default:
-                    System.out.println(history.getStatus()); 
+                    System.out.println(history.getStatus());
             }
             index++;
 
         }
-        maxScoreLabelView.setText("Max score = "+currentPlayer.getScore());
-        winningTimesLableView.setText("You win "+winNumbers+" times");
-        looseTimeLabelView.setText("You lose "+loseNumbers+" times");
+        maxScoreLabelView.setText("Max score = " + currentPlayer.getScore());
+        winningTimesLableView.setText("You win " + winNumbers + " times");
+        looseTimeLabelView.setText("You lose " + loseNumbers + " times");
         gamesColumn.setCellValueFactory(new PropertyValueFactory<History, String>("id"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableDate"));
         vsPlayerColumn.setCellValueFactory(new PropertyValueFactory<History, String>("tableVsPlayer"));

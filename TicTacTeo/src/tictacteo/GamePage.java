@@ -1,25 +1,15 @@
 package tictacteo;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.awt.AWTException;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
@@ -34,23 +24,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import model.database.Player;
 import model.database.History;
 import model.database.HistoryModel;
 import model.database.Player;
 import model.database.PlayerModel;
 
 public class GamePage extends AnchorPane {
+    static class Move {
 
+        int row, col;
+    };
     int countPressedBtn = 0;
-
     int num = 0;
     int id;
     int userCount;
     int score = 0;
     boolean xSelected;
-    boolean gameOver;
+    boolean gameOver = false;
     boolean computerTurn = false;
     Thread thread;
     static boolean stopThread = true;
@@ -73,7 +63,7 @@ public class GamePage extends AnchorPane {
     protected final Label gameName;
     protected final DropShadow gameNameShadow;
     protected final Line line;
-    
+
     protected final Label you;
     protected final Label computer;
 
@@ -237,20 +227,23 @@ public class GamePage extends AnchorPane {
         easyButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
                 gameLevel = "easy";
+                easyButton.setEffect(ds);
                 easyLevel();
             }
         });
         middleButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
-                System.out.println("You choose Middle");
-                gameLevel = "Middle";
+
+                middleButton.setEffect(ds);
+                gameLevel = "middle";
                 middileLevel();
-                
+
             }
         });
         hardButton.setOnAction((ActionEvent ev) -> {
             if (gameLevel.equals("unknown")) {
-                System.out.println("You choose Hard");
+
+                hardButton.setEffect(ds);
                 gameLevel = "hard";
                 hardLevel();
             }
@@ -319,12 +312,12 @@ public class GamePage extends AnchorPane {
         int row, column;
         String num1, num2, num3;
         if (first.equals(computerChar) && "".equals(status) && countPressedBtn < 9) {
-
             while (!empty) {
                 row = rand.nextInt((2 - 0) + 1) + 0;
                 column = rand.nextInt((2 - 0) + 1) + 0;
                 if ("".equals(board[row][column].getText())) {
                     board[row][column].setText(computerChar);
+                    board[row][column].setFont(new Font("SansSerif Bold", 15.0));
                     countPressedBtn++;
                     num1 = Integer.toString(row);
                     num2 = Integer.toString(column);
@@ -334,16 +327,222 @@ public class GamePage extends AnchorPane {
                     empty = true;
                 }
             }
-//            switchImage();
-            if (xImage.getEffect() == null) {
-                oImage.setEffect(null);
-                xImage.setEffect(ds);
-            } else if (oImage.getEffect() == null) {
-                xImage.setEffect(null);
-                oImage.setEffect(ds);
-            }
+            switchImage();
             switchTurns();
         }
+    }
+
+    public void middleLevelAlgorithm() {
+        String num1, num2, num3;
+        boolean aiTurn = true;
+        if (first.equals(computerChar) && "".equals(status) && countPressedBtn < 9) {
+            for (int i = 0; i < 3 && aiTurn; i++) {
+                for (int j = 0; j < 3 && aiTurn; j++) {
+                    if (!(board[i][j].getText().equals("O") || board[i][j].getText().equals("X"))) {
+                        board[i][j].setText(computerChar);
+                        board[i][j].setFont(new Font("SansSerif Bold", 15.0));
+                        countPressedBtn++;
+                        num1 = Integer.toString(i);
+                        num2 = Integer.toString(j);
+                        num3 = num1 + num2;
+                        record.add(first);
+                        position.add(num3);
+                        aiTurn = false;
+                    }
+                }
+            }
+            switchImage();
+            switchTurns();
+        }
+
+    }
+
+    public void hardLevelAlgorithm() {
+        String num1, num2, num3;
+        boolean aiTurn = true;
+        if (first.equals(computerChar) && "".equals(status) && countPressedBtn < 9) {
+            for (int i = 0; i < 3 && aiTurn; i++) {
+                for (int j = 0; j < 3 && aiTurn; j++) {
+                    if (!(board[i][j].getText().equals("O") || board[i][j].getText().equals("X"))) {
+                        Move bestMove = findBestMove(board);
+                        board[bestMove.row][bestMove.col].setText(computerChar);
+                        board[bestMove.row][bestMove.col].setFont(new Font("SansSerif Bold", 15.0));
+                        countPressedBtn++;
+                        num1 = Integer.toString(i);
+                        num2 = Integer.toString(j);
+                        num3 = num1 + num2;
+                        record.add(first);
+                        position.add(num3);
+                        aiTurn = false;
+                    }
+                }
+            }
+            switchImage();
+            switchTurns();
+        }
+
+    }
+
+    public Boolean isMovesLeft(Button board[][]) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j].getText().isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int evaluate(Button board[][]) {
+        // Checking for Rows for X or O victory. 
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0].getText().equals(board[row][1].getText())
+                    && board[row][1].getText().equals(board[row][2].getText())) {
+                if (board[row][0].getText().equals(userChar)) {
+                    return +10;
+                } else if (board[row][0].getText().equals(computerChar)) {
+                    return -10;
+                }
+            }
+        }
+        // Checking for Columns for X or O victory. 
+        for (int col = 0; col < 3; col++) {
+            if (board[0][col].getText().equals(board[1][col].getText())
+                    && board[1][col].getText().equals(board[2][col].getText())) {
+                if (board[0][col].getText().equals(userChar)) {
+                    return +10;
+                } else if (board[0][col].getText().equals(computerChar)) {
+                    return -10;
+                }
+            }
+        }
+
+        // Checking for Diagonals for X or O victory. 
+        if (board[0][0].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][2].getText())) {
+            if (board[0][0].getText().equals(userChar)) {
+                return +10;
+            } else if (board[0][0].getText().equals(computerChar)) {
+                return -10;
+            }
+        }
+
+        if (board[0][2].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][0].getText())) {
+            if (board[0][2].getText().equals(userChar)) {
+                return +10;
+            } else if (board[0][2].getText().equals(computerChar)) {
+                return -10;
+            }
+        }
+        // Else if none of them have won then return 0 
+        return 0;
+    }
+
+    public int minimax(Button board[][], int depth, Boolean isMax) {
+        int score = evaluate(board);
+
+        // If Maximizer has won the game  
+        // return his/her evaluated score 
+        if (score == 10) {
+            return score;
+        }
+
+        // If Minimizer has won the game  
+        // return his/her evaluated score 
+        if (score == -10) {
+            return score;
+        }
+
+        // If there are no more moves and  
+        // no winner then it is a tie 
+        if (isMovesLeft(board) == false) {
+            return 0;
+        }
+
+        // If this maximizer's move 
+        if (isMax) {
+            int best = -1000;
+
+            // Traverse all cells 
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    // Check if cell is empty 
+                    if (board[i][j].getText().isEmpty()) {
+                        // Make the move 
+                        board[i][j].setText(userChar);
+
+                        // Call minimax recursively and choose 
+                        // the maximum value 
+                        best = Math.max(best, minimax(board,
+                                depth + 1, !isMax));
+
+                        // Undo the move 
+                        board[i][j].setText("");
+                    }
+                }
+            }
+            return best;
+        } // If this minimizer's move 
+        else {
+            int best = 1000;
+
+            // Traverse all cells 
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    // Check if cell is empty 
+                    if (board[i][j].getText().isEmpty()) {
+                        // Make the move 
+                        board[i][j].setText(computerChar);
+
+                        // Call minimax recursively and choose 
+                        // the minimum value 
+                        best = Math.min(best, minimax(board,
+                                depth + 1, !isMax));
+
+                        // Undo the move 
+                        board[i][j].setText("");
+                    }
+                }
+            }
+            return best;
+        }
+    }
+
+    public Move findBestMove(Button board[][]) {
+        int bestVal = -1000;
+        Move bestMove = new Move();
+        bestMove.row = -1;
+        bestMove.col = -1;
+
+        // Traverse all cells, evaluate minimax function  
+        // for all empty cells. And return the cell  
+        // with optimal value. 
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Check if cell is empty 
+                if (board[i][j].getText().isEmpty()) {
+                    // Make the move 
+                    board[i][j].setText(userChar);
+
+                    // compute evaluation function for this 
+                    // move. 
+                    int moveVal = minimax(board, 0, false);
+
+                    // Undo the move 
+                    board[i][j].setText("");
+
+                    // If the value of the current move is 
+                    // more than the best value, then update 
+                    // best/ 
+                    if (moveVal > bestVal) {
+                        bestMove.row = i;
+                        bestMove.col = j;
+                        bestVal = moveVal;
+                    }
+                }
+            }
+        }
+        return bestMove;
     }
 
     public String firstTurn() {
@@ -503,7 +702,7 @@ public class GamePage extends AnchorPane {
         } else {
             if (!"".equals(b1) && !"".equals(b2) && !"".equals(b3) && !"".equals(b4) && !"".equals(b5) && !"".equals(b6) && !"".equals(b7) && !"".equals(b8) && !"".equals(b9)) {
                 userEqual();
- 
+
             }
         }
     }
@@ -530,87 +729,6 @@ public class GamePage extends AnchorPane {
             updatePlayerHistory();
 
         }
-    }
-
-    public void checkDiagonals() {
-        // Checking for Diagonals for X or O victory. 
-        if (board[0][0].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][2].getText())) {
-            for (int i = 0; i < 3; i++) {
-                board[i][i].setStyle("-fx-background-color: yellow; ");
-            }
-            if (board[0][0].getText().equals("X")) {
-                userXWin();
-            } else if (board[0][0].getText().equals("O")) {
-                userOWin();
-            }
-        }
-        if (board[0][2].getText().equals(board[1][1].getText()) && board[1][1].getText().equals(board[2][0].getText())) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 2; j >= 0; j--) {
-                    board[i][j].setStyle("-fx-background-color: yellow; ");
-                    System.out.println(board[i][j]);
-                }
-            }
-            if (board[0][2].getText().equals("X")) {
-                userXWin();
-            } else if (board[0][2].getText().equals("O")) {
-                userOWin();
-            }
-        }
-
-    }
-
-    public void checkCols() {
-        int col;
-        // Checking for Columns for X or O victory. 
-        for (col = 0; col < 3; col++) {
-            if (board[0][col].getText().equals(board[1][col].getText())
-                    && board[1][col].getText().equals(board[2][col].getText())) {
-                if (board[0][col].getText().equals("X")) {
-//                    board[].setStyle("-fx-background-color: yellow; ");
-                    userXWin();
-
-                } else if (board[0][col].getText().equals("O")) {
-                    userOWin();
-
-                }
-            }
-        }
-
-    }
-
-    public void checkRows() {
-        int row;
-//           Checking for Rows for X or O victory. 
-        for (row = 0; row < 3; row++) {
-            if (board[row][0].getText().equals(board[row][1].getText())
-                    && board[row][1].getText().equals(board[row][2].getText())) {
-                if (board[row][0].getText().equals("X")) {
-                    userXWin();
-
-                } else if (board[row][0].getText().equals("O")) {
-                    userOWin();
-
-                }
-            }
-        }
-    }
-
-    public void checkEqual() {
-        int row, col, counterBtn = 0;
-        for (row = 0; row < 3; row++) {
-            for (col = 0; col < 3; col++) {
-                if ("".equals(board[row][col].getText())) {
-                    counterBtn++;
-                }
-            }
-
-        }
-        if (counterBtn == 9) {
-            userEqual();
-
-        }
-
     }
 
     public void userOWin() {
@@ -674,6 +792,9 @@ public class GamePage extends AnchorPane {
     public void gameReset() {
         xImage.setEffect(null);
         oImage.setEffect(null);
+        middleButton.setEffect(null);
+        hardButton.setEffect(null);
+        easyButton.setEffect(null);
         stopThread = true;
         record.clear();
         position.clear();
@@ -734,11 +855,14 @@ public class GamePage extends AnchorPane {
 
     public void middileLevel() {
         firstTurn();
+        middleLevelAlgorithm();
 
     }
 
     public void hardLevel() {
         firstTurn();
+        hardLevelAlgorithm();
+        evaluate(board);
     }
 
     public void changeButtonStatus(Button button, String symbol) {
@@ -752,6 +876,32 @@ public class GamePage extends AnchorPane {
             switchTurns();
             computerAlgorithm();
             check();
+        } else if ("".equals(button.getText()) && "middle".equals(gameLevel)) {
+            button.setText(first);
+            countPressedBtn++;
+            button.setFont(new Font("SansSerif Bold", 15.0));
+            record.add(first);
+            position.add(symbol);
+            switchImage();
+            switchTurns();
+            middleLevelAlgorithm();
+            check();
+        } else if ("".equals(button.getText()) && "hard".equals(gameLevel)) {
+            button.setText(first);
+            countPressedBtn++;
+            button.setFont(new Font("SansSerif Bold", 15.0));
+            record.add(first);
+            position.add(symbol);
+            switchImage();
+            switchTurns();
+            hardLevelAlgorithm();
+            check();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle(" Choose Level!");
+            alert.setContentText("You Must Choose Level");
+            alert.showAndWait();
         }
     }
 
@@ -989,7 +1139,7 @@ public class GamePage extends AnchorPane {
         gridPane.setPrefWidth(221.0);
         gridPane.setStyle("-fx-background-color: #343F4B;");
 
-        containerPane.setLayoutX(115.0);
+        containerPane.setLayoutX(118.0);
         containerPane.setLayoutY(158.0);
         containerPane.setPrefHeight(159.0);
         containerPane.setPrefWidth(218.0);

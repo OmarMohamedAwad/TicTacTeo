@@ -6,26 +6,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import static java.lang.System.in;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,14 +28,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import model.database.Player;
-import static oracle.jrockit.jfr.events.Bits.byteValue;
 
 public class RecordPage extends AnchorPane {
-
     static String name = "omar";
     static List<String> record2 = new ArrayList<String>();
     static List<String> position2 = new ArrayList<String>();
@@ -95,7 +76,6 @@ public class RecordPage extends AnchorPane {
     public RecordPage(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
         this.currentPlayer = currentPlayer;
         index = 0;
-        System.out.println(index);
         thread2 = thread;
         record2 = record;
         position2 = position;
@@ -505,28 +485,18 @@ public class RecordPage extends AnchorPane {
 
                     @Override
                     public void run() {
-
-                        System.out.println("hi45");
                         boolean pf = true;
-
                         while (pf) {
-
                             try {
-
                                 Thread.sleep(1000);
-
                             } catch (InterruptedException e) {
                             }
                             if (index >= record.size() - 1) {
                                 pf = false;
-
                             }
-
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    System.out.println("hi  " + index);
-                                    System.out.println(record.size());
                                     if ("00".equals(position2.get(index))) {
                                         Button00.setText(record2.get(index));
                                         Button00.setFont(new Font("SansSerif Bold", 15.0));
@@ -557,7 +527,7 @@ public class RecordPage extends AnchorPane {
 
                                         Button22.setText(record2.get(index));
                                         Button22.setFont(new Font("SansSerif Bold", 15.0));
-                                        System.out.println(Button22.getText());
+
                                     }
 
                                     index++;

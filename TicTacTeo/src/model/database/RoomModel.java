@@ -21,7 +21,7 @@ import static model.database.PlayerModel.connect;
  */
 public class RoomModel {
 
-      static final String DB_URL = "jdbc:mysql://omarawadtictacteo.hopto.org:3306/tiktaktoe";
+    static final String DB_URL = "jdbc:mysql://omarawadtictacteo.hopto.org:3306/tiktaktoe";
     static final String DB_USER = "player";
     static final String DB_PASSWD = "player";
     public static Connection connect() throws SQLException {

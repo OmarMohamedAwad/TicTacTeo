@@ -8,9 +8,6 @@ package tictacteo;
 import java.io.*;
 import java.net.Socket;
 import javafx.application.Platform;
-import model.database.RoomModel;
-import static tictacteo.OnLineGamePage.player2;
-
 /**
  *
  * @author Omar Awad
@@ -19,10 +16,13 @@ public class ClientSide extends Thread {
     Socket playerSocket;
     DataInputStream playerDataInput;
     PrintStream playerPrintStream;
+    static String user;
+    static Integer score;
     static String dataListened;
+
     public ClientSide() {
         try {
-            playerSocket = new Socket("127.0.0.1", 5000);
+            playerSocket = new Socket("omarawadtictacteo.hopto.org", 5000);
             playerDataInput = new DataInputStream(playerSocket.getInputStream());
             playerPrintStream = new PrintStream(playerSocket.getOutputStream());
             start();
@@ -30,7 +30,6 @@ public class ClientSide extends Thread {
             System.out.println("");
         }
     }
-
     @Override
     public void run() {
         while (true) {

@@ -21,7 +21,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.database.Player;
-import model.database.RoomModel;
 
 
 public class GameWithFriendPage extends AnchorPane {

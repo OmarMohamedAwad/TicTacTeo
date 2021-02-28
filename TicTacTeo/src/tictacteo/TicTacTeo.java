@@ -25,7 +25,6 @@ public class TicTacTeo extends Application{
 
        LogInPage root = new LogInPage(primaryStage , thread);
         Scene scene = new Scene(root, 490, 417);
-        
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.setScene(scene);
         primaryStage.resizableProperty().setValue(false);
