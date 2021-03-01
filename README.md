@@ -1,2 +1,0 @@
-# TicTacTeo
-TicTacTeo
