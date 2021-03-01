@@ -49,7 +49,7 @@ public class OnLineGamePage extends AnchorPane {
     static Thread thread;
     static boolean stopThread = true;
     static Player currentPlayer;
-    Room room;
+    static Room room;
     boolean firstTurn;
     String userName;
     History newUserHistory = new History();
@@ -108,8 +108,7 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     protected final Button exitBtn;
-
-
+    static Player p1;
     volatile static int player2 = -1;
 
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
@@ -184,17 +183,17 @@ public class OnLineGamePage extends AnchorPane {
 
         setDesignProperty();
         if (currentPlayer.getUserID() != room.get_player1_Id()) {
-
+            p1 = PlayerModel.playerInfo(room.get_player1_Id());
             player2 = currentPlayer.getUserID();
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
                 xTurnLabel.setText(currentPlayer.getUserName());
-
+                oTurnLabel.setText(p1.getUserName());
             } else {
                 userChar = "O";
                 oTurnLabel.setText(currentPlayer.getUserName());
+                xTurnLabel.setText(p1.getUserName());
             }
-            //  } //else {
 
         }
         checkIfPlayersEnter();
@@ -213,15 +212,12 @@ public class OnLineGamePage extends AnchorPane {
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
 
-
         //GIFI
         gif.setFitHeight(360.0);
         gif.setFitWidth(489.0);
         gif.setLayoutY(69.0);
         gif.setImage(new Image(getClass().getResource("/view/images/25.gif").toExternalForm()));
         gif.setStyle("visibility: false;");
-
-
 
         gif.setFitHeight(360.0);
         gif.setFitWidth(489.0);
@@ -412,8 +408,7 @@ public class OnLineGamePage extends AnchorPane {
         xTurnLabel.setLayoutX(22.0);
         xTurnLabel.setLayoutY(254.0);
         xTurnLabel.setPrefHeight(26.0);
-        xTurnLabel.setPrefWidth(85.0);
-        //   xTurnLabel.setText("Your Turn");
+        xTurnLabel.setPrefWidth(90.0);
         xTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         xTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         xTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
@@ -430,8 +425,7 @@ public class OnLineGamePage extends AnchorPane {
         oTurnLabel.setLayoutX(398.0);
         oTurnLabel.setLayoutY(254.0);
         oTurnLabel.setPrefHeight(26.0);
-        oTurnLabel.setPrefWidth(85.0);
-        //   oTurnLabel.setText("Your Turn");
+        oTurnLabel.setPrefWidth(90.0);
         oTurnLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         oTurnLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         oTurnLabel.setFont(new Font("SansSerif Bold", 15.0));
@@ -479,6 +473,7 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(xTurnLabel);
         getChildren().add(vsImageView);
         getChildren().add(oTurnLabel);
+        resetAll();
     }
 
     public void endGameDesign() {
@@ -602,7 +597,6 @@ public class OnLineGamePage extends AnchorPane {
         });
 
         watchVideoEndGame.setOnAction(e -> {
-            deleteRoom(primary);
             primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "onlineFriend")));
         });
     }
@@ -743,27 +737,29 @@ public class OnLineGamePage extends AnchorPane {
         String[] splitMessage = commingData.split(",");
         if (splitMessage[2].equalsIgnoreCase(currentPlayer.getUserID() + "")) {
             myTurn = true;
-        } else {
+            drawMove(splitMessage,true);
+        } else{
             myTurn = false;
+            if (splitMessage[splitMessage.length - 1].equalsIgnoreCase(room.get_roomId() + "")) {
+                drawMove(splitMessage,false);
+            }
         }
-        drawMove(splitMessage);
-        if (splitMessage[0].equalsIgnoreCase("O")) {
-            oImageView.setEffect(null);
-            xImageView.setEffect(ds);
-            first = "X";
 
-//            oTurnLabel.setStyle("visibility: false;");
-//            xTurnLabel.setStyle("visibility: true;");
-            return first;
-        } else if (splitMessage[0].equalsIgnoreCase("X")) {
-            //         oTurnLabel.setText(Player1Id.getUserName());
-            oImageView.setEffect(ds);
-            xImageView.setEffect(null);
-//            xTurnLabel.setStyle("visibility: false;");
-//            oTurnLabel.setStyle("visibility: true;");
-            first = "O";
-            return first;
+
+        if (splitMessage[splitMessage.length - 1].equalsIgnoreCase(room.get_roomId() + "")) {
+            if (splitMessage[0].equalsIgnoreCase("O")) {
+                oImageView.setEffect(null);
+                xImageView.setEffect(ds);
+                first = "X";
+                return first;
+            } else if (splitMessage[0].equalsIgnoreCase("X")) {
+                oImageView.setEffect(ds);
+                xImageView.setEffect(null);
+                first = "O";
+                return first;
+            }
         }
+
         return null;
     }
 
@@ -778,7 +774,7 @@ public class OnLineGamePage extends AnchorPane {
             gif.setStyle("visibility: true;");
             updatePlayerHistory();
             gif.setStyle("visibility: true;");
-        }  else if (userChar.equalsIgnoreCase("O")) {
+        } else if (userChar.equalsIgnoreCase("O")) {
             score--;
             status = "looser";
             scoreLabel.setText("Score :" + score);
@@ -859,30 +855,31 @@ public class OnLineGamePage extends AnchorPane {
             position.add(symbol);
             checkStatus();
             if (player2 == currentPlayer.getUserID() && status == "") {
-                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id());
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + "," + room.get_roomId());
             } else if (player2 == currentPlayer.getUserID() && status != "") {
                 if (status.equals("winner")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",l");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",l" + "," + room.get_roomId());
                 } else if (status.equals("looser")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",w");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",w" + "," + room.get_roomId());
                 } else if (status.equals("draw")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",d");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",d" + "," + room.get_roomId());
                 }
             } else if (currentPlayer.getUserID() == room.get_player1_Id() && status == "") {
-                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
+                curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + "," + room.get_roomId());
             } else if (currentPlayer.getUserID() == room.get_player1_Id() && status != "") {
                 if (status.equals("winner")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",l");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",l" + "," + room.get_roomId());
                 } else if (status.equals("looser")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",w");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",w" + "," + room.get_roomId());
                 } else if (status.equals("draw")) {
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",d");
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",d" + "," + room.get_roomId());
                 }
             }
         }
     }
 
     public void resetAll() {
+        p1 = null;
         player2 = -1;
         record.clear();
         position.clear();
@@ -892,9 +889,8 @@ public class OnLineGamePage extends AnchorPane {
         commingData = "";
         status = "";
         stopThread = true;
-        oTurnLabel.setStyle("visibility: false;");
-        xTurnLabel.setStyle("visibility: false;");
         first = firstTurn();
+        userChar = "";
         button00.setText("");
         button01.setText("");
         button02.setText("");
@@ -944,10 +940,8 @@ public class OnLineGamePage extends AnchorPane {
 
                                 if ("X".equals(userChar)) {
                                     oTurnLabel.setText(VSPlayer.getUserName());
-                                    //    xTurnLabel.setText(currentPlayer.getUserName());
                                 } else if ("O".equals(userChar)) {
                                     xTurnLabel.setText(VSPlayer.getUserName());
-                                    //    oTurnLabel.setText(currentPlayer.getUserName());
 
                                 }
                             }
@@ -972,16 +966,7 @@ public class OnLineGamePage extends AnchorPane {
         switchTurns(first, commingData);
     }
 
-    public static void drawMove(String[] splitMessage) {
-        if (splitMessage.length == 4 && splitMessage[2] != currentPlayer.getUserID() + "") {
-            if (splitMessage[3].equals("l")) {
-                displayEndGame("/view/images/gameMessages/loos.png");
-            } else if (splitMessage[3].equals("w")) {
-                displayEndGame("/view/images/gameMessages/win.png");
-            } else if (splitMessage[3].equals("d")) {
-                displayEndGame("/view/images/gameMessages/drawc.jpg");
-            }
-        }
+    public static void drawMove(String[] splitMessage, boolean drawFlag) {
         String pos = splitMessage[1];
         String ch = splitMessage[0];
         try {
@@ -1013,6 +998,9 @@ public class OnLineGamePage extends AnchorPane {
                 button22.setText(ch);
                 button22.setFont(new Font("SansSerif Bold", 15.0));
             }
+            if(drawFlag){
+                drawMessage(splitMessage);
+            }
             record.add(ch);
             position.add(pos);
 
@@ -1020,5 +1008,17 @@ public class OnLineGamePage extends AnchorPane {
             System.out.println("Thread Not Running Correctly");
         }
 
+    }
+
+    public static void drawMessage(String[] splitMessage){
+        if (splitMessage.length >= 4) {
+            if (splitMessage[3].equals("l")) {
+                displayEndGame("/view/images/gameMessages/loos.png");
+            } else if (splitMessage[3].equals("w")) {
+                displayEndGame("/view/images/gameMessages/win.png");
+            } else if (splitMessage[3].equals("d")) {
+                displayEndGame("/view/images/gameMessages/drawc.jpg");
+            }
+        }
     }
 }

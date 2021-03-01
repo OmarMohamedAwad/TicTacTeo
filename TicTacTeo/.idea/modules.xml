@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TicTacTeo.iml" filepath="$PROJECT_DIR$/.idea/TicTacTeo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TicTacTeo.iml" filepath="$PROJECT_DIR$/TicTacTeo.iml" />
     </modules>
   </component>
 </project>
