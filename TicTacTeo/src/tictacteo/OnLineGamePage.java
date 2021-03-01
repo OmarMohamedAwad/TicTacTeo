@@ -1,6 +1,5 @@
 package tictacteo;
 
-
 import java.util.List;
 import java.util.ArrayList;
 import javafx.application.Platform;
@@ -26,14 +25,15 @@ import model.database.Player;
 import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
-public class OnLineGamePage extends AnchorPane {
 
+public class OnLineGamePage extends AnchorPane {
 
     public Player Player1Id;
     public static Player VSPlayer;
     static String status = "";
     static List<String> record = new ArrayList<String>();
     static List<String> position = new ArrayList<String>();
+    protected final ImageView gif;
     boolean friendTurn = false;
     volatile static String first;
     static String userChar;
@@ -108,6 +108,7 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
     volatile static int player2 = -1;
+
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
 
         listenToServer = thread;
@@ -128,6 +129,7 @@ public class OnLineGamePage extends AnchorPane {
         titleLabel = new Label();
         titleDropShadow = new DropShadow();
         line = new Line();
+        gif = new ImageView();
 
         scoreLabel = new Label();
         scoreLabelShadow = new DropShadow();
@@ -177,7 +179,7 @@ public class OnLineGamePage extends AnchorPane {
         characterEndGameLable = new Label();
 
         setDesignProperty();
-          if (currentPlayer.getUserID() != room.get_player1_Id()) {
+        if (currentPlayer.getUserID() != room.get_player1_Id()) {
 
             player2 = currentPlayer.getUserID();
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
@@ -188,8 +190,7 @@ public class OnLineGamePage extends AnchorPane {
                 userChar = "O";
                 oTurnLabel.setText(currentPlayer.getUserName());
             }
-      //  } //else {
-
+            //  } //else {
 
         }
         checkIfPlayersEnter();
@@ -201,11 +202,18 @@ public class OnLineGamePage extends AnchorPane {
         setButtonsAction();
 
     }
+
     public void setDesignProperty() {
         setId("AnchorPane");
         setPrefHeight(417.0);
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
+
+        gif.setFitHeight(360.0);
+        gif.setFitWidth(489.0);
+        gif.setLayoutY(69.0);
+        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
+        gif.setStyle("visibility: false;");
 
         logoImageView.setFitHeight(45.0);
         logoImageView.setFitWidth(45.0);
@@ -432,8 +440,7 @@ public class OnLineGamePage extends AnchorPane {
 
         getChildren().add(titleLabel);
         getChildren().add(line);
-        getChildren().add(exitButton);
-
+        getChildren().add(exitButton);   
         getChildren().add(scoreLabel);
         getChildren().add(scoreImage);
         gridPane.getColumnConstraints().add(firstColumnConstraints);
@@ -459,6 +466,7 @@ public class OnLineGamePage extends AnchorPane {
         getChildren().add(vsImageView);
         getChildren().add(oTurnLabel);
     }
+
     public void endGameDesign() {
         backPane.setLayoutX(0.0);
         backPane.setLayoutY(69.0);
@@ -551,9 +559,10 @@ public class OnLineGamePage extends AnchorPane {
         endGamePane.getChildren().add(playerNameEndGameLabel);
         endGamePane.getChildren().add(characterEndGameLable);
         getChildren().add(endGamePane);
-      
+        getChildren().add(gif);
 
     }
+
     public void setActionsPage(Stage primary) {
         exitButton.setOnAction(e -> {
             PlayerModel.updatePlayerScore(id, score);
@@ -563,6 +572,7 @@ public class OnLineGamePage extends AnchorPane {
 
         watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "onlineFriend"))));
     }
+
     public void setButtonsAction() {
         button00.setOnAction(e -> changeButtonStatus(button00, "00"));
         button01.setOnAction(e -> changeButtonStatus(button01, "01"));
@@ -574,6 +584,7 @@ public class OnLineGamePage extends AnchorPane {
         button21.setOnAction(e -> changeButtonStatus(button21, "21"));
         button22.setOnAction(e -> changeButtonStatus(button22, "22"));
     }
+
     public void checkStatus() {
         String b1 = button00.getText();
         String b2 = button01.getText();
@@ -638,11 +649,13 @@ public class OnLineGamePage extends AnchorPane {
         }
 
     }
+
     public void userEqual() {
         status = "draw";
         displayEndGame("../view/images/gameMessages/drawc.jpg");
         updatePlayerHistory();
     }
+
     public String userChar() {
         if (room.get_player1_Id() == currentPlayer.getUserID()) {
             userChar = room.get_player1_Char();
@@ -659,12 +672,14 @@ public class OnLineGamePage extends AnchorPane {
             if (room.get_player1_Char().equalsIgnoreCase("O")) {
                 userChar = "X";
             } else {
-            } if (room.get_player1_Char().equalsIgnoreCase("X")){
+            }
+            if (room.get_player1_Char().equalsIgnoreCase("X")) {
                 userChar = "O";
             }
             return userChar;
         }
     }
+
     public String firstTurn() {
 
         if (currentPlayer.getUserID() == room.get_player1_Id()) {
@@ -688,6 +703,7 @@ public class OnLineGamePage extends AnchorPane {
         return first;
 
     }
+
     public static String switchTurns(String first, String commingData) {
 
         String[] splitMessage = commingData.split(",");
@@ -716,6 +732,7 @@ public class OnLineGamePage extends AnchorPane {
         }
         return null;
     }
+
     public void userXWin() {
         if (userChar.equalsIgnoreCase("X")) {
             score++;
@@ -724,10 +741,11 @@ public class OnLineGamePage extends AnchorPane {
             xImageView.setEffect(null);
             scoreLabel.setText("Score :" + score);
             displayEndGame("../view/images/gameMessages/win.png");
+            gif.setStyle("visibility: true;");
             updatePlayerHistory();
 
 //            gif.setStyle("visibility: true;");
-        } else if (userChar.equalsIgnoreCase("O")){
+        } else if (userChar.equalsIgnoreCase("O")) {
             score--;
             status = "looser";
             scoreLabel.setText("Score :" + score);
@@ -738,6 +756,7 @@ public class OnLineGamePage extends AnchorPane {
 
         }
     }
+
     public void userOWin() {
         if (userChar.equalsIgnoreCase("O")) {
             score++;
@@ -747,9 +766,9 @@ public class OnLineGamePage extends AnchorPane {
             xImageView.setEffect(null);
             displayEndGame("../view/images/gameMessages/win.png");
             updatePlayerHistory();
-//            gif.setStyle("visibility: true;");
+            gif.setStyle("visibility: true;");
 
-        } else if(userChar.equalsIgnoreCase("X")){
+        } else if (userChar.equalsIgnoreCase("X")) {
             score--;
             status = "loose";
             scoreLabel.setText("Score :" + score);
@@ -760,7 +779,6 @@ public class OnLineGamePage extends AnchorPane {
 
         }
     }
-
 
     public static void displayEndGame(String img) {
         thread = new Thread(new Runnable() {
@@ -791,43 +809,46 @@ public class OnLineGamePage extends AnchorPane {
         });
         thread.start();
     }
+
     public void changeButtonsColor(Button btn1, Button btn2, Button btn3) {
         btn1.setStyle("-fx-background-color: blue; ");
         btn2.setStyle("-fx-background-color: blue; ");
         btn3.setStyle("-fx-background-color: blue; ");
     }
+
     public void changeButtonStatus(Button button, String symbol) {
         if (button.getText() == "" && player2 != -1 && myTurn) {
             drawCounter += 1;
             button.setText(userChar);
             button.setFont(new Font("SansSerif Bold", 15.0));
-            
 
             record.add(userChar);
             position.add(symbol);
             checkStatus();
             if (player2 == currentPlayer.getUserID() && status == "") {
                 curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id());
-            } else if (player2 == currentPlayer.getUserID() && status != ""){
-                if(status.equals("winner"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",l");
-                else if (status.equals("looser"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",w");
-                else if (status.equals("draw"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id()+",d");
-                
-            }else if (currentPlayer.getUserID() == room.get_player1_Id() && status == ""){
+            } else if (player2 == currentPlayer.getUserID() && status != "") {
+                if (status.equals("winner")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",l");
+                } else if (status.equals("looser")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",w");
+                } else if (status.equals("draw")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + room.get_player1_Id() + ",d");
+                }
+            } else if (currentPlayer.getUserID() == room.get_player1_Id() && status == "") {
                 curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2);
-            }else if (currentPlayer.getUserID() == room.get_player1_Id() && status != ""){
-                if(status.equals("winner"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",l");
-                else if (status.equals("looser"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",w");
-                else if (status.equals("draw"))
-                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2+",d");
+            } else if (currentPlayer.getUserID() == room.get_player1_Id() && status != "") {
+                if (status.equals("winner")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",l");
+                } else if (status.equals("looser")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",w");
+                } else if (status.equals("draw")) {
+                    curruntClient.playerPrintStream.println(userChar + "," + symbol + "," + player2 + ",d");
+                }
             }
         }
     }
+
     public void resetAll() {
         record.clear();
         position.clear();
@@ -857,10 +878,12 @@ public class OnLineGamePage extends AnchorPane {
         button21.setStyle("-fx-background-color: #ececec;");
         button22.setStyle("-fx-background-color: #ececec;");
     }
+
     public void deleteRoom(Stage primary) {
         RoomModel.DeleteRoom(room.get_roomId());
         primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }
+
     public void checkIfPlayersEnter() {
         thread = new Thread(new Runnable() {
 
@@ -884,10 +907,10 @@ public class OnLineGamePage extends AnchorPane {
 
                                 if ("X".equals(userChar)) {
                                     oTurnLabel.setText(VSPlayer.getUserName());
-                                //    xTurnLabel.setText(currentPlayer.getUserName());
+                                    //    xTurnLabel.setText(currentPlayer.getUserName());
                                 } else if ("O".equals(userChar)) {
                                     xTurnLabel.setText(VSPlayer.getUserName());
-                                //    oTurnLabel.setText(currentPlayer.getUserName());
+                                    //    oTurnLabel.setText(currentPlayer.getUserName());
 
                                 }
                             }
@@ -898,6 +921,7 @@ public class OnLineGamePage extends AnchorPane {
         });
         thread.start();
     }
+
     public void updatePlayerHistory() {
         playerNameEndGameLabel.setText(userName);
         characterEndGameLable.setText(userChar);
@@ -905,19 +929,22 @@ public class OnLineGamePage extends AnchorPane {
         HistoryModel.addHistory(newUserHistory);
 
     }
+
     public static void messageFromeServer(String msg) {
         commingData = msg;
         switchTurns(first, commingData);
     }
+
     public static void drawMove(String[] splitMessage) {
-        if(splitMessage.length == 4 && splitMessage[2] != currentPlayer.getUserID()+""){
-            if(splitMessage[3].equals("l"))
+        if (splitMessage.length == 4 && splitMessage[2] != currentPlayer.getUserID() + "") {
+            if (splitMessage[3].equals("l")) {
                 displayEndGame("../view/images/gameMessages/loos.png");
-            else if (splitMessage[3].equals("w"))
+            } else if (splitMessage[3].equals("w")) {
                 displayEndGame("../view/images/gameMessages/win.png");
-            else if (splitMessage[3].equals("d"))
-               displayEndGame("../view/images/gameMessages/drawc.jpg"); 
-        } 
+            } else if (splitMessage[3].equals("d")) {
+                displayEndGame("../view/images/gameMessages/drawc.jpg");
+            }
+        }
         String pos = splitMessage[1];
         String ch = splitMessage[0];
         try {

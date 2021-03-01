@@ -930,9 +930,7 @@ public class GamePage extends AnchorPane {
         logoImage.setPickOnBounds(true);
         logoImage.setPreserveRatio(true);
         logoImage.setImage(new Image(getClass().getResource("../view/images/tic-tac-toe.jpg").toExternalForm()));
-
         logoImage.setEffect(logoShadowImage);
-
         gameName.setLayoutX(85.0);
         gameName.setLayoutY(23.0);
         gameName.setPrefHeight(25.0);
@@ -940,23 +938,19 @@ public class GamePage extends AnchorPane {
         gameName.setText("Tic Tac Teo");
         gameName.setTextFill(javafx.scene.paint.Color.WHITE);
         gameName.setFont(new Font("SansSerif Bold", 15.0));
-
         gameNameShadow.setColor(javafx.scene.paint.Color.BLACK);
         gameName.setEffect(gameNameShadow);
-
         gif.setFitHeight(360.0);
         gif.setFitWidth(489.0);
         gif.setLayoutY(69.0);
         gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
         gif.setStyle("visibility: false;");
-
         line.setEndX(400.0);
         line.setLayoutX(101.0);
         line.setLayoutY(68.0);
         line.setStartX(-100.0);
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
-
         scoreLabel.setLayoutX(423.0);
         scoreLabel.setLayoutY(21.0);
         scoreLabel.setPrefHeight(25.0);
