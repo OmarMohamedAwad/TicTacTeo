@@ -28,6 +28,8 @@ import model.database.RoomModel;
 
 public class OnLineGamePage extends AnchorPane {
 
+    protected final ImageView gif;
+
     public Player Player1Id;
     public static Player VSPlayer;
     static String status = "";
@@ -201,6 +203,9 @@ public class OnLineGamePage extends AnchorPane {
         setActionsPage(primary);
         setButtonsAction();
 
+        //GIFI
+         gif = new ImageView();
+         
     }
 
     public void setDesignProperty() {
@@ -208,6 +213,16 @@ public class OnLineGamePage extends AnchorPane {
         setPrefHeight(417.0);
         setPrefWidth(500.0);
         setStyle("-fx-background-color: #343F4B;");
+        
+        
+         //GIFI
+        gif.setFitHeight(360.0);
+        gif.setFitWidth(489.0);
+        gif.setLayoutY(69.0);
+        gif.setImage(new Image(getClass().getResource("../view/images/25.gif").toExternalForm()));
+        gif.setStyle("visibility: false;");
+        
+        
 
         gif.setFitHeight(360.0);
         gif.setFitWidth(489.0);
@@ -743,9 +758,8 @@ public class OnLineGamePage extends AnchorPane {
             displayEndGame("../view/images/gameMessages/win.png");
             gif.setStyle("visibility: true;");
             updatePlayerHistory();
-
-//            gif.setStyle("visibility: true;");
-        } else if (userChar.equalsIgnoreCase("O")) {
+            gif.setStyle("visibility: true;");
+        }  else if (userChar.equalsIgnoreCase("O")) {
             score--;
             status = "looser";
             scoreLabel.setText("Score :" + score);
