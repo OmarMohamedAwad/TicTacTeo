@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="500.0" style="-fx-background-color: #343F4B;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictacteo.FXMLController">
+    <stylesheets>
+        <URL value="@fxml.css" />
+    </stylesheets>
+   <children>
+      <Line endX="400.0" layoutX="101.0" layoutY="68.0" startX="-100.0" stroke="#6b6b6b" strokeWidth="2.0" style="-fx-stroke: #6b6b6b;">
+      </Line>
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/options/tic-tac-toe-game.jpg" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <StackPane layoutX="134.0" layoutY="86.0" prefHeight="106.0" prefWidth="111.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/options/computer.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+         </children>
+      </StackPane>
+      <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="331.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/options/frind.jpg" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="137.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/options/x.jpg" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="106.0" fitWidth="141.0" layoutX="331.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/options/o.jpg" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <RadioButton fx:id="crb" layoutX="140.0" layoutY="196.0" mnemonicParsing="false" style="-fx-text-fill: white;" text="Computer" textFill="#fcfcfc">
+         <toggleGroup>
+            <ToggleGroup fx:id="plAgainst" />
+         </toggleGroup>
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect></RadioButton>
+      <RadioButton fx:id="frb" layoutX="355.0" layoutY="196.0" mnemonicParsing="false" style="-fx-text-fill: white;" text="Friend" textFill="#fcf9f9" toggleGroup="$plAgainst">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect></RadioButton>
+      <RadioButton layoutX="186.0" layoutY="343.0" mnemonicParsing="false" style="-fx-text-fill: white;" text="X" textFill="#f8f6f6" fx:id="xrb">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="ychar" />
+         </toggleGroup>
+         <effect>
+            <DropShadow />
+         </effect>
+      </RadioButton>
+      <RadioButton fx:id="orb" layoutX="371.0" layoutY="343.0" mnemonicParsing="false" style="-fx-text-fill: white;" text="O" textFill="#f8f6f6" toggleGroup="$ychar">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </RadioButton>
+      <Text fill="#fffdfd" layoutX="83.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Teo">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text fill="#f8f7f7" layoutX="11.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text=" Play Against :" wrappingWidth="110.99999667424709">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text fill="#f8f7f7" layoutX="11.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Your Charcter :" wrappingWidth="123.2548828125">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Button layoutX="251.0" layoutY="377.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Play Now" textFill="#f8f7f7">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
+      <Button layoutX="37.0" layoutY="377.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15px; -fx-background-color: #3065b5; -fx-color: white;" styleClass="mainFxmlClass" text="Back" textFill="#f8f7f7">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="417.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="506.0" style="-fx-background-color: #343F4B;">
+         <children>
+            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/myHistory/tic-tac-toe-game.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+            <Label contentDisplay="CENTER" layoutX="63.0" layoutY="14.0" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="User Name" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    <AnchorPane accessibleRole="BUTTON" minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="500.0" style="-fx-background-color: #343F4B;">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="124.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/myHistory/progress.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="347.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/myHistory/big-win.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+            <Label contentDisplay="CENTER" layoutX="166.0" layoutY="7.0" prefHeight="32.0" prefWidth="167.0" style="-fx-background-color: #343F4B; -fx-alignment: center;" text="See Your Progress" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="83.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/myHistory/max-score.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect></ImageView>
+            <ScrollPane hbarPolicy="NEVER" layoutX="54.0" layoutY="179.0" prefHeight="110.0" prefWidth="379.0">
+               <content>
+                  <TableView nodeOrientation="LEFT_TO_RIGHT" prefHeight="110.0" prefWidth="379.0">
+                    <columns>
+                      <TableColumn prefWidth="96.0" styleClass="Colums" text="Games" />
+                      <TableColumn minWidth="0.0" prefWidth="94.0" styleClass="Colums" text="Date" />
+                        <TableColumn prefWidth="93.0" styleClass="Colums" text="Vs-Player" />
+                        <TableColumn prefWidth="76.0" styleClass="Colums" text="Status" />
+                    </columns>
+                     <opaqueInsets>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </opaqueInsets>
+                     <effect>
+                        <DropShadow color="#642603" height="28.15" radius="14.7675" spread="0.08" width="32.92" />
+                     </effect>
+                     <columnResizePolicy>
+                     </columnResizePolicy>
+                  </TableView>
+               </content>
+               <effect>
+                  <DropShadow color="#c95c0e" />
+               </effect>
+            </ScrollPane>
+            <Button contentDisplay="CENTER" layoutX="199.0" layoutY="311.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="114.0" style="-fx-background-radius: 15; -fx-background-color: #3065b5;" text="Back" textFill="#fcf9f9" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="189.0" AnchorPane.topAnchor="311.0">
+               <effect>
+                  <InnerShadow />
+               </effect>
+
+            </Button>
+            <Label contentDisplay="CENTER" layoutX="62.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Win # Times" textAlignment="CENTER" textFill="#5555d2">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
+               </effect>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="201.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-radius: 5px; -fx-alignment: center;" text="You Lose # Times" textAlignment="CENTER" textFill="#5555d2">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
+               </effect>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="326.0" layoutY="127.0" prefHeight="32.0" prefWidth="101.0" style="-fx-alignment: center; -fx-background-color: white; -fx-border-radius: 5px;" text="The MaxScore #" textAlignment="CENTER" textFill="#5555d2">
+               <font>
+                  <Font name="System Bold Italic" size="10.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="#512304" height="25.77" radius="11.192499999999999" />
+               </effect>
+            </Label>
+            <Pane layoutX="219.0" layoutY="57.0" prefHeight="59.0" prefWidth="60.0">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="60.0">
+                     <image>
+                        <Image url="@../images/myHistory/losing.jpg" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+         <effect>
+            <ColorAdjust />
+         </effect></AnchorPane>
+  </items>
+   <effect>
+      <DropShadow />
+   </effect>
+</SplitPane>
