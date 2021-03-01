@@ -1,16 +1,6 @@
 package tictacteo;
 
-import java.awt.AWTException;
-import java.io.IOException;
-import java.net.URL;
 
-import java.util.Vector;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -24,16 +14,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.database.Player;
-import model.database.History;
-import model.database.HistoryModel;
-import model.database.Player;
-import model.database.PlayerModel;
 
 public class OptionPage extends AnchorPane {
 

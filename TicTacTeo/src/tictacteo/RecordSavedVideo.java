@@ -1,32 +1,12 @@
 package tictacteo;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import static java.lang.System.in;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,14 +24,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import model.database.Player;
-import static oracle.jrockit.jfr.events.Bits.byteValue;
 
 public class RecordSavedVideo extends AnchorPane {
-
   static List<String> recordFromFile = new ArrayList<String>();
    static List<String> positionFromFile = new ArrayList<String>();
     static String name = "omar";
@@ -101,7 +77,6 @@ public class RecordSavedVideo extends AnchorPane {
         positionFromFile = new ArrayList<String>();
         this.currentPlayer = currentPlayer;
         index = 0;
-        System.out.println(index);
         thread2 = thread;
         LogoImage = new ImageView();
         LogoImageShadow = new DropShadow();
@@ -506,64 +481,41 @@ public class RecordSavedVideo extends AnchorPane {
             }
             reader.close();
             String content = stringBuilder.toString();
-            System.out.println(content);
+           
             String[] str = content.split(" ");
-            System.out.println(str.length);
-            System.out.println(str);
             for (int i = 0; i < str.length; i++) {
                 if (str[i].equalsIgnoreCase("X") || str[i].equalsIgnoreCase("O")) {
-
                     recordFromFile.add(str[i]);
-
                 } else {
                     positionFromFile.add(str[i]);
                 }
-                System.out.println(str[i]);
-            }
-            for (int i = 0; i < recordFromFile.size(); i++) {
-                System.out.println(recordFromFile.get(i));
-                 System.out.println(positionFromFile.get(i));
             }
         } catch (IOException ex) {
             Logger.getLogger(RecordSavedVideo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         WatchButton.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent ev) {
-
                 clearButtons();
                 index = 0;
                 thread2 = new Thread(new Runnable() {
-
                     @Override
                     public void run() {
-
                         boolean pf = true;
-
                         while (pf) {
-
                             try {
-
                                 Thread.sleep(1000);
-
                             } catch (InterruptedException e) {
                             }
                             if (index >= recordFromFile.size() - 1) {
                                 pf = false;
-
                             }
-
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    System.out.println("hi  " + index);
-                                    System.out.println(recordFromFile.size());
                                     if (positionFromFile.get(index).equals("00")) {
                                         Button00.setText(recordFromFile.get(index));
-                                        Button00.setFont(new Font("SansSerif Bold", 15.0));
-                               
+                                        Button00.setFont(new Font("SansSerif Bold", 15.0));                               
                                     } else if (positionFromFile.get(index).equals("01")) {
                                         Button01.setText(recordFromFile.get(index));
                                         Button01.setFont(new Font("SansSerif Bold", 15.0));

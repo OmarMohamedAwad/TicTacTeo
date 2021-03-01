@@ -1,7 +1,6 @@
 package tictacteo;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,13 +17,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.database.Player;
-import model.database.PlayerModel;
 import model.database.Room;
 import model.database.RoomModel;
-import static tictacteo.MyDashboardPage.currentPlayer;
+
 
 public class OnlineOfflinePage extends AnchorPane {
-
     protected final Line line;
     protected final ImageView logoImageView;
     protected final DropShadow logoDropShadow;
@@ -253,7 +250,6 @@ public class OnlineOfflinePage extends AnchorPane {
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
             Room room = RoomModel.UpdateRoom(enterExistRoom, player1ID);
-
             room.get_player2_Id();
             if (room == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

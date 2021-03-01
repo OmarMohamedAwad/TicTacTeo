@@ -11,7 +11,6 @@ import java.util.Vector;
 import model.database.Player;
 
 public class PlayerModel {
-
     static final String DB_URL = "jdbc:mysql://omarawadtictacteo.hopto.org:3306/tiktaktoe";
     static final String DB_USER = "player";
     static final String DB_PASSWD = "player";
@@ -19,7 +18,6 @@ public class PlayerModel {
     public static Connection connect() throws SQLException {
         return (Connection) DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
     }
-
     public static boolean addPlayer(Player user) {
         try {
             Connection connection = connect();

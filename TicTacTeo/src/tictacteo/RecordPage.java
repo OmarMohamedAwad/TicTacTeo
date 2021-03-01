@@ -6,26 +6,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import static java.lang.System.in;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,14 +28,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import model.database.Player;
-import static oracle.jrockit.jfr.events.Bits.byteValue;
 
 public class RecordPage extends AnchorPane {
-
     static String name = "omar";
     static List<String> record2 = new ArrayList<String>();
     static List<String> position2 = new ArrayList<String>();
@@ -60,7 +41,7 @@ public class RecordPage extends AnchorPane {
     protected final Label TicTacTeo;
     protected final DropShadow TicTacTeoShadow;
     protected final Line line;
-  
+
     protected final ImageView XImage;
     protected final ImageView OImage;
     protected final Button ExitButton;
@@ -88,14 +69,13 @@ public class RecordPage extends AnchorPane {
     protected final Button Button22;
     protected final DropShadow dropShadow3;
     static int index = 0;
-    
+
     static Thread thread2 = new Thread();
     Player currentPlayer;
 
     public RecordPage(Stage primary, Player currentPlayer, List<String> record, List<String> position, Thread thread, String page) {
         this.currentPlayer = currentPlayer;
         index = 0;
-        System.out.println(index);
         thread2 = thread;
         record2 = record;
         position2 = position;
@@ -164,10 +144,9 @@ public class RecordPage extends AnchorPane {
         line.setStroke(javafx.scene.paint.Color.valueOf("#6b6b6b"));
         line.setStrokeWidth(2.0);
 
-
         XImage.setFitHeight(55.0);
         XImage.setFitWidth(55.0);
-        XImage.setLayoutX(145.0);
+        XImage.setLayoutX(175.0);
         XImage.setLayoutY(89.0);
         XImage.setPickOnBounds(true);
         XImage.setPreserveRatio(true);
@@ -181,7 +160,7 @@ public class RecordPage extends AnchorPane {
         OImage.setPreserveRatio(true);
         OImage.setImage(new Image(getClass().getResource("../view/images/options/o.jpg").toExternalForm()));
 
-        ExitButton.setLayoutX(40.0);
+        ExitButton.setLayoutX(30.0);
         ExitButton.setLayoutY(353.0);
         ExitButton.setMaxHeight(37.0);
         ExitButton.setMaxWidth(129.0);
@@ -197,16 +176,19 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
-                if (page == "computer")
+                if (page == "computer") {
                     primary.setScene(new Scene(new GamePage(primary, currentPlayer, xSelected, thread2)));
-                else if (page == "localFriend")
+                } else if (page == "localFriend") {
                     primary.setScene(new Scene(new GameWithFriendPage(primary, currentPlayer, xSelected, thread2)));
+                } else {
+                    primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread2)));
+                }
             }
         });
 
         ExitButton.setEffect(ExitButtonInnerShadow);
 
-        WatchButton.setLayoutX(200.0);
+        WatchButton.setLayoutX(190.0);
         WatchButton.setLayoutY(353.0);
         WatchButton.setMaxHeight(37.0);
         WatchButton.setMaxWidth(129.0);
@@ -234,37 +216,30 @@ public class RecordPage extends AnchorPane {
 
             @Override
             public void handle(ActionEvent ev) {
+                try {
 
-//                FileChooser fc = new FileChooser();
-  //              Window stage = null;
-    //            File file = fc.showSaveDialog(stage);
-           //     if (file != null) {
+                    PrintWriter pw = new PrintWriter(new FileOutputStream("AYA.txt"));
+                    for (int i = 0; i < record.size(); i++) {
+                        // pw.println(record.get(i)+","+position.get(i));
 
-      //              String filePath = file.getPath();
-                    try {
-
-                        PrintWriter pw = new PrintWriter(new FileOutputStream("AYA.txt"));
-                        for (int i = 0; i < record.size(); i++) {
-                             // pw.println(record.get(i)+","+position.get(i));
-                              
-                            pw.print(record.get(i)+" ");
-                            pw.print(position.get(i)+" ");
-
-                        }
-
-                        pw.close();
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(RecordPage.class.getName()).log(Level.SEVERE, null, ex);
+                        pw.print(record.get(i) + " ");
+                        pw.print(position.get(i) + " ");
 
                     }
-               
+
+                    pw.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(RecordPage.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+
             }
         });
-        
+
         SaveButton.setEffect(SaveButtonShadow);
 
         pane.setLayoutX(
-                114.0);
+                135.0);
         pane.setLayoutY(
                 160.0);
         pane.setPrefHeight(
@@ -510,28 +485,18 @@ public class RecordPage extends AnchorPane {
 
                     @Override
                     public void run() {
-
-                        System.out.println("hi45");
                         boolean pf = true;
-
                         while (pf) {
-
                             try {
-
                                 Thread.sleep(1000);
-
                             } catch (InterruptedException e) {
                             }
                             if (index >= record.size() - 1) {
                                 pf = false;
-
                             }
-
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    System.out.println("hi  " + index);
-                                    System.out.println(record.size());
                                     if ("00".equals(position2.get(index))) {
                                         Button00.setText(record2.get(index));
                                         Button00.setFont(new Font("SansSerif Bold", 15.0));
@@ -562,7 +527,7 @@ public class RecordPage extends AnchorPane {
 
                                         Button22.setText(record2.get(index));
                                         Button22.setFont(new Font("SansSerif Bold", 15.0));
-                                        System.out.println(Button22.getText());
+
                                     }
 
                                     index++;
