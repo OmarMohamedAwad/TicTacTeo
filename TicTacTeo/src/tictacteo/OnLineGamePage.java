@@ -28,8 +28,6 @@ import model.database.RoomModel;
 
 public class OnLineGamePage extends AnchorPane {
 
-    protected final ImageView gif;
-
     public Player Player1Id;
     public static Player VSPlayer;
     static String status = "";
@@ -109,6 +107,9 @@ public class OnLineGamePage extends AnchorPane {
     protected final Label playerCharacter;
     protected final Label playerNameEndGameLabel;
     protected final Label characterEndGameLable;
+    protected final Button exitBtn;
+
+
     volatile static int player2 = -1;
 
     public OnLineGamePage(Stage primary, Player currentPlayer, boolean xSelected, Thread thread, Room room) {
@@ -137,6 +138,7 @@ public class OnLineGamePage extends AnchorPane {
         scoreLabelShadow = new DropShadow();
         scoreImage = new ImageView();
 
+        exitBtn = new Button();
         exitButton = new Button();
         exitButtonInnerShadow = new InnerShadow();
         playAgininnerShadow = new InnerShadow();
@@ -202,9 +204,6 @@ public class OnLineGamePage extends AnchorPane {
         firstTurn();
         setActionsPage(primary);
         setButtonsAction();
-
-        //GIFI
-         gif = new ImageView();
          
     }
 
@@ -276,7 +275,7 @@ public class OnLineGamePage extends AnchorPane {
         scoreImage.setPickOnBounds(true);
         scoreImage.setPreserveRatio(true);
         scoreImage.setImage(new Image(getClass().getResource("../view/images/myDashboard/star.png").toExternalForm()));
-
+        
         exitButton.setLayoutX(210.0);
         exitButton.setLayoutY(353.0);
         exitButton.setMaxHeight(37.0);
@@ -528,8 +527,19 @@ public class OnLineGamePage extends AnchorPane {
         watchVideoEndGame.getStyleClass().add("play-btn");
         watchVideoEndGame.setText("Wach Video");
         watchVideoEndGame.setTextFill(javafx.scene.paint.Color.WHITE);
-
         watchVideoEndGame.setEffect(innerShadow0);
+
+        exitBtn.setLayoutX(38.0);
+        exitBtn.setLayoutY(187.0);
+        exitBtn.setMnemonicParsing(false);
+        exitBtn.setPrefHeight(17.0);
+        exitBtn.setPrefWidth(88.0);
+        exitBtn.setStyle("-fx-background-radius: 15; -fx-background-color: #006fb2;");
+        exitBtn.getStyleClass().add("play-btn");
+        exitBtn.setText("Exit");
+        exitBtn.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        exitBtn.setEffect(innerShadow);
 
         playerNameLabel.setLayoutX(40.0);
         playerNameLabel.setLayoutY(150.0);
@@ -568,6 +578,7 @@ public class OnLineGamePage extends AnchorPane {
         endGamePane.getChildren().add(xIcone);
         endGamePane.getChildren().add(yIcone);
         endGamePane.getChildren().add(vsIcon);
+        endGamePane.getChildren().add(exitBtn);
         endGamePane.getChildren().add(watchVideoEndGame);
         endGamePane.getChildren().add(playerNameLabel);
         endGamePane.getChildren().add(playerCharacter);
@@ -582,10 +593,18 @@ public class OnLineGamePage extends AnchorPane {
         exitButton.setOnAction(e -> {
             PlayerModel.updatePlayerScore(id, score);
             deleteRoom(primary);
-            primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
+            primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)));
         });
-
-        watchVideoEndGame.setOnAction(e -> primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "onlineFriend"))));
+        
+        exitBtn.setOnAction(e -> {
+            deleteRoom(primary);
+            primary.setScene(new Scene(new OptionPage(primary, currentPlayer, thread)));
+        });
+        
+        watchVideoEndGame.setOnAction(e -> {
+            deleteRoom(primary);
+            primary.setScene(new Scene(new RecordPage(primary, currentPlayer, record, position, thread, "onlineFriend")));
+        });
     }
 
     public void setButtonsAction() {
@@ -864,11 +883,14 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void resetAll() {
+        player2 = -1;
         record.clear();
         position.clear();
         xImageView.setEffect(null);
         oImageView.setEffect(null);
         drawCounter = 0;
+        commingData = "";
+        status = "";
         stopThread = true;
         oTurnLabel.setStyle("visibility: false;");
         xTurnLabel.setStyle("visibility: false;");
@@ -894,6 +916,7 @@ public class OnLineGamePage extends AnchorPane {
     }
 
     public void deleteRoom(Stage primary) {
+        resetAll();
         RoomModel.DeleteRoom(room.get_roomId());
         primary.setScene(new Scene(new OnlineOfflinePage(primary, currentPlayer, xSelected, thread)));
     }

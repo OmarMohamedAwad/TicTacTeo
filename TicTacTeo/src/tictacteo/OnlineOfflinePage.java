@@ -250,7 +250,6 @@ public class OnlineOfflinePage extends AnchorPane {
         } else if (roomTextField.getText().isEmpty() && !enterOnlineRoomTextField.getText().isEmpty()) {
             String enterExistRoom = enterOnlineRoomTextField.getText();
             Room room = RoomModel.UpdateRoom(enterExistRoom, player1ID);
-            room.get_player2_Id();
             if (room == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
@@ -258,6 +257,7 @@ public class OnlineOfflinePage extends AnchorPane {
                 alert.setContentText("Room Not Exist ,Please Create One");
                 alert.showAndWait();
             } else {
+                room.get_player2_Id();
                 primary.setScene(new Scene(new OnLineGamePage(primary, currentPlayer, xSelected, thread, room)));
 
             }
